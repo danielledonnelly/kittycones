@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Customers from './Customers';
 
 function App() {
   const [selectedCone, setSelectedCone] = useState(null);
@@ -47,34 +48,22 @@ function App() {
         }}
       />
 
-      {/* Customers Layer */}
-      <img
-        src="/assets/customers.png"
-        alt="Customers"
-        style={{
-          position: 'absolute',
-          width: '100vw',
-          height: 'auto',
-          bottom: 0,
-          left: 0,
-          zIndex: 2,
-        }}
-      />
-
+       {/* Customers Layer */}
+       <Customers cones={cones} scoops={scoops} />
       {/* Counter */}
       <div
         style={{
           position: 'absolute',
           width: '100%',
-          maxHeight: '25vh', // Increased height to 25% of the screen
+          maxHeight: '25vh',
           backgroundColor: '#9F86C0',
           bottom: 0,
           zIndex: 3,
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
-          padding: '20px 40px 30px', // Added padding to left, right, and bottom
-          boxSizing: 'border-box', // Ensures padding doesn't overflow the container
+          padding: '20px 40px 30px',
+          boxSizing: 'border-box',
         }}
       >
         {/* Assembled Ice Cream */}
@@ -104,7 +93,7 @@ function App() {
               alt={`Scoop ${index + 1}`}
               style={{
                 position: 'absolute',
-                bottom: `${210 + index * 50}px`, // Slightly adjusted scoops
+                bottom: `${210 + index * 50}px`, 
                 left: '50%',
                 transform: 'translateX(-50%)',
                 width: '110%',
@@ -167,7 +156,7 @@ function App() {
                 width: '120px',
                 height: '120px',
                 border: 'none',
-                outline: 'none', // Remove the outline
+                outline: 'none', 
               }}
             >
               <img
@@ -192,7 +181,7 @@ function App() {
             style={{
               background: 'none',
               border: 'none',
-              outline: 'none', // Remove the outline
+              outline: 'none',
               cursor: 'pointer',
               width: '100%',
               height: '100%',
