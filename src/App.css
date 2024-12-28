@@ -1,42 +1,131 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+.app-container {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+.background {
+  position: absolute;
+  width: 100vw;
+  height: auto;
+  top: 0;
+  left: 0;
+  z-index: 1;
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
+.counter {
+  position: absolute;
+  width: 100%;
+  max-height: 25vh;
+  background-color: #9F86C0;
+  bottom: 0;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 40px 30px;
+  box-sizing: border-box;
+}
+
+.ice-cream {
+  flex: 0 0 auto;
+  width: 220px;
+  height: 220px;
+  position: relative;
+}
+
+.ice-cream-cone {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+}
+
+.ice-cream-scoop {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 110%;
+}
+
+.buttons-group {
+  flex: 1 1 auto;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+}
+
+.button {
+  background: none;
+  padding: 10px;
+  cursor: pointer;
+  width: 120px;
+  height: 120px;
+  border: none;
+  outline: none;
+}
+
+.button img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.button:focus {
+  outline: none; 
+  box-shadow: none; 
+}
+
+.restart-button {
+  flex: 0 0 auto;
+  width: 120px;
+  height: 120px;
+  outline: none; 
+}
+
+.restart-button img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.customer {
+  width: 150px;
+}
+
+@media (max-width: 1600px) {
+  .button {
+    width: 90px;
+    height: 90px;
   }
-  to {
-    transform: rotate(360deg);
+
+  .ice-cream-cone {
+    width: 160px;
   }
-}
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
+  .ice-cream-scoop {
+    width: 75%;
+    transform: translate(-70%, 30%);
   }
+
+  .customer {
+    transform: translate(0%, 20%);
+  }
+d
 }
 
-.card {
-  padding: 2em;
-}
+@media (max-width: 480px) {
+  .button {
+    width: 70px; /* Further reduce button size for very small screens */
+    height: 70px;
+  }
 
-.read-the-docs {
-  color: #888;
+  .ice-cream-cone {
+    width: 70%; /* Further scale down cone size */
+  }
+
+  .ice-cream-scoop {
+    width: 80%; /* Further scale down scoop size */
+  }
 }

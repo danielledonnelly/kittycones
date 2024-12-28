@@ -36,6 +36,7 @@ function Customers({ cones, scoops }) {
       {customerImages.map((customer, index) => (
         <div
           key={index}
+          className="customer"
           style={{
             position: 'relative',
             display: 'flex',
@@ -45,6 +46,7 @@ function Customers({ cones, scoops }) {
         >
           {/* Ice Cream Order */}
           <div
+            className="order"
             style={{
               position: 'absolute',
               bottom: '105%', 
@@ -57,6 +59,7 @@ function Customers({ cones, scoops }) {
             {/* Cone */}
             {customerOrders[index]?.cone && (
               <img
+                className="cone-order"
                 src={`/assets/${customerOrders[index].cone}`}
                 alt="Cone"
                 style={{
@@ -70,6 +73,7 @@ function Customers({ cones, scoops }) {
             {customerOrders[index]?.scoops.map((scoop, scoopIndex) => (
               <img
                 key={scoopIndex}
+                className="scoop-order"
                 src={`/assets/${scoop}`}
                 alt={`Scoop ${scoopIndex + 1}`}
                 style={{
