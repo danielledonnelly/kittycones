@@ -64,7 +64,7 @@ function App() {
         </div>
 
         {/* Buttons for Cones */}
-        <div className="buttons-group">
+        <div className="buttons-group cone-buttons">
           {cones.map((cone) => (
             <button
               key={cone}
@@ -77,7 +77,7 @@ function App() {
         </div>
 
         {/* Buttons for Scoops */}
-        <div className="buttons-group">
+        <div className="buttons-group scoop-buttons">
           {scoops.map((scoop) => (
             <button
               key={scoop}

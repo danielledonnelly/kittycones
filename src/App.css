@@ -111,17 +111,20 @@ body {
   position: absolute;
   width: 200px; 
   height: 300px;
-  background-color: #FFFFFFBF;
+  background-color: #FFF0F0BF;
   border: 4px solid #241843;
   border-radius: 50%;
   z-index: -1; 
-  top: -260px;
+  top: -270px;
+}
+
+.cone-buttons {
+  margin-top: -30px; 
 }
 
 @media (max-width: 1600px) {
   .button {
-    width: 90px;
-    height: 90px;
+    max-width: 100px;
   }
 
   .ice-cream-cone {
@@ -136,20 +139,19 @@ body {
   .customer {
     transform: translate(0%, 20%);
   }
-d
 }
 
 @media (max-width: 480px) {
-  .button {
-    width: 70px; /* Further reduce button size for very small screens */
+  /* .button {
+    width: 70px;
     height: 70px;
-  }
+  } */
 
   .ice-cream-cone {
-    width: 70%; /* Further scale down cone size */
+    width: 70%; 
   }
 
   .ice-cream-scoop {
-    width: 80%; /* Further scale down scoop size */
+    width: 80%;
   }
 }
