@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
-import Customers from './Customers';
+import Customers, { generateCustomerOrders } from './Customers';
 import './App.css';
 
 function App() {
   const [selectedCone, setSelectedCone] = useState(null);
   const [selectedScoops, setSelectedScoops] = useState([]);
+  const [customerImages, setCustomerImages] = useState(
+    Array.from({ length: 10 }, (_, i) => `customer${i + 1}.png`)
+  );
 
   const cones = [
     'light-cone.png',
@@ -19,6 +22,11 @@ function App() {
     'strawberry-scoop.png',
     'blueberry-scoop.png',
   ];
+
+
+  const [customerOrders, setCustomerOrders] = useState(() =>
+    generateCustomerOrders(cones, scoops, Array.from({ length: 10 }, (_, i) => `customer${i + 1}.png`))
+  );
 
   const handleConeClick = (cone) => {
     setSelectedCone(cone);
@@ -37,6 +45,8 @@ function App() {
     const updatedCustomers = [...customerImages];
     updatedCustomers.splice(customerIndex, 1); // Remove the matched customer
     setCustomerImages(updatedCustomers);
+
+    // Clear the assembled ice cream
     setSelectedCone(null);
     setSelectedScoops([]);
   };
@@ -53,6 +63,9 @@ function App() {
         selectedCone={selectedCone}
         selectedScoops={selectedScoops}
         removeCustomer={removeCustomer}
+        customerImages={customerImages}
+        customerOrders={customerOrders}
+        setCustomerOrders={setCustomerOrders}
       />
 
       {/* Counter */}

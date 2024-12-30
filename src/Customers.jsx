@@ -1,7 +1,4 @@
-import React, { useMemo, useState } from 'react';
-
-// Generate customer orders (only once)
-const generateCustomerOrders = (cones, scoops, customerImages) => {
+export const generateCustomerOrders = (cones, scoops, customerImages) => {
   return customerImages.map(() => {
     const randomCone = cones[Math.floor(Math.random() * cones.length)];
     const scoopCount = Math.floor(Math.random() * 3) + 1; // 1 to 3 scoops
@@ -12,15 +9,16 @@ const generateCustomerOrders = (cones, scoops, customerImages) => {
   });
 };
 
-function Customers({ cones, scoops, selectedCone, selectedScoops }) {
-  const [customerImages, setCustomerImages] = useState(
-    Array.from({ length: 10 }, (_, i) => `customer${i + 1}.png`)
-  );
-
-  const [customerOrders, setCustomerOrders] = useState(() =>
-    generateCustomerOrders(cones, scoops, Array.from({ length: 10 }, (_, i) => `customer${i + 1}.png`))
-  );
-
+function Customers({
+  cones,
+  scoops,
+  selectedCone,
+  selectedScoops,
+  removeCustomer,
+  customerImages,
+  customerOrders,
+  setCustomerOrders,
+}) {
   const handleOrderClick = (customerOrder, customerIndex) => {
     if (!selectedCone || selectedScoops.length === 0) {
       alert('Your ice cream is incomplete!');
@@ -33,18 +31,10 @@ function Customers({ cones, scoops, selectedCone, selectedScoops }) {
       customerOrder.scoops.every((scoop, index) => scoop === selectedScoops[index]);
 
     if (isConeMatch && isScoopsMatch) {
-      // Replace customer with a new one
-      const updatedCustomers = [...customerImages];
       const updatedOrders = [...customerOrders];
-
-      const newCustomer = `customer${Math.floor(Math.random() * 10) + 1}.png`;
-      const newOrder = generateCustomerOrders(cones, scoops, [])[0];
-
-      updatedCustomers.splice(customerIndex, 1, newCustomer);
-      updatedOrders.splice(customerIndex, 1, newOrder);
-
-      setCustomerImages(updatedCustomers);
+      updatedOrders.splice(customerIndex, 1, generateCustomerOrders(cones, scoops, [])[0]);
       setCustomerOrders(updatedOrders);
+      removeCustomer(customerIndex);
     } else {
       alert('Order does not match!');
     }
