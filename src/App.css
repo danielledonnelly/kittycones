@@ -5,6 +5,14 @@
   overflow: hidden;
 }
 
+body {
+  margin: 0;
+  display: flex;
+  place-items: center;
+  min-width: 320px;
+  min-height: 100vh;
+}
+
 .background {
   position: absolute;
   width: 100vw;
@@ -92,6 +100,22 @@
 
 .customer {
   width: 150px;
+}
+
+.order {
+  position: relative;
+}
+
+.order::before {
+  content: '';
+  position: absolute;
+  width: 200px; 
+  height: 300px;
+  background-color: #FFFFFFBF;
+  border: 4px solid #241843;
+  border-radius: 50%;
+  z-index: -1; 
+  top: -260px;
 }
 
 @media (max-width: 1600px) {
