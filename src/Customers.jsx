@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 
 // Generate customer orders (only once)
 const generateCustomerOrders = (cones, scoops, customerImages) => {
@@ -13,13 +13,13 @@ const generateCustomerOrders = (cones, scoops, customerImages) => {
 };
 
 function Customers({ cones, scoops, selectedCone, selectedScoops }) {
-  const customerImages = [
-    'customer1.png',
-    'customer2.png',
-    'customer3.png',
-  ];
+  const [customerImages, setCustomerImages] = useState(
+    Array.from({ length: 10 }, (_, i) => `customer${i + 1}.png`)
+  );
 
-  const customerOrders = useMemo(() => generateCustomerOrders(cones, scoops, customerImages), []);
+  const [customerOrders, setCustomerOrders] = useState(() =>
+    generateCustomerOrders(cones, scoops, Array.from({ length: 10 }, (_, i) => `customer${i + 1}.png`))
+  );
 
   const handleOrderClick = (customerOrder, customerIndex) => {
     if (!selectedCone || selectedScoops.length === 0) {
@@ -27,22 +27,28 @@ function Customers({ cones, scoops, selectedCone, selectedScoops }) {
       return;
     }
 
-    // Updated cone matching logic
     const isConeMatch = customerOrder.cone === selectedCone;
-
-    // Scoops matching logic
     const isScoopsMatch =
       customerOrder.scoops.length === selectedScoops.length &&
       customerOrder.scoops.every((scoop, index) => scoop === selectedScoops[index]);
 
     if (isConeMatch && isScoopsMatch) {
-      alert(`Order matched for customer ${customerIndex + 1}!`);
-      // Logic to remove customer or update state can go here
+      // Replace customer with a new one
+      const updatedCustomers = [...customerImages];
+      const updatedOrders = [...customerOrders];
+
+      const newCustomer = `customer${Math.floor(Math.random() * 10) + 1}.png`;
+      const newOrder = generateCustomerOrders(cones, scoops, [])[0];
+
+      updatedCustomers.splice(customerIndex, 1, newCustomer);
+      updatedOrders.splice(customerIndex, 1, newOrder);
+
+      setCustomerImages(updatedCustomers);
+      setCustomerOrders(updatedOrders);
     } else {
       alert('Order does not match!');
     }
   };
-  
 
   return (
     <div
@@ -56,7 +62,7 @@ function Customers({ cones, scoops, selectedCone, selectedScoops }) {
         zIndex: 2,
       }}
     >
-      {customerImages.map((customer, index) => (
+      {customerImages.slice(0, 3).map((customer, index) => (
         <div
           key={index}
           className="customer"
@@ -73,9 +79,9 @@ function Customers({ cones, scoops, selectedCone, selectedScoops }) {
             onClick={() => handleOrderClick(customerOrders[index], index)}
             style={{
               position: 'absolute',
-              bottom: '105%', 
+              bottom: '105%',
               display: 'flex',
-              flexDirection: 'column-reverse', 
+              flexDirection: 'column-reverse',
               alignItems: 'center',
               width: '100px',
             }}
@@ -102,7 +108,7 @@ function Customers({ cones, scoops, selectedCone, selectedScoops }) {
                 alt={`Scoop ${scoopIndex + 1}`}
                 style={{
                   position: 'absolute',
-                  bottom: `${100 + scoopIndex * 20}px`, 
+                  bottom: `${100 + scoopIndex * 20}px`,
                   left: '50%',
                   transform: 'translateX(-50%)',
                   width: '110%',
