@@ -1,3 +1,9 @@
+* {
+  /* NOTE TO SELF: I need to go back and add this blurb to a lot of my other web projects */
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
 .app-container {
   position: relative;
   width: 100vw;
@@ -104,18 +110,20 @@ body {
 
 .order {
   position: relative;
+  cursor: pointer;
+  z-index: 1; 
 }
 
 .order::before {
   content: '';
   position: absolute;
   width: 200px; 
-  height: 300px;
+  height: 260px;
   background-color: #FFF0F0BF;
   border: 4px solid #241843;
   border-radius: 50%;
   z-index: -1; 
-  top: -270px;
+  top: -260px;
 }
 
 .cone-buttons {

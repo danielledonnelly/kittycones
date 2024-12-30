@@ -12,7 +12,7 @@ const generateCustomerOrders = (cones, scoops, customerImages) => {
   });
 };
 
-function Customers({ cones, scoops }) {
+function Customers({ cones, scoops, selectedCone, selectedScoops }) {
   const customerImages = [
     'customer1.png',
     'customer2.png',
@@ -20,6 +20,29 @@ function Customers({ cones, scoops }) {
   ];
 
   const customerOrders = useMemo(() => generateCustomerOrders(cones, scoops, customerImages), []);
+
+  const handleOrderClick = (customerOrder, customerIndex) => {
+    if (!selectedCone || selectedScoops.length === 0) {
+      alert('Your ice cream is incomplete!');
+      return;
+    }
+
+    // Updated cone matching logic
+    const isConeMatch = customerOrder.cone === selectedCone;
+
+    // Scoops matching logic
+    const isScoopsMatch =
+      customerOrder.scoops.length === selectedScoops.length &&
+      customerOrder.scoops.every((scoop, index) => scoop === selectedScoops[index]);
+
+    if (isConeMatch && isScoopsMatch) {
+      alert(`Order matched for customer ${customerIndex + 1}!`);
+      // Logic to remove customer or update state can go here
+    } else {
+      alert('Order does not match!');
+    }
+  };
+  
 
   return (
     <div
@@ -47,6 +70,7 @@ function Customers({ cones, scoops }) {
           {/* Ice Cream Order */}
           <div
             className="order"
+            onClick={() => handleOrderClick(customerOrders[index], index)}
             style={{
               position: 'absolute',
               bottom: '105%', 

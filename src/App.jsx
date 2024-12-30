@@ -33,13 +33,27 @@ function App() {
     setSelectedScoops([]);
   };
 
+  const removeCustomer = (customerIndex) => {
+    const updatedCustomers = [...customerImages];
+    updatedCustomers.splice(customerIndex, 1); // Remove the matched customer
+    setCustomerImages(updatedCustomers);
+    setSelectedCone(null);
+    setSelectedScoops([]);
+  };
+
   return (
     <div className="app-container">
       {/* Background Layer */}
       <img src="/assets/background.png" alt="Background" className="background" />
 
       {/* Customers Layer */}
-      <Customers cones={cones} scoops={scoops} />
+      <Customers
+        cones={cones}
+        scoops={scoops}
+        selectedCone={selectedCone}
+        selectedScoops={selectedScoops}
+        removeCustomer={removeCustomer}
+      />
 
       {/* Counter */}
       <div className="counter">
