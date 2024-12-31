@@ -1,7 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './App.css';
 
-// Helper function to generate customer orders
 const generateCustomerOrders = (cones, scoops, customerImages) => {
   return customerImages.map(() => {
     const randomCone = cones[Math.floor(Math.random() * cones.length)];
@@ -19,6 +18,8 @@ function App() {
   const [customerImages, setCustomerImages] = useState(
     Array.from({ length: 10 }, (_, i) => `customer${i + 1}.png`)
   );
+  const [coins, setCoins] = useState(0); // Coin counter
+  const [time, setTime] = useState(60); // Timer countdown
 
   const cones = [
     'light-cone.png',
@@ -38,6 +39,21 @@ function App() {
     generateCustomerOrders(cones, scoops, Array.from({ length: 10 }, (_, i) => `customer${i + 1}.png`))
   );
 
+  // Timer logic
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setTime((prevTime) => {
+        if (prevTime <= 1) {
+          clearInterval(timer);
+          return 0; // Stop at 0
+        }
+        return prevTime - 1;
+      });
+    }, 1000);
+
+    return () => clearInterval(timer); // Cleanup on unmount
+  }, []);
+
   const handleConeClick = (cone) => {
     setSelectedCone(cone);
   };
@@ -49,6 +65,7 @@ function App() {
   const handleRestart = () => {
     setSelectedCone(null);
     setSelectedScoops([]);
+    setTime(60); // Reset the timer
   };
 
   const handleOrderClick = (customerOrder, customerIndex) => {
@@ -63,12 +80,15 @@ function App() {
       customerOrder.scoops.every((scoop, index) => scoop === selectedScoops[index]);
 
     if (isConeMatch && isScoopsMatch) {
+      // Increment coins
+      setCoins((prevCoins) => prevCoins + 10);
+
       // Replace the matched customer with a new one
       const updatedCustomers = [...customerImages];
       const updatedOrders = [...customerOrders];
 
       const newCustomer = `customer${Math.floor(Math.random() * 10) + 1}.png`;
-      const newOrder = generateCustomerOrders(cones, scoops, [])[0];
+      const newOrder = generateCustomerOrders(cones, scoops, [newCustomer])[0];
 
       updatedCustomers.splice(customerIndex, 1, newCustomer);
       updatedOrders.splice(customerIndex, 1, newOrder);
@@ -86,6 +106,48 @@ function App() {
 
   return (
     <div className="app-container">
+      {/* Coin Counter */}
+      <div
+        className="coin-counter"
+        style={{
+          position: 'absolute',
+          top: '10px',
+          left: '10px',
+          zIndex: 9999,
+          background: '#FFF0F0BF',
+          color: '#000',
+          border: '2px solid #241843',
+          borderRadius: '10px',
+          padding: '10px 20px',
+          fontSize: '18px',
+          fontWeight: 'bold',
+          fontFamily: '"Roboto", sans-serif',
+        }}
+      >
+        Coins: {coins}
+      </div>
+
+      {/* Timer */}
+      <div
+        className="timer"
+        style={{
+          position: 'absolute',
+          top: '10px',
+          right: '10px', // Positioned at the top-right
+          zIndex: 9999,
+          background: '#FFF0F0BF',
+          color: '#000',
+          border: '2px solid #241843',
+          borderRadius: '10px',
+          padding: '10px 20px',
+          fontSize: '18px',
+          fontWeight: 'bold',
+          fontFamily: '"Roboto", sans-serif',
+        }}
+      >
+        Time: {time}
+      </div>
+
       {/* Background Layer */}
       <img src="/assets/background.png" alt="Background" className="background" />
 
