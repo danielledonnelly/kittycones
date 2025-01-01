@@ -81,7 +81,7 @@ function App() {
 
     if (isConeMatch && isScoopsMatch) {
       // Increment coins
-      setCoins((prevCoins) => prevCoins + 10);
+      setCoins((prevCoins) => prevCoins + 15);
 
       // Replace the matched customer with a new one
       const updatedCustomers = [...customerImages];
