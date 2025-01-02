@@ -73,29 +73,26 @@ function App() {
       alert('Your ice cream is incomplete!');
       return;
     }
-
+  
     const isConeMatch = customerOrder.cone === selectedCone;
     const isScoopsMatch =
       customerOrder.scoops.length === selectedScoops.length &&
       customerOrder.scoops.every((scoop, index) => scoop === selectedScoops[index]);
-
+  
     if (isConeMatch && isScoopsMatch) {
       // Increment coins
       setCoins((prevCoins) => prevCoins + 15);
-
-      // Replace the matched customer with a new one
-      const updatedCustomers = [...customerImages];
-      const updatedOrders = [...customerOrders];
-
-      const newCustomer = `customer${Math.floor(Math.random() * 10) + 1}.png`;
-      const newOrder = generateCustomerOrders(cones, scoops, [newCustomer])[0];
-
-      updatedCustomers.splice(customerIndex, 1, newCustomer);
-      updatedOrders.splice(customerIndex, 1, newOrder);
-
+  
+      // Update the customer queue
+      const updatedCustomers = [...customerImages.slice(1), `customer${Math.floor(Math.random() * 10) + 1}.png`];
+      const updatedOrders = [
+        ...customerOrders.slice(1),
+        generateCustomerOrders(cones, scoops, [`customer${Math.floor(Math.random() * 10) + 1}.png`])[0],
+      ];
+  
       setCustomerImages(updatedCustomers);
       setCustomerOrders(updatedOrders);
-
+  
       // Clear the assembled ice cream
       setSelectedCone(null);
       setSelectedScoops([]);
@@ -103,6 +100,7 @@ function App() {
       alert('Order does not match!');
     }
   };
+  
 
   return (
     <div className="app-container">
