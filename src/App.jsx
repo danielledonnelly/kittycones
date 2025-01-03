@@ -83,12 +83,20 @@ function App() {
       // Increment coins
       setCoins((prevCoins) => prevCoins + 15);
   
-      // Update the customer queue
-      const updatedCustomers = [...customerImages.slice(1), `customer${Math.floor(Math.random() * 10) + 1}.png`];
-      const updatedOrders = [
-        ...customerOrders.slice(1),
-        generateCustomerOrders(cones, scoops, [`customer${Math.floor(Math.random() * 10) + 1}.png`])[0],
-      ];
+      // Update customer queue
+      const updatedCustomers = [...customerImages];
+      const updatedOrders = [...customerOrders];
+  
+      // Remove the clicked customer and shift left
+      updatedCustomers.splice(customerIndex, 1);
+      updatedOrders.splice(customerIndex, 1);
+  
+      // Add a new customer and order at the end
+      const newCustomer = `customer${Math.floor(Math.random() * 10) + 1}.png`;
+      const newOrder = generateCustomerOrders(cones, scoops, [newCustomer])[0];
+  
+      updatedCustomers.push(newCustomer);
+      updatedOrders.push(newOrder);
   
       setCustomerImages(updatedCustomers);
       setCustomerOrders(updatedOrders);
