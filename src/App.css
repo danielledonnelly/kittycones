@@ -11,6 +11,15 @@
   overflow: hidden;
 }
 
+.background {
+  position: absolute;
+  width: 100vw;
+  height: auto;
+  top: 0;
+  left: 0;
+  z-index: 1;
+}
+
 body {
   margin: 0;
   display: flex;
@@ -19,13 +28,37 @@ body {
   min-height: 100vh;
 }
 
-.background {
-  position: absolute;
-  width: 100vw;
+.button {
+  background: none;
+  padding: 10px;
+  cursor: pointer;
+  width: 120px;
+  height: 120px;
+  border: none;
+  outline: none;
+}
+
+.button img {
+  width: 100%;
   height: auto;
-  top: 0;
-  left: 0;
-  z-index: 1;
+  display: block;
+}
+
+.buttons-group {
+  flex: 1 1 auto;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+}
+
+.button:focus {
+  outline: none; 
+  box-shadow: none; 
+}
+
+.cone-buttons {
+  margin-top: -30px; 
 }
 
 .counter {
@@ -40,6 +73,25 @@ body {
   justify-content: space-between;
   padding: 20px 40px 30px;
   box-sizing: border-box;
+}
+
+.coin-counter {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 9999;
+  background: #FFF0F0BF;
+  color: #000;
+  border: 2px solid #241843;
+  border-radius: 10px;
+  padding: 10px 20px;
+  font-size: 18px;
+  font-weight: bold;
+  font-family: 'Roboto', sans-serif;
+}
+
+.customer {
+  width: 150px;
 }
 
 .ice-cream {
@@ -62,33 +114,53 @@ body {
   width: 110%;
 }
 
-.buttons-group {
-  flex: 1 1 auto;
+.starting-screen {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80%;
+  max-width: 600px;
+  padding: 30px;
+  background-color: #FFF0F0BF;
+  border: 4px solid #241843;
+  border-radius: 20px;
+  z-index: 10000;
   display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
+  flex-direction: column;
   justify-content: center;
+  align-items: center;
+  text-align: center;
+  box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.3);
 }
 
-.button {
-  background: none;
-  padding: 10px;
-  cursor: pointer;
-  width: 120px;
-  height: 120px;
+.starting-screen-title {
+  font-size: 40px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  color: #241843;
+  font-family: 'Pacifico', cursive;
+}
+
+.starting-screen-text {
+  font-size: 18px;
+  line-height: 1.5;
+  margin-bottom: 30px;
+  color: #241843;
+  max-width: 100%;
+  font-family: 'Lato', sans-serif;
+}
+
+.starting-screen-button {
+  background-color: #241843;
+  color: #FFF;
   border: none;
-  outline: none;
-}
-
-.button img {
-  width: 100%;
-  height: auto;
-  display: block;
-}
-
-.button:focus {
-  outline: none; 
-  box-shadow: none; 
+  border-radius: 8px;
+  padding: 12px 24px;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  font-family: 'Lato', sans-serif;
 }
 
 .restart-button {
@@ -102,10 +174,6 @@ body {
   width: 100%;
   height: auto;
   display: block;
-}
-
-.customer {
-  width: 150px;
 }
 
 .order {
@@ -126,13 +194,13 @@ body {
   top: -260px;
 }
 
-.cone-buttons {
-  margin-top: -30px; 
-}
-
 @media (max-width: 1600px) {
   .button {
     max-width: 100px;
+  }
+
+  .customer {
+    transform: translate(0%, 20%);
   }
 
   .ice-cream-cone {
@@ -144,9 +212,6 @@ body {
     transform: translate(-70%, 30%);
   }
 
-  .customer {
-    transform: translate(0%, 20%);
-  }
 }
 
 @media (max-width: 480px) {

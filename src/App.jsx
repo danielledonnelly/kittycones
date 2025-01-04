@@ -1,58 +1,66 @@
-import React, { useState, useEffect } from 'react';
-import './App.css';
+import React, { useState, useEffect } from "react";
+import "./App.css";
 
 const generateCustomerOrders = (cones, scoops, customerImages) => {
   return customerImages.map(() => {
     const randomCone = cones[Math.floor(Math.random() * cones.length)];
     const scoopCount = Math.floor(Math.random() * 3) + 1; // 1 to 3 scoops
-    const randomScoops = Array.from({ length: scoopCount }, () =>
-      scoops[Math.floor(Math.random() * scoops.length)]
+    const randomScoops = Array.from(
+      { length: scoopCount },
+      () => scoops[Math.floor(Math.random() * scoops.length)]
     );
     return { cone: randomCone, scoops: randomScoops };
   });
 };
 
 function App() {
+  const [showStartScreen, setShowStartScreen] = useState(true);
   const [selectedCone, setSelectedCone] = useState(null);
   const [selectedScoops, setSelectedScoops] = useState([]);
   const [customerImages, setCustomerImages] = useState(
-    Array.from({ length: 10 }, (_, i) => `customer${i + 1}.png`)
+    Array.from({ length: 10 }, (_, i) => `customer${i + 1}.svg`)
   );
   const [coins, setCoins] = useState(0); // Coin counter
   const [time, setTime] = useState(60); // Timer countdown
 
   const cones = [
-    'light-cone.png',
-    'dark-cone.png',
-    'light-cake-cone.png',
-    'dark-cake-cone.png',
+    "light-cone.png",
+    "dark-cone.png",
+    "light-cake-cone.png",
+    "dark-cake-cone.png",
   ];
 
   const scoops = [
-    'vanilla-scoop.png',
-    'chocolate-scoop.png',
-    'strawberry-scoop.png',
-    'blueberry-scoop.png',
+    "vanilla-scoop.png",
+    "chocolate-scoop.png",
+    "strawberry-scoop.png",
+    "blueberry-scoop.png",
   ];
 
   const [customerOrders, setCustomerOrders] = useState(() =>
-    generateCustomerOrders(cones, scoops, Array.from({ length: 10 }, (_, i) => `customer${i + 1}.png`))
+    generateCustomerOrders(
+      cones,
+      scoops,
+      Array.from({ length: 10 }, (_, i) => `customer${i + 1}.svg`)
+    )
   );
 
   // Timer logic
   useEffect(() => {
-    const timer = setInterval(() => {
-      setTime((prevTime) => {
-        if (prevTime <= 1) {
-          clearInterval(timer);
-          return 0; // Stop at 0
-        }
-        return prevTime - 1;
-      });
-    }, 1000);
+    if (!showStartScreen) {
+      const timer = setInterval(() => {
+        setTime((prevTime) => {
+          if (prevTime <= 1) {
+            clearInterval(timer);
+            return 0; // Stop at 0
+          }
+          return prevTime - 1;
+        });
+      }, 1000);
 
-    return () => clearInterval(timer); // Cleanup on unmount
-  }, []);
+      return () => clearInterval(timer); // Cleanup on unmount
+    }
+  }, [showStartScreen]);
 
   const handleConeClick = (cone) => {
     setSelectedCone(cone);
@@ -70,66 +78,79 @@ function App() {
 
   const handleOrderClick = (customerOrder, customerIndex) => {
     if (!selectedCone || selectedScoops.length === 0) {
-      alert('Your ice cream is incomplete!');
+      
       return;
     }
-  
+
     const isConeMatch = customerOrder.cone === selectedCone;
     const isScoopsMatch =
       customerOrder.scoops.length === selectedScoops.length &&
-      customerOrder.scoops.every((scoop, index) => scoop === selectedScoops[index]);
-  
+      customerOrder.scoops.every(
+        (scoop, index) => scoop === selectedScoops[index]
+      );
+
     if (isConeMatch && isScoopsMatch) {
       // Increment coins
       setCoins((prevCoins) => prevCoins + 15);
-  
+
       // Update customer queue
       const updatedCustomers = [...customerImages];
       const updatedOrders = [...customerOrders];
-  
+
       // Remove the clicked customer and shift left
       updatedCustomers.splice(customerIndex, 1);
       updatedOrders.splice(customerIndex, 1);
-  
+
       // Add a new customer and order at the end
-      const newCustomer = `customer${Math.floor(Math.random() * 10) + 1}.png`;
+      const newCustomer = `customer${Math.floor(Math.random() * 10) + 1}.svg`;
       const newOrder = generateCustomerOrders(cones, scoops, [newCustomer])[0];
-  
+
       updatedCustomers.push(newCustomer);
       updatedOrders.push(newOrder);
-  
+
       setCustomerImages(updatedCustomers);
       setCustomerOrders(updatedOrders);
-  
+
       // Clear the assembled ice cream
       setSelectedCone(null);
       setSelectedScoops([]);
     } else {
-      alert('Order does not match!');
+      // Decrement coins
+      setCoins((prevCoins) => Math.max(0, prevCoins - 5));
     }
   };
   
 
   return (
     <div className="app-container">
+      {/* Starting Screen */}
+      {showStartScreen && (
+        <div className="starting-screen">
+          <h1 className="starting-screen-title">KITTY CONES</h1>
+          <p className="starting-screen-text">
+            Serve ice cream to hungry kitties by clicking on the appropriate
+            ingredients and then clicking the order bubble. Serve kitties as
+            fast as possible and keep the line moving to get more coins!
+          </p>
+          <button
+  className="starting-screen-button"
+  onClick={() => {
+    setShowStartScreen(false);
+    const backgroundMusic = new Audio('/assets/music.mp3');
+    backgroundMusic.loop = true; // Loop the music
+    backgroundMusic.volume = 0.5; // Set volume to 50%
+    backgroundMusic.play().catch((error) => {
+      console.warn('Music playback failed', error);
+    });
+  }}
+>
+            Start
+          </button>
+        </div>
+      )}
+
       {/* Coin Counter */}
-      <div
-        className="coin-counter"
-        style={{
-          position: 'absolute',
-          top: '10px',
-          left: '10px',
-          zIndex: 9999,
-          background: '#FFF0F0BF',
-          color: '#000',
-          border: '2px solid #241843',
-          borderRadius: '10px',
-          padding: '10px 20px',
-          fontSize: '18px',
-          fontWeight: 'bold',
-          fontFamily: '"Roboto", sans-serif',
-        }}
-      >
+      <div className="coin-counter">
         Coins: {coins}
       </div>
 
@@ -137,17 +158,17 @@ function App() {
       <div
         className="timer"
         style={{
-          position: 'absolute',
-          top: '10px',
-          right: '10px', // Positioned at the top-right
+          position: "absolute",
+          top: "10px",
+          right: "10px", // Positioned at the top-right
           zIndex: 9999,
-          background: '#FFF0F0BF',
-          color: '#000',
-          border: '2px solid #241843',
-          borderRadius: '10px',
-          padding: '10px 20px',
-          fontSize: '18px',
-          fontWeight: 'bold',
+          background: "#FFF0F0BF",
+          color: "#000",
+          border: "2px solid #241843",
+          borderRadius: "10px",
+          padding: "10px 20px",
+          fontSize: "18px",
+          fontWeight: "bold",
           fontFamily: '"Roboto", sans-serif',
         }}
       >
@@ -155,17 +176,21 @@ function App() {
       </div>
 
       {/* Background Layer */}
-      <img src="/assets/background.png" alt="Background" className="background" />
+      <img
+        src="/assets/background.png"
+        alt="Background"
+        className="background"
+      />
 
       {/* Customers Layer */}
       <div
         style={{
-          position: 'absolute',
-          bottom: '30px',
+          position: "absolute",
+          bottom: "30px",
           left: 0,
-          width: '100%',
-          display: 'flex',
-          justifyContent: 'space-evenly',
+          width: "100%",
+          display: "flex",
+          justifyContent: "space-evenly",
           zIndex: 2,
         }}
       >
@@ -174,10 +199,10 @@ function App() {
             key={index}
             className="customer"
             style={{
-              position: 'relative',
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
+              position: "relative",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
             }}
           >
             {/* Ice Cream Order */}
@@ -185,12 +210,12 @@ function App() {
               className="order"
               onClick={() => handleOrderClick(customerOrders[index], index)}
               style={{
-                position: 'absolute',
-                bottom: '105%',
-                display: 'flex',
-                flexDirection: 'column-reverse',
-                alignItems: 'center',
-                width: '100px',
+                position: "absolute",
+                bottom: "105%",
+                display: "flex",
+                flexDirection: "column-reverse",
+                alignItems: "center",
+                width: "100px",
               }}
             >
               {/* Cone */}
@@ -200,9 +225,9 @@ function App() {
                   src={`/assets/${customerOrders[index].cone}`}
                   alt="Cone"
                   style={{
-                    position: 'absolute',
-                    bottom: '0px',
-                    width: '100%',
+                    position: "absolute",
+                    bottom: "0px",
+                    width: "100%",
                   }}
                 />
               )}
@@ -214,11 +239,11 @@ function App() {
                   src={`/assets/${scoop}`}
                   alt={`Scoop ${scoopIndex + 1}`}
                   style={{
-                    position: 'absolute',
+                    position: "absolute",
                     bottom: `${100 + scoopIndex * 20}px`,
-                    left: '50%',
-                    transform: 'translateX(-50%)',
-                    width: '110%',
+                    left: "50%",
+                    transform: "translateX(-50%)",
+                    width: "110%",
                   }}
                 />
               ))}
@@ -229,8 +254,8 @@ function App() {
               src={`/assets/${customer}`}
               alt={`Customer ${index + 1}`}
               style={{
-                width: '600px',
-                height: 'auto',
+                width: "600px",
+                height: "auto",
               }}
             />
           </div>
