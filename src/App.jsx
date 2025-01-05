@@ -228,43 +228,45 @@ function App() {
   >
     {customerImages.slice(0, 3).map((customer, index) => (
       <motion.div
-        key={customer} // Use a unique identifier for Motion
-        className="customer"
-        initial={{ opacity: 0, scale: 0.8 }} // Start faded and smaller
-        animate={{ opacity: 1, scale: 1 }} // Animate to full size and visibility
-        exit={{ opacity: 0, scale: 0.5 }} // Shrink and fade out when removed
-        transition={{ duration: 0.5 }} // Control animation speed
+      key={customer} // Unique key for Motion
+      layout // Enables layout animations
+      className="customer"
+      initial={{ opacity: 0, scale: 0.8 }} // Start smaller and faded out
+      animate={{ opacity: 1, scale: 1 }} // Animate to full size and visibility
+      exit={{ opacity: 0, scale: 0.5 }} // Shrink and fade out when removed
+      transition={{ duration: 0.5 }} // Animation speed
+    >
+      {/* Ice Cream Order */}
+      <div
+        className="order"
+        onClick={() => handleOrderClick(customerOrders[index], index)}
       >
-        {/* Ice Cream Order */}
-        <div
-          className="order"
-          onClick={() => handleOrderClick(customerOrders[index], index)}
-        >
-          {/* Cone */}
-          {customerOrders[index]?.cone && (
-            <img
-              className="cone-order"
-              src={`/assets/${customerOrders[index].cone}`}
-              alt="Cone"
-            />
-          )}
-          {/* Scoops */}
-          {customerOrders[index]?.scoops.map((scoop, scoopIndex) => (
-            <img
-              key={scoopIndex}
-              className="scoop-order"
-              src={`/assets/${scoop}`}
-              alt={`Scoop ${scoopIndex + 1}`}
-              style={{
-                "--scoop-index": scoopIndex,
-              }}
-            />
-          ))}
-        </div>
-
-        {/* Customer Image */}
-        <img src={`/assets/${customer}`} alt={`Customer ${index + 1}`} />
-      </motion.div>
+        {/* Cone */}
+        {customerOrders[index]?.cone && (
+          <img
+            className="cone-order"
+            src={`/assets/${customerOrders[index].cone}`}
+            alt="Cone"
+          />
+        )}
+        {/* Scoops */}
+        {customerOrders[index]?.scoops.map((scoop, scoopIndex) => (
+          <img
+            key={scoopIndex}
+            className="scoop-order"
+            src={`/assets/${scoop}`}
+            alt={`Scoop ${scoopIndex + 1}`}
+            style={{
+              "--scoop-index": scoopIndex, // Pass dynamic value as a CSS variable
+            }}
+          />
+        ))}
+      </div>
+    
+      {/* Customer Image */}
+      <img src={`/assets/${customer}`} alt={`Customer ${index + 1}`} />
+    </motion.div>
+    
     ))}
   </div>
 </AnimatePresence>
