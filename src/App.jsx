@@ -1,29 +1,52 @@
 import React, { useState, useEffect } from "react";
 import "./App.css";
-import { motion, AnimatePresence } from "motion/react"
+import { motion, AnimatePresence } from "motion/react";
 
+// Arrays of cone and scoop images
+// NOTE TO SELF: May change the variables below from labeled to numbered so that they match the naming convention of customer images
+const cones = [
+  "light-cone.png",
+  "dark-cone.png",
+  "light-cake-cone.png",
+  "dark-cake-cone.png",
+];
+const scoops = [
+  "vanilla-scoop.png",
+  "chocolate-scoop.png",
+  "strawberry-scoop.png",
+  "blueberry-scoop.png",
+];
+
+// Function to generate randomized customer orders
 const generateCustomerOrders = (cones, scoops, customerImages) => {
   return customerImages.map(() => {
-    const randomCone = cones[Math.floor(Math.random() * cones.length)];
-    const scoopCount = Math.floor(Math.random() * 3) + 1; // 1 to 3 scoops
+    // Loop through customer images to create an order for each customer
+    const randomCone = cones[Math.floor(Math.random() * cones.length)]; // Randomly select a cone from the array
+    const scoopCount = Math.floor(Math.random() * 3) + 1; // Randomly determine the number of scoops (1 to 3)
     const randomScoops = Array.from(
       { length: scoopCount },
-      () => scoops[Math.floor(Math.random() * scoops.length)]
+      () => scoops[Math.floor(Math.random() * scoops.length)] // Create an array of randomly selected scoops (up to the scoop count)
     );
-    return { cone: randomCone, scoops: randomScoops };
+    return { cone: randomCone, scoops: randomScoops }; // Return an order object with the selected cone and scoops.
   });
 };
 
 function App() {
-  const [showStartScreen, setShowStartScreen] = useState(true);
-  const [showEndScreen, setShowEndScreen] = useState(false);
-  const [selectedCone, setSelectedCone] = useState(null);
-  const [selectedScoops, setSelectedScoops] = useState([]);
-  const [customerImages, setCustomerImages] = useState(
+  const [showStartScreen, setShowStartScreen] = useState(true); // State to control whether the start screen is visible
+
+  const [showEndScreen, setShowEndScreen] = useState(false); // State to control whether the end screen is visible
+
+  const [selectedCone, setSelectedCone] = useState(null); // State to track which cone the player selects.
+
+  const [selectedScoops, setSelectedScoops] = useState([]); // State to track the scoops the player selects.
+
+  const [customerImages, setCustomerImages] = useState( 
+    // State to hold a list of customer images
     Array.from({ length: 10 }, (_, i) => `customer${i + 1}.svg`)
   );
+
   const [coins, setCoins] = useState(0); // Coin counter
-  const [time, setTime] = useState(60); // Timer countdown
+  const [time, setTime] = useState(60); // Timer
 
   // High scores initialization
   const [highScores, setHighScores] = useState(() => {
@@ -34,21 +57,7 @@ function App() {
       console.error("Error reading from localStorage:", error);
       return [];
     }
-  });  
-
-  const cones = [
-    "light-cone.png",
-    "dark-cone.png",
-    "light-cake-cone.png",
-    "dark-cake-cone.png",
-  ];
-
-  const scoops = [
-    "vanilla-scoop.png",
-    "chocolate-scoop.png",
-    "strawberry-scoop.png",
-    "blueberry-scoop.png",
-  ];
+  });
 
   const [customerOrders, setCustomerOrders] = useState(() =>
     generateCustomerOrders(
@@ -149,14 +158,14 @@ function App() {
     console.log("Final Coins at Game End:", coins); // Debugging
     updateHighScores(coins); // Save the current score
     setShowEndScreen(true); // Show end screen
-  };  
+  };
 
   const updateHighScores = (currentScore) => {
     const updatedScores = [...highScores, currentScore]
       .filter((score) => score > 0) // Ignore invalid scores
       .sort((a, b) => b - a) // Sort descending
       .slice(0, 10); // Top 10 scores
-  
+
     setHighScores(updatedScores);
     try {
       localStorage.setItem("highScores", JSON.stringify(updatedScores)); // Save
@@ -165,9 +174,7 @@ function App() {
       console.error("Error saving to localStorage:", error);
     }
   };
-  
-  
-  
+
   return (
     <div
       className={`app-container ${
@@ -215,62 +222,60 @@ function App() {
 
       {/* Customers Layer */}
       <AnimatePresence>
-  <div
-    style={{
-      position: "absolute",
-      bottom: "30px",
-      left: 0,
-      width: "100%",
-      display: "flex",
-      justifyContent: "space-evenly",
-      zIndex: 2,
-    }}
-  >
-    {customerImages.slice(0, 3).map((customer, index) => (
-      <motion.div
-        key={customer} // Unique identifier
-        layout
-        className="customer"
-        initial={{ opacity: 0, x: 50 }} // Start offscreen to the right
-        animate={{ opacity: 1, x: 0 }} // Move to the correct position
-        exit={{ opacity: 0, x: -50 }} // Exit to the left
-        transition={{ duration: .5 }} // Animation speed
-      >
-        {/* Ice Cream Order */}
         <div
-          className="order"
-          onClick={() => handleOrderClick(customerOrders[index], index)}
+          style={{
+            position: "absolute",
+            bottom: "30px",
+            left: 0,
+            width: "100%",
+            display: "flex",
+            justifyContent: "space-evenly",
+            zIndex: 2,
+          }}
         >
-          {/* Cone */}
-          {customerOrders[index]?.cone && (
-            <img
-              className="cone-order"
-              src={`/assets/${customerOrders[index].cone}`}
-              alt="Cone"
-            />
-          )}
-          {/* Scoops */}
-          {customerOrders[index]?.scoops.map((scoop, scoopIndex) => (
-            <img
-              key={scoopIndex}
-              className="scoop-order"
-              src={`/assets/${scoop}`}
-              alt={`Scoop ${scoopIndex + 1}`}
-              style={{
-                "--scoop-index": scoopIndex,
-              }}
-            />
+          {customerImages.slice(0, 3).map((customer, index) => (
+            <motion.div
+              key={customer} // Unique identifier
+              layout
+              className="customer"
+              initial={{ opacity: 0, x: 50 }} // Start offscreen to the right
+              animate={{ opacity: 1, x: 0 }} // Move to the correct position
+              exit={{ opacity: 0, x: -50 }} // Exit to the left
+              transition={{ duration: 0.5 }} // Animation speed
+            >
+              {/* Ice Cream Order */}
+              <div
+                className="order"
+                onClick={() => handleOrderClick(customerOrders[index], index)}
+              >
+                {/* Cone */}
+                {customerOrders[index]?.cone && (
+                  <img
+                    className="cone-order"
+                    src={`/assets/${customerOrders[index].cone}`}
+                    alt="Cone"
+                  />
+                )}
+                {/* Scoops */}
+                {customerOrders[index]?.scoops.map((scoop, scoopIndex) => (
+                  <img
+                    key={scoopIndex}
+                    className="scoop-order"
+                    src={`/assets/${scoop}`}
+                    alt={`Scoop ${scoopIndex + 1}`}
+                    style={{
+                      "--scoop-index": scoopIndex,
+                    }}
+                  />
+                ))}
+              </div>
+
+              {/* Customer Image */}
+              <img src={`/assets/${customer}`} alt={`Customer ${index + 1}`} />
+            </motion.div>
           ))}
         </div>
-
-        {/* Customer Image */}
-        <img src={`/assets/${customer}`} alt={`Customer ${index + 1}`} />
-      </motion.div>
-    ))}
-  </div>
-</AnimatePresence>
-
-
+      </AnimatePresence>
 
       {/* Counter */}
       <div className="counter">
@@ -334,23 +339,22 @@ function App() {
         </div>
       </div>
       {showEndScreen && (
-  <div className="end screen">
-    <h1 className="end screen-title">Game Over</h1>
-    <p className="end screen-text">Your Score: {coins}</p>
-    <h2 className="end screen-title">High Scores</h2>
-    <div className="high-scores">
-      {highScores.map((score, index) => (
-        <div key={index} className="high-score-item">
-          {index + 1}. {score}
+        <div className="end screen">
+          <h1 className="end screen-title">Game Over</h1>
+          <p className="end screen-text">Your Score: {coins}</p>
+          <h2 className="end screen-title">High Scores</h2>
+          <div className="high-scores">
+            {highScores.map((score, index) => (
+              <div key={index} className="high-score-item">
+                {index + 1}. {score}
+              </div>
+            ))}
+          </div>
+          <button className="end screen-button" onClick={handleRestart}>
+            Restart
+          </button>
         </div>
-      ))}
-    </div>
-    <button className="end screen-button" onClick={handleRestart}>
-      Restart
-    </button>
-  </div>
-)}
-
+      )}
     </div>
   );
 }
