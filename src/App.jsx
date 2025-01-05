@@ -17,21 +17,25 @@ const scoops = [
   "blueberry-scoop.png",
 ];
 
+// Audio
+const backgroundMusic = new Audio("/assets/music.mp3");
+backgroundMusic.loop = true; // Loop the music
+
 // Function to generate randomized customer orders
 const generateCustomerOrders = (cones, scoops, customerImages) => {
   return customerImages.map(() => {
-    // Loop through customer images to create an order for each customer
     const randomCone = cones[Math.floor(Math.random() * cones.length)]; // Randomly select a cone from the array
     const scoopCount = Math.floor(Math.random() * 3) + 1; // Randomly determine the number of scoops (1 to 3)
     const randomScoops = Array.from(
       { length: scoopCount },
       () => scoops[Math.floor(Math.random() * scoops.length)] // Create an array of randomly selected scoops (up to the scoop count)
     );
-    return { cone: randomCone, scoops: randomScoops }; // Return an order object with the selected cone and scoops.
+    return { cone: randomCone, scoops: randomScoops }; // Return an order object with the selected cone and scoops
   });
 };
 
 function App() {
+  // SCREENS AND SELECTED VARIABLES
   const [showStartScreen, setShowStartScreen] = useState(true); // State to control whether the start screen is visible
 
   const [showEndScreen, setShowEndScreen] = useState(false); // State to control whether the end screen is visible
@@ -40,26 +44,29 @@ function App() {
 
   const [selectedScoops, setSelectedScoops] = useState([]); // State to track the scoops the player selects.
 
-  const [customerImages, setCustomerImages] = useState( 
+  const [customerImages, setCustomerImages] = useState(
     // State to hold a list of customer images
     Array.from({ length: 10 }, (_, i) => `customer${i + 1}.svg`)
   );
 
-  const [coins, setCoins] = useState(0); // Coin counter
-  const [time, setTime] = useState(60); // Timer
+  // STATISTICS
+  const [coins, setCoins] = useState(0); // State to track the player's coins
 
-  // High scores initialization
+  const [time, setTime] = useState(60); // State to track the remaining time
+
   const [highScores, setHighScores] = useState(() => {
+    // State to hold high scores, initialized by reading from localStorage
     try {
-      const savedScores = localStorage.getItem("highScores");
-      return savedScores ? JSON.parse(savedScores) : [];
+      const savedScores = localStorage.getItem("highScores"); // Try to retrieve saved scores from localStorage
+      return savedScores ? JSON.parse(savedScores) : []; // If scores exist, parse and use them; otherwise, initialize with an empty array
     } catch (error) {
-      console.error("Error reading from localStorage:", error);
-      return [];
+      console.error("Error reading from localStorage:", error); // Log any errors that occur while accessing localStorage.
+      return []; // Default to an empty array if an error occurs
     }
   });
 
   const [customerOrders, setCustomerOrders] = useState(() =>
+    // State for managing customer orders
     generateCustomerOrders(
       cones,
       scoops,
@@ -67,67 +74,63 @@ function App() {
     )
   );
 
-  // Timer logic
+  // TIMER LOGIC
   useEffect(() => {
     if (!showStartScreen && !showEndScreen) {
+      // Timer runs only if start and end screens are not shown
       const timer = setInterval(() => {
         setTime((prevTime) => {
           if (prevTime <= 1) {
-            clearInterval(timer);
-            handleGameEnd();
-            return 0;
+            // If time reaches 1 second or less
+            clearInterval(timer); // Stop the timer
+            handleGameEnd(); // Trigger end game logic
+            return 0; // Set the timer to 0
           }
-          return prevTime - 1;
+          return prevTime - 1; // Decrease time by 1 second
         });
-      }, 1000);
+      }, 1000); // Update timer every 1 second
 
-      return () => clearInterval(timer);
+      return () => clearInterval(timer); // Cleanup function to clear the interval
     }
-  }, [showStartScreen, showEndScreen]);
+  }, [showStartScreen, showEndScreen]); // Dependencies to re-run the effect
 
+  useEffect(() => {
+    return () => {
+      backgroundMusic.pause(); // Pause the music when the component unmounts
+      backgroundMusic.currentTime = 0; // Reset the music to the start
+    };
+  }, []);
+
+  // ASSEMBLING AND SERVING ICE CREAM CONE LOGIC
   const handleConeClick = (cone) => {
+    // Function for selecting a cone
     setSelectedCone(cone);
   };
 
   const handleScoopClick = (scoop) => {
+    // Function for selecting scoops
     setSelectedScoops((prevScoops) => [...prevScoops, scoop]);
   };
 
-  const handleRestart = () => {
-    setSelectedCone(null);
-    setSelectedScoops([]);
-    setTime(60); // Reset the timer
-    setCoins(0); // Reset coins
-    setShowEndScreen(false); // Hide the end screen
-    setCustomerOrders(
-      generateCustomerOrders(
-        cones,
-        scoops,
-        Array.from({ length: 10 }, (_, i) => `customer${i + 1}.svg`)
-      )
-    ); // Regenerate customer orders
-    setCustomerImages(
-      Array.from({ length: 10 }, (_, i) => `customer${i + 1}.svg`)
-    ); // Reset customer images
-  };
-
   const handleOrderClick = (customerOrder, customerIndex) => {
+    // Function for serving orders
     if (!selectedCone || selectedScoops.length === 0) {
+      // If no cone or scoops are selected
       return;
     }
 
-    const isConeMatch = customerOrder.cone === selectedCone;
-    const isScoopsMatch =
+    const isConeMatch = customerOrder.cone === selectedCone; // Check if the selected cone matches the customer's order
+    const isScoopsMatch = // Check if the selected scoops match the customer's order
       customerOrder.scoops.length === selectedScoops.length &&
       customerOrder.scoops.every(
         (scoop, index) => scoop === selectedScoops[index]
       );
 
     if (isConeMatch && isScoopsMatch) {
-      // Increment coins
+      // Increment coins, 15 coins for each correct order
       setCoins((prevCoins) => prevCoins + 15);
 
-      // Update customer queue
+      // Update customer line
       const updatedCustomers = [...customerImages];
       const updatedOrders = [...customerOrders];
 
@@ -154,6 +157,25 @@ function App() {
     }
   };
 
+  // RESTART LOGIC
+  const handleRestart = () => {
+    setSelectedCone(null);
+    setSelectedScoops([]);
+    setTime(60); // Reset the timer
+    setCoins(0); // Reset coins
+    setShowEndScreen(false); // Hide the end screen
+    setCustomerOrders(
+      generateCustomerOrders(
+        cones,
+        scoops,
+        Array.from({ length: 10 }, (_, i) => `customer${i + 1}.svg`)
+      )
+    ); // Regenerate customer orders
+    setCustomerImages(
+      Array.from({ length: 10 }, (_, i) => `customer${i + 1}.svg`)
+    ); // Reset customer images
+  };
+
   const handleGameEnd = () => {
     console.log("Final Coins at Game End:", coins); // Debugging
     updateHighScores(coins); // Save the current score
@@ -168,8 +190,11 @@ function App() {
 
     setHighScores(updatedScores);
     try {
-      localStorage.setItem("highScores", JSON.stringify(updatedScores)); // Save
-      console.log("Updated High Scores:", updatedScores); // Debugging
+      const scoresString = JSON.stringify(updatedScores);
+      if (scoresString) {
+        localStorage.setItem("highScores", scoresString);
+        console.log("Updated High Scores:", updatedScores); // Debugging
+      }
     } catch (error) {
       console.error("Error saving to localStorage:", error);
     }
@@ -194,13 +219,12 @@ function App() {
             className="starting screen-button"
             onClick={() => {
               setShowStartScreen(false);
-              const backgroundMusic = new Audio("/assets/music.mp3");
-              backgroundMusic.loop = true; // Loop the music
-              backgroundMusic.volume = 0.5; // Set volume to 50%
-              backgroundMusic.play().catch((error) => {
-                console.warn("Music playback failed", error);
-              });
-            }}
+              if (backgroundMusic.paused) {
+                backgroundMusic.play().catch((error) => {
+                  console.warn("Music playback failed", error);
+                });
+              }
+            }}            
           >
             Start
           </button>
@@ -338,6 +362,8 @@ function App() {
           </button>
         </div>
       </div>
+
+      {/* High Scores */}
       {showEndScreen && (
         <div className="end screen">
           <h1 className="end screen-title">Game Over</h1>

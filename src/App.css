@@ -276,7 +276,8 @@ body {
   }
 
   .customer {
-    transform: translate(0%, 20%);
+    max-width: 80px;
+    transform: translate(0%, 20%) !important;
   }
 
   .ice-cream-cone {
