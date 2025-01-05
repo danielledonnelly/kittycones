@@ -46,7 +46,7 @@ function App() {
 
   const [customerImages, setCustomerImages] = useState(
     // State to hold a list of customer images
-    Array.from({ length: 10 }, (_, i) => `customer${i + 1}.svg`)
+    Array.from({ length: 3 }, (_, i) => `customer${i + 1}.svg`)
   );
 
   // STATISTICS
@@ -113,41 +113,39 @@ function App() {
   };
 
   const handleOrderClick = (customerOrder, customerIndex) => {
-    // Function for serving orders
     if (!selectedCone || selectedScoops.length === 0) {
-      // If no cone or scoops are selected
       return;
     }
-
-    const isConeMatch = customerOrder.cone === selectedCone; // Check if the selected cone matches the customer's order
-    const isScoopsMatch = // Check if the selected scoops match the customer's order
+  
+    const isConeMatch = customerOrder.cone === selectedCone;
+    const isScoopsMatch =
       customerOrder.scoops.length === selectedScoops.length &&
       customerOrder.scoops.every(
         (scoop, index) => scoop === selectedScoops[index]
       );
-
+  
     if (isConeMatch && isScoopsMatch) {
-      // Increment coins, 15 coins for each correct order
+      // Increment coins
       setCoins((prevCoins) => prevCoins + 15);
-
+  
       // Update customer line
       const updatedCustomers = [...customerImages];
       const updatedOrders = [...customerOrders];
-
+  
       // Remove the clicked customer and shift left
       updatedCustomers.splice(customerIndex, 1);
       updatedOrders.splice(customerIndex, 1);
-
+  
       // Add a new customer and order at the end
       const newCustomer = `customer${Math.floor(Math.random() * 10) + 1}.svg`;
       const newOrder = generateCustomerOrders(cones, scoops, [newCustomer])[0];
-
+  
       updatedCustomers.push(newCustomer);
       updatedOrders.push(newOrder);
-
+  
       setCustomerImages(updatedCustomers);
       setCustomerOrders(updatedOrders);
-
+  
       // Clear the assembled ice cream
       setSelectedCone(null);
       setSelectedScoops([]);
@@ -155,7 +153,7 @@ function App() {
       // Decrement coins
       setCoins((prevCoins) => Math.max(0, prevCoins - 5));
     }
-  };
+  };  
 
   // RESTART LOGIC
   const handleRestart = () => {
