@@ -155,8 +155,8 @@ body {
   z-index: 200;
   background-color: #FFFFFF !important;
   color: #241843 !important;
-  height: 800px !important;
-  width: 600px !important;
+  height: 100% !important;
+  width: 100% !important;
 }
 
 .ice-cream-scoop {
