@@ -228,15 +228,14 @@ function App() {
         <div className="mobile screen">
           <h1 className="mobile screen-title">WARNING</h1>
           <p className="mobile screen-text">
-            Kitty Cones is not optimized for this screen size, so good luck—
-            play at your own risk!
+            Kitty Cones is not optimized for this screen size!
           </p>
-          <button
+          {/* <button    this will be enabled when the game is mobile responsive 
             className="mobile screen-button"
             onClick={() => setShowMobileWarning(false)}
           >
             OK
-          </button>
+          </button> */}
         </div>
       )}
 
