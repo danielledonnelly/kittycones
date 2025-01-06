@@ -116,36 +116,36 @@ function App() {
     if (!selectedCone || selectedScoops.length === 0) {
       return;
     }
-  
+
     const isConeMatch = customerOrder.cone === selectedCone;
     const isScoopsMatch =
       customerOrder.scoops.length === selectedScoops.length &&
       customerOrder.scoops.every(
         (scoop, index) => scoop === selectedScoops[index]
       );
-  
+
     if (isConeMatch && isScoopsMatch) {
       // Increment coins
       setCoins((prevCoins) => prevCoins + 15);
-  
+
       // Update customer line
       const updatedCustomers = [...customerImages];
       const updatedOrders = [...customerOrders];
-  
+
       // Remove the clicked customer and shift left
       updatedCustomers.splice(customerIndex, 1);
       updatedOrders.splice(customerIndex, 1);
-  
+
       // Add a new customer and order at the end
       const newCustomer = `customer${Math.floor(Math.random() * 10) + 1}.svg`;
       const newOrder = generateCustomerOrders(cones, scoops, [newCustomer])[0];
-  
+
       updatedCustomers.push(newCustomer);
       updatedOrders.push(newOrder);
-  
+
       setCustomerImages(updatedCustomers);
       setCustomerOrders(updatedOrders);
-  
+
       // Clear the assembled ice cream
       setSelectedCone(null);
       setSelectedScoops([]);
@@ -153,7 +153,7 @@ function App() {
       // Decrement coins
       setCoins((prevCoins) => Math.max(0, prevCoins - 5));
     }
-  };  
+  };
 
   // RESTART LOGIC
   const handleRestart = () => {
@@ -198,12 +198,48 @@ function App() {
     }
   };
 
+  // MOBILE WARNING
+  const [showMobileWarning, setShowMobileWarning] = useState(
+    window.innerWidth < 1200
+  );
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth < 1200 && !showMobileWarning) {
+        setShowMobileWarning(true);
+      }
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, [showMobileWarning]);
+
   return (
     <div
       className={`app-container ${
         showStartScreen || showEndScreen ? "disable-buttons" : ""
       }`}
     >
+
+            {/* Mobile Warning */}
+            {showMobileWarning && (
+        <div className="mobile screen">
+          <h1 className="mobile screen-title">WARNING</h1>
+          <p className="mobile screen-text">
+            Kitty Cones is not optimized for this screen size, so good luck—
+            play at your own risk!
+          </p>
+          <button
+            className="mobile screen-button"
+            onClick={() => setShowMobileWarning(false)}
+          >
+            OK
+          </button>
+        </div>
+      )}
+
       {/* Starting Screen */}
       {showStartScreen && (
         <div className="starting screen">
@@ -222,7 +258,7 @@ function App() {
                   console.warn("Music playback failed", error);
                 });
               }
-            }}            
+            }}
           >
             Start
           </button>
@@ -293,7 +329,11 @@ function App() {
               </div>
 
               {/* Customer Image */}
-              <img src={`/assets/${customer}`} alt={`Customer ${index + 1}`} />
+              <img
+                className="customer-image"
+                src={`/assets/${customer}`}
+                alt={`Customer ${index + 1}`}
+              />
             </motion.div>
           ))}
         </div>
