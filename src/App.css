@@ -153,10 +153,10 @@ body {
 
 .mobile {
   z-index: 200;
-  background-color: #FFFFFF !important;
+  background-color: #EFDAE6 !important;
   color: #241843 !important;
-  height: 100% !important;
-  width: 100% !important;
+  height: 80% !important;
+  width: 80% !important;
 }
 
 .ice-cream-scoop {
