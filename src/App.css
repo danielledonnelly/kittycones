@@ -174,7 +174,7 @@ body {
   display: flex;
   flex-direction: column-reverse;
   align-items: center;
-  width: 100px;
+  width: 95px;
 }
 
 .order::before {
@@ -305,11 +305,11 @@ body {
   }
 
   .button {
-    width: 50px !important;
-    height: 50px !important;
+    width: 60px !important;
+    height: 60px !important;
     position: relative;
     flex-direction: row;
-    left: 100px !important;
+    left: 20px !important;
     bottom: 0px !important;
     gap: 0px !important;
   }
@@ -321,7 +321,6 @@ body {
     gap: 0px; 
     width: 100%;
     padding: 20px;
-    left: -10px !important;
   }
   
   .cone-buttons,
@@ -369,19 +368,28 @@ body {
   }
 
   .ice-cream {
-    position: absolute;
-    width: 200px;
-    bottom: 10px;
+    position: relative;
+    transform: scale(0.7); /* Scale slightly smaller */
+    transform-origin: center bottom; /* Keep scaling anchored at the bottom */
+    width: 120px; /* Adjust size */
+    height: auto;
   }
-
-
+  
   .ice-cream-cone {
-    width: 70%;
+    position: relative;
+    width: 100%; 
+    bottom: 0;
+    z-index: 1;
   }
-
+  
   .ice-cream-scoop {
-    width: 80%;
+    position: absolute;
+    left: 50%; 
+    transform: translateX(-50%) translateY(85px);
+    width: 100%; 
+    z-index: 2;
   }
+  
 
   .order::before {
     width: 120px; 
