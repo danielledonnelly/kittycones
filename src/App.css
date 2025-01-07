@@ -302,29 +302,77 @@ body {
   .background {
     width: 180%;
   }
+
   .button {
-    width: 50px;
-    height: 50px;
+    width: 50px !important;
+    height: 50px !important;
     position: relative;
     flex-direction: row;
-    left: -200px !important;
+    left: 100px !important;
     bottom: 0px !important;
     gap: 0px !important;
   }
 
+
   .buttons-group {
-    gap: 0px !important
+    display: flex;
+    justify-content: space-between; 
+    gap: 0px; 
+    width: 100%;
+    padding: 20px;
+    left: -10px !important;
+  }
+  
+  .cone-buttons,
+  .scoop-buttons {
+    display: grid; 
+    grid-template-columns: repeat(2, 1fr); 
+    justify-items: center;
+    align-items: center; 
+  }
+  
+  .button {
+    width: 150px; 
+    height: 150px; 
+    background: none;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+  }
+  
+  .button img {
+    width: 100%;
+    height: auto;
+    display: block;
   }
 
-  
+  .counter {
+    max-height: 40vh;
+    position: absolute;
+    bottom: 0; 
+    left: 0; 
+    width: 100%; 
+    height: 400px; 
+    padding: 20px; 
+    box-sizing: border-box; 
+    z-index: 3;
+  }
+
   .customer {
-    bottom: 50px;
+    bottom: 300px;
   }
 
   .customer-image {
     width: 250px;
     height: 250px;
   }
+
+  .ice-cream {
+    position: absolute;
+    width: 200px;
+    bottom: 10px;
+  }
+
 
   .ice-cream-cone {
     width: 70%;
@@ -356,19 +404,6 @@ body {
     padding: 10px 20px;
     font-size: 16px;
   }
-
-  .counter {
-  max-height: 30vh;
-  position: absolute; /* Ensure it's positioned relative to its parent */
-  bottom: 0; /* Stick to the bottom of the parent */
-  left: 0; /* Optional: Align it to the left */
-  width: 100%; /* Ensure it spans the width of the parent */
-  height: 400px; /* Adjust height to fit your buttons */
-  padding: 20px; /* Add padding for spacing inside the counter */
-  box-sizing: border-box; /* Ensure padding doesn’t affect total height */
-  z-index: 3; /* Ensure it appears above background layers */
-}
-
 
   .coin-counter, .timer {
     font-size: 14px;
