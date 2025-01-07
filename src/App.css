@@ -47,9 +47,7 @@ body {
 .buttons-group {
   flex: 1 1 auto;
   display: flex;
-  flex-wrap: wrap;
   gap: 20px;
-  justify-content: center;
 }
 
 .button:focus {
@@ -300,21 +298,32 @@ body {
   }
 
 @media (max-width: 600px) {
+
   .background {
     width: 180%;
   }
   .button {
-    width: 70px;
-    height: 70px;
+    width: 50px;
+    height: 50px;
+    position: relative;
+    flex-direction: row;
+    left: -200px !important;
+    bottom: 0px !important;
+    gap: 0px !important;
   }
 
+  .buttons-group {
+    gap: 0px !important
+  }
+
+  
   .customer {
-    width: 70px;
+    bottom: 50px;
   }
 
   .customer-image {
-    width: 50px;
-    height: 50px;
+    width: 250px;
+    height: 250px;
   }
 
   .ice-cream-cone {
@@ -323,6 +332,10 @@ body {
 
   .ice-cream-scoop {
     width: 80%;
+  }
+
+  .order::before {
+    visibility: hidden;
   }
 
   .screen {
@@ -345,8 +358,17 @@ body {
   }
 
   .counter {
-    padding: 15px 30px;
-  }
+  max-height: 30vh;
+  position: absolute; /* Ensure it's positioned relative to its parent */
+  bottom: 0; /* Stick to the bottom of the parent */
+  left: 0; /* Optional: Align it to the left */
+  width: 100%; /* Ensure it spans the width of the parent */
+  height: 400px; /* Adjust height to fit your buttons */
+  padding: 20px; /* Add padding for spacing inside the counter */
+  box-sizing: border-box; /* Ensure padding doesn’t affect total height */
+  z-index: 3; /* Ensure it appears above background layers */
+}
+
 
   .coin-counter, .timer {
     font-size: 14px;
