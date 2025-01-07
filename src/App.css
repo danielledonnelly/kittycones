@@ -383,7 +383,8 @@ body {
   }
 
   .order::before {
-    visibility: hidden;
+    width: 120px; 
+    height: 300px;
   }
 
   .screen {
