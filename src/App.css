@@ -157,6 +157,7 @@ body {
   color: #241843 !important;
   height: 80% !important;
   width: 80% !important;
+  visibility: hidden;
 }
 
 .ice-cream-scoop {
@@ -165,7 +166,6 @@ body {
   transform: translateX(-50%);
   width: 110%;
 }
-
 
 .order {
   position: relative;
