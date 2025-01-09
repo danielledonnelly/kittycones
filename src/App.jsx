@@ -70,7 +70,7 @@ function App() {
     generateCustomerOrders(
       cones,
       scoops,
-      Array.from({ length: 10 }, (_, i) => `customer${i + 1}.svg`)
+      Array.from({ length: 3 }, (_, i) => `customer${i + 1}.svg`)
     )
   );
 
