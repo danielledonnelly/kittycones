@@ -187,7 +187,6 @@ body {
   border-radius: 50%;
   z-index: -1; 
   top: -260px;
-  visibility: hidden;
 }
 
 .scoop-order {
@@ -301,8 +300,9 @@ body {
 @media (max-width: 600px) {
 
   .background {
-    width: 200%;
-    left: -90px;
+    width: 250%;
+    height: 80%;
+    left: -250px;
   }
 
   .button {
@@ -395,6 +395,7 @@ body {
   .order::before {
     width: 120px; 
     height: 300px;
+    visibility: hidden;
   }
 
   .screen {

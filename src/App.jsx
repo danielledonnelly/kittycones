@@ -140,8 +140,10 @@ function App() {
       const newCustomer = `customer${Math.floor(Math.random() * 10) + 1}.svg`;
       const newOrder = generateCustomerOrders(cones, scoops, [newCustomer])[0];
 
-      updatedCustomers.push(newCustomer);
-      updatedOrders.push(newOrder);
+      if (updatedCustomers.length < 3) {
+        updatedCustomers.push(newCustomer);
+        updatedOrders.push(newOrder);
+      }      
 
       setCustomerImages(updatedCustomers);
       setCustomerOrders(updatedOrders);
@@ -166,11 +168,11 @@ function App() {
       generateCustomerOrders(
         cones,
         scoops,
-        Array.from({ length: 10 }, (_, i) => `customer${i + 1}.svg`)
+        Array.from({ length: 3 }, (_, i) => `customer${i + 1}.svg`)
       )
     ); // Regenerate customer orders
     setCustomerImages(
-      Array.from({ length: 10 }, (_, i) => `customer${i + 1}.svg`)
+      Array.from({ length: 3 }, (_, i) => `customer${i + 1}.svg`)
     ); // Reset customer images
   };
 
