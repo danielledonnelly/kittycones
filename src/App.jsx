@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import "./App.css";
 import { motion, AnimatePresence } from "motion/react";
 
@@ -22,8 +22,8 @@ const backgroundMusic = new Audio("/assets/music.mp3");
 backgroundMusic.loop = true; // Loop the music
 
 // Function to generate randomized customer orders
-const generateCustomerOrders = (cones, scoops, customerImages) => {
-  return customerImages.map(() => {
+const generateCustomerOrders = (cones, scoops, amount) => {
+  return Array.from({length: amount}, () => {
     const randomCone = cones[Math.floor(Math.random() * cones.length)]; // Randomly select a cone from the array
     const scoopCount = Math.floor(Math.random() * 3) + 1; // Randomly determine the number of scoops (1 to 3)
     const randomScoops = Array.from(
@@ -34,26 +34,30 @@ const generateCustomerOrders = (cones, scoops, customerImages) => {
   });
 };
 
+const customerIds = Array.from({length: 10}, (_, i) => i + 1);
+
 function App() {
+  const currentIdIndex = useRef(0);
+  const getCustomerNumber = () => {
+    console.log(currentIdIndex);
+    const number = customerIds[currentIdIndex.current];
+    currentIdIndex.current = (currentIdIndex.current + 1) % customerIds.length;
+    return number;
+  };
+
   // SCREENS AND SELECTED VARIABLES
   const [showStartScreen, setShowStartScreen] = useState(true); // State to control whether the start screen is visible
-
   const [showEndScreen, setShowEndScreen] = useState(false); // State to control whether the end screen is visible
-
   const [selectedCone, setSelectedCone] = useState(null); // State to track which cone the player selects.
-
   const [selectedScoops, setSelectedScoops] = useState([]); // State to track the scoops the player selects.
-
-  const [customerImages, setCustomerImages] = useState(
+  const [customerImages, setCustomerImages] = useState(() =>
     // State to hold a list of customer images
-    Array.from({ length: 3 }, (_, i) => `customer${i + 1}.svg`)
+    Array.from({ length: 3 }, () => `customer${getCustomerNumber()}.svg`)
   );
 
   // STATISTICS
   const [coins, setCoins] = useState(0); // State to track the player's coins
-
   const [time, setTime] = useState(60); // State to track the remaining time
-
   const [highScores, setHighScores] = useState(() => {
     // State to hold high scores, initialized by reading from localStorage
     try {
@@ -64,13 +68,12 @@ function App() {
       return []; // Default to an empty array if an error occurs
     }
   });
-
   const [customerOrders, setCustomerOrders] = useState(() =>
     // State for managing customer orders
     generateCustomerOrders(
       cones,
       scoops,
-      Array.from({ length: 3 }, (_, i) => `customer${i + 1}.svg`)
+      3
     )
   );
 
@@ -126,27 +129,23 @@ function App() {
 
     if (isConeMatch && isScoopsMatch) {
       // Increment coins
-      setCoins((prevCoins) => prevCoins + 15);
-
-      // Update customer line
-      const updatedCustomers = [...customerImages];
-      const updatedOrders = [...customerOrders];
+      setCoins((prevCoins) => prevCoins + 15); 
 
       // Remove the clicked customer and shift left
-      updatedCustomers.splice(customerIndex, 1);
-      updatedOrders.splice(customerIndex, 1);
+      customerImages.splice(customerIndex, 1);
+      customerOrders.splice(customerIndex, 1);
 
       // Add a new customer and order at the end
-      const newCustomer = `customer${Math.floor(Math.random() * 10) + 1}.svg`;
-      const newOrder = generateCustomerOrders(cones, scoops, [newCustomer])[0];
+      const newCustomer = `customer${getCustomerNumber()}.svg`;
+      const newOrder = generateCustomerOrders(cones, scoops, 1)[0];
 
-      if (updatedCustomers.length < 3) {
-        updatedCustomers.push(newCustomer);
-        updatedOrders.push(newOrder);
-      }      
+      if (customerImages.length < 3) {
+        customerImages.push(newCustomer);
+        customerOrders.push(newOrder);
+      }
 
-      setCustomerImages(updatedCustomers);
-      setCustomerOrders(updatedOrders);
+      setCustomerImages(customerImages);
+      setCustomerOrders(customerOrders);
 
       // Clear the assembled ice cream
       setSelectedCone(null);
@@ -168,11 +167,11 @@ function App() {
       generateCustomerOrders(
         cones,
         scoops,
-        Array.from({ length: 3 }, (_, i) => `customer${i + 1}.svg`)
+       3 
       )
     ); // Regenerate customer orders
     setCustomerImages(
-      Array.from({ length: 3 }, (_, i) => `customer${i + 1}.svg`)
+      Array.from({ length: 3 }, () => `customer${getCustomerNumber()}.svg`)
     ); // Reset customer images
   };
 
