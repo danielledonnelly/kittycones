@@ -38,12 +38,19 @@ const customerIds = Array.from({length: 10}, (_, i) => i + 1);
 
 function App() {
   const currentIdIndex = useRef(0);
-  const getCustomerNumber = () => {
-    console.log(currentIdIndex);
-    const number = customerIds[currentIdIndex.current];
-    currentIdIndex.current = (currentIdIndex.current + 1) % customerIds.length;
+  const getCustomerNumber = (currentImages) => {
+    let number;
+    let attempts = 0;
+    do {
+      number = customerIds[currentIdIndex.current];
+      currentIdIndex.current = (currentIdIndex.current + 1) % customerIds.length;
+      attempts++;
+    } while (
+      currentImages.includes(`customer${number}.svg`) &&
+      attempts < customerIds.length
+    );
     return number;
-  };
+  };  
 
   // SCREENS AND SELECTED VARIABLES
   const [showStartScreen, setShowStartScreen] = useState(true); // State to control whether the start screen is visible
@@ -51,9 +58,9 @@ function App() {
   const [selectedCone, setSelectedCone] = useState(null); // State to track which cone the player selects.
   const [selectedScoops, setSelectedScoops] = useState([]); // State to track the scoops the player selects.
   const [customerImages, setCustomerImages] = useState(() =>
-    // State to hold a list of customer images
-    Array.from({ length: 3 }, () => `customer${getCustomerNumber()}.svg`)
+    Array.from({ length: 3 }, () => `customer${getCustomerNumber([])}.svg`)
   );
+  
 
   // STATISTICS
   const [coins, setCoins] = useState(0); // State to track the player's coins
@@ -119,42 +126,37 @@ function App() {
     if (!selectedCone || selectedScoops.length === 0) {
       return;
     }
-
+  
     const isConeMatch = customerOrder.cone === selectedCone;
     const isScoopsMatch =
       customerOrder.scoops.length === selectedScoops.length &&
       customerOrder.scoops.every(
         (scoop, index) => scoop === selectedScoops[index]
       );
-
+  
     if (isConeMatch && isScoopsMatch) {
-      // Increment coins
-      setCoins((prevCoins) => prevCoins + 15); 
-
-      // Remove the clicked customer and shift left
-      customerImages.splice(customerIndex, 1);
-      customerOrders.splice(customerIndex, 1);
-
-      // Add a new customer and order at the end
-      const newCustomer = `customer${getCustomerNumber()}.svg`;
-      const newOrder = generateCustomerOrders(cones, scoops, 1)[0];
-
-      if (customerImages.length < 3) {
-        customerImages.push(newCustomer);
-        customerOrders.push(newOrder);
-      }
-
-      setCustomerImages(customerImages);
-      setCustomerOrders(customerOrders);
-
-      // Clear the assembled ice cream
+      setCoins((prevCoins) => prevCoins + 15);
+  
+      setCustomerImages((prevImages) => {
+        const updatedImages = [...prevImages];
+        const newCustomer = `customer${getCustomerNumber(updatedImages)}.svg`;
+        updatedImages[customerIndex] = newCustomer;
+        return updatedImages;
+      });
+  
+      setCustomerOrders((prevOrders) => {
+        const updatedOrders = [...prevOrders];
+        const newOrder = generateCustomerOrders(cones, scoops, 1)[0];
+        updatedOrders[customerIndex] = newOrder;
+        return updatedOrders;
+      });
+  
       setSelectedCone(null);
       setSelectedScoops([]);
     } else {
-      // Decrement coins
       setCoins((prevCoins) => Math.max(0, prevCoins - 5));
     }
-  };
+  };  
 
   // RESTART LOGIC
   const handleRestart = () => {
