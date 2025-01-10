@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import "./App.css";
 import { motion, AnimatePresence } from "motion/react";
 
@@ -22,8 +22,8 @@ const backgroundMusic = new Audio("/assets/music.mp3");
 backgroundMusic.loop = true; // Loop the music
 
 // Function to generate randomized customer orders
-const generateCustomerOrders = (cones, scoops, amount) => {
-  return Array.from({length: amount}, () => {
+const generateCustomerOrders = (cones, scoops, customerImages) => {
+  return customerImages.map(() => {
     const randomCone = cones[Math.floor(Math.random() * cones.length)]; // Randomly select a cone from the array
     const scoopCount = Math.floor(Math.random() * 3) + 1; // Randomly determine the number of scoops (1 to 3)
     const randomScoops = Array.from(
@@ -34,37 +34,29 @@ const generateCustomerOrders = (cones, scoops, amount) => {
   });
 };
 
-const customerIds = Array.from({length: 10}, (_, i) => i + 1);
-
 function App() {
-  const currentIdIndex = useRef(0);
-  const getCustomerNumber = (currentImages) => {
-    let number;
-    let attempts = 0;
-    do {
-      number = customerIds[currentIdIndex.current];
-      currentIdIndex.current = (currentIdIndex.current + 1) % customerIds.length;
-      attempts++;
-    } while (
-      currentImages.includes(`customer${number}.svg`) &&
-      attempts < customerIds.length
-    );
-    return number;
-  };  
-
   // SCREENS AND SELECTED VARIABLES
   const [showStartScreen, setShowStartScreen] = useState(true); // State to control whether the start screen is visible
+
   const [showEndScreen, setShowEndScreen] = useState(false); // State to control whether the end screen is visible
+
   const [selectedCone, setSelectedCone] = useState(null); // State to track which cone the player selects.
+
   const [selectedScoops, setSelectedScoops] = useState([]); // State to track the scoops the player selects.
-  const [customerImages, setCustomerImages] = useState(() =>
-    Array.from({ length: 3 }, () => `customer${getCustomerNumber([])}.svg`)
+
+  const [customerImages, setCustomerImages] = useState(
+    // State to hold a list of customer images
+    Array.from({ length: 3 }, (_, i) => `customer${i + 1}.svg`)
   );
-  
+
+  const [nextCustomerId, setNextCustomerId] = useState(4);
+
 
   // STATISTICS
   const [coins, setCoins] = useState(0); // State to track the player's coins
+
   const [time, setTime] = useState(60); // State to track the remaining time
+
   const [highScores, setHighScores] = useState(() => {
     // State to hold high scores, initialized by reading from localStorage
     try {
@@ -75,12 +67,13 @@ function App() {
       return []; // Default to an empty array if an error occurs
     }
   });
+
   const [customerOrders, setCustomerOrders] = useState(() =>
     // State for managing customer orders
     generateCustomerOrders(
       cones,
       scoops,
-      3
+      Array.from({ length: 3 }, (_, i) => `customer${i + 1}.svg`)
     )
   );
 
@@ -135,25 +128,45 @@ function App() {
       );
   
     if (isConeMatch && isScoopsMatch) {
+      // Increment coins
       setCoins((prevCoins) => prevCoins + 15);
   
+      // Update customer images
       setCustomerImages((prevImages) => {
         const updatedImages = [...prevImages];
-        const newCustomer = `customer${getCustomerNumber(updatedImages)}.svg`;
-        updatedImages[customerIndex] = newCustomer;
+        updatedImages.splice(customerIndex, 1); // Remove served customer
+  
+        // Find the next customer that is not already on screen
+        let nextCustomer = `customer${nextCustomerId}.svg`;
+        let currentId = nextCustomerId;
+  
+        while (updatedImages.includes(nextCustomer)) {
+          currentId = currentId + 1 > 10 ? 1 : currentId + 1; // Cycle back to 1 after reaching 10
+          nextCustomer = `customer${currentId}.svg`;
+        }
+  
+        updatedImages.push(nextCustomer); // Add the next customer
+        setNextCustomerId(currentId + 1 > 10 ? 1 : currentId + 1); // Update nextCustomerId
+  
         return updatedImages;
       });
   
+      // Update customer orders
       setCustomerOrders((prevOrders) => {
         const updatedOrders = [...prevOrders];
-        const newOrder = generateCustomerOrders(cones, scoops, 1)[0];
-        updatedOrders[customerIndex] = newOrder;
+        updatedOrders.splice(customerIndex, 1); // Remove served order
+        const newOrder = generateCustomerOrders(cones, scoops, [
+          `customer${nextCustomerId}.svg`,
+        ])[0];
+        updatedOrders.push(newOrder); // Add new order
         return updatedOrders;
       });
   
+      // Clear the assembled ice cream
       setSelectedCone(null);
       setSelectedScoops([]);
     } else {
+      // Decrement coins for incorrect order
       setCoins((prevCoins) => Math.max(0, prevCoins - 5));
     }
   };  
@@ -165,17 +178,18 @@ function App() {
     setTime(60); // Reset the timer
     setCoins(0); // Reset coins
     setShowEndScreen(false); // Hide the end screen
+    setNextCustomerId(4); // Reset next customer ID
     setCustomerOrders(
       generateCustomerOrders(
         cones,
         scoops,
-       3 
+        Array.from({ length: 3 }, (_, i) => `customer${i + 1}.svg`)
       )
     ); // Regenerate customer orders
     setCustomerImages(
-      Array.from({ length: 3 }, () => `customer${getCustomerNumber()}.svg`)
+      Array.from({ length: 3 }, (_, i) => `customer${i + 1}.svg`)
     ); // Reset customer images
-  };
+  };  
 
   const handleGameEnd = () => {
     console.log("Final Coins at Game End:", coins); // Debugging
