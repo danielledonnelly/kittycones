@@ -116,6 +116,10 @@ body {
   opacity: 1;
 }
 
+.end {
+  z-index: 3;
+}
+
 .high-scores {
   display: flex;
   justify-content: center;

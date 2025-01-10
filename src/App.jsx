@@ -51,7 +51,6 @@ function App() {
 
   const [nextCustomerId, setNextCustomerId] = useState(4);
 
-
   // STATISTICS
   const [coins, setCoins] = useState(0); // State to track the player's coins
 
@@ -77,25 +76,22 @@ function App() {
     )
   );
 
-  // TIMER LOGIC
   useEffect(() => {
-    if (!showStartScreen && !showEndScreen) {
-      // Timer runs only if start and end screens are not shown
+    if (!showStartScreen) {
       const timer = setInterval(() => {
         setTime((prevTime) => {
           if (prevTime <= 1) {
-            // If time reaches 1 second or less
-            clearInterval(timer); // Stop the timer
-            handleGameEnd(); // Trigger end game logic
-            return 0; // Set the timer to 0
+            clearInterval(timer);
+            handleGameEnd();
+            return 0;
           }
-          return prevTime - 1; // Decrease time by 1 second
+          return prevTime - 1;
         });
-      }, 1000); // Update timer every 1 second
-
-      return () => clearInterval(timer); // Cleanup function to clear the interval
+      }, 1000);
+  
+      return () => clearInterval(timer);
     }
-  }, [showStartScreen, showEndScreen]); // Dependencies to re-run the effect
+  }, [showStartScreen]);  
 
   useEffect(() => {
     return () => {
@@ -119,38 +115,38 @@ function App() {
     if (!selectedCone || selectedScoops.length === 0) {
       return;
     }
-  
+
     const isConeMatch = customerOrder.cone === selectedCone;
     const isScoopsMatch =
       customerOrder.scoops.length === selectedScoops.length &&
       customerOrder.scoops.every(
         (scoop, index) => scoop === selectedScoops[index]
       );
-  
+
     if (isConeMatch && isScoopsMatch) {
       // Increment coins
       setCoins((prevCoins) => prevCoins + 15);
-  
+
       // Update customer images
       setCustomerImages((prevImages) => {
         const updatedImages = [...prevImages];
         updatedImages.splice(customerIndex, 1); // Remove served customer
-  
+
         // Find the next customer that is not already on screen
         let nextCustomer = `customer${nextCustomerId}.svg`;
         let currentId = nextCustomerId;
-  
+
         while (updatedImages.includes(nextCustomer)) {
           currentId = currentId + 1 > 10 ? 1 : currentId + 1; // Cycle back to 1 after reaching 10
           nextCustomer = `customer${currentId}.svg`;
         }
-  
+
         updatedImages.push(nextCustomer); // Add the next customer
         setNextCustomerId(currentId + 1 > 10 ? 1 : currentId + 1); // Update nextCustomerId
-  
+
         return updatedImages;
       });
-  
+
       // Update customer orders
       setCustomerOrders((prevOrders) => {
         const updatedOrders = [...prevOrders];
@@ -161,7 +157,7 @@ function App() {
         updatedOrders.push(newOrder); // Add new order
         return updatedOrders;
       });
-  
+
       // Clear the assembled ice cream
       setSelectedCone(null);
       setSelectedScoops([]);
@@ -169,7 +165,7 @@ function App() {
       // Decrement coins for incorrect order
       setCoins((prevCoins) => Math.max(0, prevCoins - 5));
     }
-  };  
+  };
 
   // RESTART LOGIC
   const handleRestart = () => {
@@ -189,9 +185,10 @@ function App() {
     setCustomerImages(
       Array.from({ length: 3 }, (_, i) => `customer${i + 1}.svg`)
     ); // Reset customer images
-  };  
+  };
 
   const handleGameEnd = () => {
+    console.log("handleGameEnd called"); // Debugging
     console.log("Final Coins at Game End:", coins); // Debugging
     updateHighScores(coins); // Save the current score
     setShowEndScreen(true); // Show end screen
@@ -239,12 +236,13 @@ function App() {
         showStartScreen || showEndScreen ? "disable-buttons" : ""
       }`}
     >
-            {/* Mobile Warning */}
-            {showMobileWarning && (
+      {/* Mobile Warning */}
+      {showMobileWarning && (
         <div className="mobile screen">
           <h1 className="mobile screen-title">WARNING</h1>
           <p className="mobile screen-text">
-            Kitty Cones is not optimized for this screen size! Please play on a larger screen.
+            Kitty Cones is not optimized for this screen size! Please play on a
+            larger screen.
           </p>
           {/* <button    this will be enabled when the game is mobile responsive 
             className="mobile screen-button"
@@ -260,9 +258,9 @@ function App() {
         <div className="starting screen">
           <h1 className="starting screen-title">KITTY CONES</h1>
           <p className="starting screen-text">
-            Serve ice cream to hungry kitties by clicking on the ingredients
-            and then clicking the order bubble. Serve customers as fast
-            as possible and keep the line moving to get more coins!
+            Serve ice cream to hungry kitties by clicking on the ingredients and
+            then clicking the order bubble. Serve customers as fast as possible
+            and keep the line moving to get more coins!
           </p>
           <button
             className="starting screen-button"
@@ -428,6 +426,7 @@ function App() {
                 {index + 1}. {score}
               </div>
             ))}
+            <br/><br/><br/>
           </div>
           <button className="end screen-button" onClick={handleRestart}>
             Restart
