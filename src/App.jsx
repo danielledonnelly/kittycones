@@ -312,7 +312,7 @@ function App() {
               initial={{ opacity: 0, x: 50 }} // Start offscreen to the right
               animate={{ opacity: 1, x: 0 }} // Move to the correct position
               exit={{ opacity: 0, x: -50 }} // Exit to the left
-              transition={{ duration: 0.5 }} // Animation speed
+              transition={{ duration: 0.7 }} // Animation speed
             >
               {/* Ice Cream Order */}
               <div
