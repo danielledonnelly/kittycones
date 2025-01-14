@@ -315,7 +315,7 @@ body {
     height: 60px !important;
     position: relative;
     flex-direction: row;
-    left: -10px !important;
+    left: -30px !important;
     bottom: 0px !important;
     gap: 0px !important;
   }
@@ -375,9 +375,9 @@ body {
 
   .ice-cream {
     position: relative;
-    transform: scale(0.7); /* Scale slightly smaller */
-    transform-origin: center bottom; /* Keep scaling anchored at the bottom */
-    width: 120px; /* Adjust size */
+    transform: scale(0.7); 
+    transform-origin: center bottom; 
+    width: 120px;
     height: auto;
   }
   
@@ -395,7 +395,6 @@ body {
     width: 100%; 
     z-index: 2;
   }
-  
 
   .order::before {
     width: 120px; 
