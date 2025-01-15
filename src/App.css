@@ -315,7 +315,7 @@ body {
     height: 60px !important;
     position: relative;
     flex-direction: row;
-    left: -30px !important;
+    right: 60px !important;
     bottom: 0px !important;
     gap: 0px !important;
   }
@@ -326,7 +326,7 @@ body {
     justify-content: space-between; 
     gap: 0px; 
     width: 100%;
-    padding: 20px;
+    padding: 10px;
   }
   
   .cone-buttons,
