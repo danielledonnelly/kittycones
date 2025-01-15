@@ -379,6 +379,7 @@ body {
     transform-origin: center bottom; 
     width: 120px;
     height: auto;
+    left: -20px;
   }
   
   .ice-cream-cone {
