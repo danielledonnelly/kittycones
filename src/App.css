@@ -14,11 +14,13 @@
 
 .background {
   position: absolute;
-  width: 100vw;
+  min-width: 100vw !important;
+  min-height: 100% !important;
   height: auto;
   top: 0;
   left: 0;
   z-index: 1;
+  background-color: #DEB1CB !important;
 }
 
 body {
