@@ -156,6 +156,10 @@ body {
   width: 100%;
 }
 
+.icon {
+  z-index: 10;
+}
+
 .mobile {
   z-index: 200;
   background-color: #EFDAE6 !important;
@@ -164,6 +168,30 @@ body {
   width: 80% !important;
   visibility: hidden;
 }
+
+.mute-button {
+  z-index: 10 !important;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: rgba(0, 0, 0, 0.6);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 18px;
+  transition: background 0.3s;
+}
+
+.mute-button:hover {
+  background: rgba(0, 0, 0, 0.8);
+}
+
 
 .ice-cream-scoop {
   position: absolute;
@@ -307,9 +335,8 @@ body {
 @media (max-width: 600px) {
 
   .background {
-    /* width: 250%;
-    height: 80%; */
-    left: -500px;
+    left: -650px;
+    zoom: 0.5;
   }
 
   .button {

@@ -1,6 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import "./App.css";
 import { motion, AnimatePresence } from "motion/react";
+import music from "/assets/music.mp3";
+import { IconButton } from "@mui/material";
+import MusicNoteIcon from "@mui/icons-material/MusicNote";
+import MusicOffIcon from "@mui/icons-material/MusicOff";
 
 // Arrays of cone and scoop images
 // NOTE TO SELF: May change the variables below from labeled to numbered so that they match the naming convention of customer images
@@ -17,10 +21,6 @@ const scoops = [
   "blueberry-scoop.png",
 ];
 
-// Audio
-const backgroundMusic = new Audio("/assets/music.mp3");
-backgroundMusic.loop = true; // Loop the music
-
 // Function to generate randomized customer orders
 const generateCustomerOrders = (cones, scoops, customerImages) => {
   return customerImages.map(() => {
@@ -35,10 +35,25 @@ const generateCustomerOrders = (cones, scoops, customerImages) => {
 };
 
 function App() {
-  // SCREENS AND SELECTED VARIABLES
+  // Screens and selected variables
   const [showStartScreen, setShowStartScreen] = useState(true); // State to control whether the start screen is visible
 
   const [showEndScreen, setShowEndScreen] = useState(false); // State to control whether the end screen is visible
+
+  const [isMusicEnabled, setIsMusicEnabled] = useState(false);
+
+  const audioRef = useRef(null);
+
+  useEffect(() => {
+    if (audioRef.current) {
+      audioRef.current.volume = 0.2;
+      if (isMusicEnabled) {
+        audioRef.current.play();
+      } else {
+        audioRef.current.pause();
+      }
+    }
+  }, [isMusicEnabled]);
 
   const [selectedCone, setSelectedCone] = useState(null); // State to track which cone the player selects.
 
@@ -92,13 +107,6 @@ function App() {
       return () => clearInterval(timer);
     }
   }, [showStartScreen]);  
-
-  useEffect(() => {
-    return () => {
-      backgroundMusic.pause(); // Pause the music when the component unmounts
-      backgroundMusic.currentTime = 0; // Reset the music to the start
-    };
-  }, []);
 
   // ASSEMBLING AND SERVING ICE CREAM CONE LOGIC
   const handleConeClick = (cone) => {
@@ -280,6 +288,27 @@ function App() {
 
       {/* Coin Counter */}
       <div className="coin-counter">Coins: {coins}</div>
+
+      {/* Music */}
+      <audio ref={audioRef} loop autoPlay muted={!isMusicEnabled}>
+        <source src={music} type="audio/mpeg" />
+        Your browser does not support the audio element.
+      </audio>
+
+      {/* Music Toggle Button */}
+      <IconButton
+        className="icon"
+        sx={{
+          position: "fixed",
+          top: "15px",
+          right: "130px",
+          zIndex: 3,
+          color: isMusicEnabled ? "white" : "grey",
+        }}
+        onClick={() => setIsMusicEnabled(!isMusicEnabled)}
+      >
+        {isMusicEnabled ? <MusicNoteIcon /> : <MusicOffIcon />}
+      </IconButton>
 
       {/* Timer */}
       <div className="timer">Time: {time}</div>
