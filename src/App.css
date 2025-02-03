@@ -307,9 +307,9 @@ body {
 @media (max-width: 600px) {
 
   .background {
-    width: 250%;
-    height: 80%;
-    left: -250px;
+    /* width: 250%;
+    height: 80%; */
+    left: -500px;
   }
 
   .button {
