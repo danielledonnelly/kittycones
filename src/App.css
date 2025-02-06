@@ -171,8 +171,8 @@ body {
 
 .mute-button {
   z-index: 10 !important;
-  position: absolute;
-  top: 10px;
+  position: relative;
+  top: 12px !important;
   right: 10px;
   background: rgba(0, 0, 0, 0.6);
   color: white;
@@ -424,6 +424,11 @@ body {
     transform: translateX(-50%) translateY(85px);
     width: 100%; 
     z-index: 2;
+  }
+
+  .mute-button {
+    right: 100px !important;
+    top: 8px !important;
   }
 
   .order::before {

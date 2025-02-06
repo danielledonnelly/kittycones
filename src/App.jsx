@@ -296,8 +296,9 @@ function App() {
       </audio>
 
       {/* Music Toggle Button */}
+      {/* <div className="mute-button"> */}
       <IconButton
-        className="icon"
+        className="mute-button"
         sx={{
           position: "fixed",
           top: "15px",
@@ -309,6 +310,7 @@ function App() {
       >
         {isMusicEnabled ? <MusicNoteIcon /> : <MusicOffIcon />}
       </IconButton>
+      {/* </div> */}
 
       {/* Timer */}
       <div className="timer">Time: {time}</div>
