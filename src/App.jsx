@@ -304,7 +304,7 @@ function App() {
           top: "15px",
           right: "130px",
           zIndex: 3,
-          color: isMusicEnabled ? "white" : "grey",
+          color: isMusicEnabled ? "#EFDAE6" : "medium-grey",
         }}
         onClick={() => setIsMusicEnabled(!isMusicEnabled)}
       >
