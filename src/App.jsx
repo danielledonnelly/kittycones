@@ -5,6 +5,7 @@ import music from "/assets/music.mp3";
 import { IconButton } from "@mui/material";
 import MusicNoteIcon from "@mui/icons-material/MusicNote";
 import MusicOffIcon from "@mui/icons-material/MusicOff";
+import Home from "./Home";
 
 // Arrays of cone and scoop images
 // NOTE TO SELF: May change the variables below from labeled to numbered so that they match the naming convention of customer images
@@ -37,11 +38,8 @@ const generateCustomerOrders = (cones, scoops, customerImages) => {
 function App() {
   // Screens and selected variables
   const [showStartScreen, setShowStartScreen] = useState(true); // State to control whether the start screen is visible
-
   const [showEndScreen, setShowEndScreen] = useState(false); // State to control whether the end screen is visible
-
   const [isMusicEnabled, setIsMusicEnabled] = useState(false);
-
   const audioRef = useRef(null);
 
   useEffect(() => {
@@ -55,8 +53,12 @@ function App() {
     }
   }, [isMusicEnabled]);
 
-  const [selectedCone, setSelectedCone] = useState(null); // State to track which cone the player selects.
+  const handleStart = () => {
+    setShowStartScreen(false);
+    setIsMusicEnabled(true);
+  };
 
+  const [selectedCone, setSelectedCone] = useState(null); // State to track which cone the player selects.
   const [selectedScoops, setSelectedScoops] = useState([]); // State to track the scoops the player selects.
 
   const [customerImages, setCustomerImages] = useState(
@@ -239,11 +241,9 @@ function App() {
   }, [showMobileWarning]);
 
   return (
-    <div
-      className={`app-container ${
-        showStartScreen || showEndScreen ? "disable-buttons" : ""
-      }`}
-    >
+    <div className={`app-container ${showStartScreen || showEndScreen ? "disable-buttons" : ""}`}>
+      {showStartScreen ? <Home onStart={handleStart} showStartScreen={showStartScreen} /> : null}
+
       {/* Mobile Warning */}
       {showMobileWarning && (
         <div className="mobile screen">
@@ -262,7 +262,7 @@ function App() {
       )}
 
       {/* Starting Screen */}
-      {showStartScreen && (
+      {/* {showStartScreen && (
         <div className="starting screen">
           <h1 className="starting screen-title">KITTY CONES</h1>
           <p className="starting screen-text">
@@ -284,7 +284,7 @@ function App() {
             Start
           </button>
         </div>
-      )}
+      )} */}
 
       {/* Coin Counter */}
       <div className="coin-counter">Coins: {coins}</div>

@@ -86,7 +86,7 @@ body {
   position: absolute;
   top: 10px;
   left: 10px;
-  z-index: 9999;
+  z-index: 7;
   background: #EFDAE6;
   color: #000;
   border: 2px solid #241843;
@@ -143,6 +143,11 @@ body {
   font-family: 'Lato', sans-serif;
 }
 
+.home-background {
+  position: fixed;
+  z-index: 9!important;
+}
+
 .ice-cream {
   flex: 0 0 auto;
   width: 220px;
@@ -156,10 +161,6 @@ body {
   width: 100%;
 }
 
-.icon {
-  z-index: 10;
-}
-
 .mobile {
   z-index: 200;
   background-color: #EFDAE6 !important;
@@ -170,7 +171,7 @@ body {
 }
 
 .mute-button {
-  z-index: 10 !important;
+  z-index: 7 !important;
   position: relative;
   top: 12px !important;
   right: 10px;
@@ -282,7 +283,7 @@ body {
 }
 
 .starting {
-  z-index: 100;
+  z-index: 10;
 }
 
 .restart-button {
@@ -302,7 +303,7 @@ body {
   position: absolute;
   top: 10px;
   right: 10px;
-  z-index: 9999;
+  z-index: 7;
   background: #EFDAE6;
   color: #000;
   border: 2px solid #241843;
