@@ -483,11 +483,12 @@ body {
   }
 
   .screen-title {
-    font-size: 32px;
+    font-size: 42px;
   }
 
   .screen-text {
     font-size: 16px;
+    width: 100% !important;
   }
 
   .screen-button {
