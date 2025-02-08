@@ -15,13 +15,13 @@ const Home = ({ onStart, showStartScreen }) => {
         <div className="starting screen">
           <h1 className="starting screen-title">KITTY CONES</h1>
           <p className="starting screen-text">
-            Serve ice cream to hungry kitties by clicking on the ingredients and
-            then clicking the order bubble. Serve customers as fast as possible
-            and keep the line moving to get more coins!
+            Make ice cream for hungry kitties by clicking on the ingredients and
+            then clicking their order bubble. Serve customers as fast as you can
+            and keep the line moving quickly to get more coins!
           </p>
-          <button className="starting screen-button" onClick={onStart}>
-            Start
-          </button>
+          <button className="starting screen-button" onClick={onStart}>Start</button>
+          <button className="starting screen-button" onClick={onStart}>About</button>
+          <button className="starting screen-button" onClick={onStart}>Leaderboard</button>
         </div>
       )}
     </div>
