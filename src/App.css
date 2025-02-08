@@ -479,7 +479,7 @@ body {
   .screen {
     width: 95%;
     height: auto;
-    padding: 20px;
+    margin: 10%;
   }
 
   .screen-title {
@@ -487,7 +487,7 @@ body {
   }
 
   .screen-text {
-    font-size: 16px;
+    font-size: 14px;
     width: 100% !important;
   }
 
