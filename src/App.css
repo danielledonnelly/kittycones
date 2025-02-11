@@ -371,6 +371,28 @@ body {
     transform: translate(-70%, 30%);
   }
 
+  
+  .screen {
+    width: 80% !important;
+    height: auto;
+    margin-right: 10%;
+  }
+
+  .screen-title {
+    font-size: 42px;
+  }
+
+  .screen-text {
+    font-size: 24px;
+    width: 80% !important;
+    max-width: 100% !important;
+  }
+
+  .screen-button {
+    padding: 10px 20px;
+    font-size: 16px;
+  }
+
 @media (max-width: 600px) {
 
   .background {
@@ -477,9 +499,9 @@ body {
   }
 
   .screen {
-    width: 95%;
+    width: 80% !important;
     height: auto;
-    margin: 10%;
+    margin-right: 10%;
   }
 
   .screen-title {
@@ -489,6 +511,7 @@ body {
   .screen-text {
     font-size: 14px;
     width: 100% !important;
+    max-width: 100% !important;
   }
 
   .screen-button {
