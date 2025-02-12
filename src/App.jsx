@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import "./App.css";
 import { motion, AnimatePresence } from "motion/react";
 import music from "/assets/music.mp3";
