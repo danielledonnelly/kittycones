@@ -19,9 +19,18 @@ const Home = ({ onStart, showStartScreen }) => {
             then clicking their order bubble. Serve customers as fast as you can
             and keep the line moving quickly to get more coins!
           </p>
-          <button className="starting screen-button" onClick={onStart}>Start</button>
-          <button className="starting screen-button" onClick={onStart}>About</button>
-          <button className="starting screen-button" onClick={onStart}>Leaderboard</button>
+          <button
+            className="starting screen-button"
+            onClick={onStart} // Trigger the onStart function passed from App
+          >
+            Start
+          </button>
+          <button className="starting screen-button" onClick={() => window.location.href = "/about"}>
+            About
+          </button>
+          <button className="starting screen-button" onClick={() => window.location.href = "/leaderboard"}>
+            Leaderboard
+          </button>
         </div>
       )}
     </div>
