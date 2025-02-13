@@ -166,7 +166,7 @@ body {
 
 .home-background {
   position: fixed;
-  z-index: 9!important;
+  /* z-index: 9!important; */
   min-width: 100vw !important;
   min-height: 100% !important;
   height: auto;

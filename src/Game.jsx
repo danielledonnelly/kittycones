@@ -1,14 +1,10 @@
-import React, { useState, useRef, useEffect } from "react";
-import { BrowserRouter as Router, Routes, Route, useNavigate } from "react-router-dom";
-import "./App.css";
+import { useState, useRef, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "motion/react";
 import music from "/assets/music.mp3";
 import { IconButton } from "@mui/material";
 import MusicNoteIcon from "@mui/icons-material/MusicNote";
 import MusicOffIcon from "@mui/icons-material/MusicOff";
-import Home from "./Home";
-
-//Game does not work on localhost:5173 but does work on localhost:5173/game
 
 // Arrays of cone and scoop images
 // NOTE TO SELF: May change the variables below from labeled to numbered so that they match the naming convention of customer images
@@ -40,8 +36,6 @@ const generateCustomerOrders = (cones, scoops, customerImages) => {
 
 function Game() {
   const navigate = useNavigate(); // Declare the navigate hook
-  const [showStartScreen, setShowStartScreen] = useState(true); // State to control whether the start screen is visible
-  const [showEndScreen, setShowEndScreen] = useState(false); // State to control whether the end screen is visible
   const [isMusicEnabled, setIsMusicEnabled] = useState(false);
   const audioRef = useRef(null);
 
@@ -55,13 +49,6 @@ function Game() {
       }
     }
   }, [isMusicEnabled]);
-
-  const handleStart = () => {
-    setShowStartScreen(false); // Hide the start screen
-    setIsMusicEnabled(true); // Enable the music
-    navigate("/game"); // Corrected to use navigate
-  };
-
 
   const [selectedCone, setSelectedCone] = useState(null); // State to track which cone the player selects.
   const [selectedScoops, setSelectedScoops] = useState([]); // State to track the scoops the player selects.
@@ -99,21 +86,19 @@ function Game() {
   );
 
   useEffect(() => {
-    if (!showStartScreen) {
-      const timer = setInterval(() => {
-        setTime((prevTime) => {
-          if (prevTime <= 1) {
-            clearInterval(timer);
-            handleGameEnd();
-            return 0;
-          }
-          return prevTime - 1;
-        });
-      }, 1000);
-  
-      return () => clearInterval(timer);
-    }
-  }, [showStartScreen]);  
+    const timer = setInterval(() => {
+      setTime((prevTime) => {
+        if (prevTime <= 1) {
+          clearInterval(timer);
+          handleGameEnd();
+          return 0;
+        }
+        return prevTime - 1;
+      });
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, []);
 
   // ASSEMBLING AND SERVING ICE CREAM CONE LOGIC
   const handleConeClick = (cone) => {
@@ -188,7 +173,6 @@ function Game() {
     setSelectedScoops([]);
     setTime(60); // Reset the timer
     setCoins(0); // Reset coins
-    setShowEndScreen(false); // Hide the end screen
     setNextCustomerId(4); // Reset next customer ID
     setCustomerOrders(
       generateCustomerOrders(
@@ -206,7 +190,7 @@ function Game() {
     console.log("handleGameEnd called"); // Debugging
     console.log("Final Coins at Game End:", coins); // Debugging
     updateHighScores(coins); // Save the current score
-    setShowEndScreen(true); // Show end screen
+    navigate("/game-over");
   };
 
   const updateHighScores = (currentScore) => {
@@ -246,9 +230,7 @@ function Game() {
   }, [showMobileWarning]);
 
   return (
-    <div className={`app-container ${showStartScreen || showEndScreen ? "disable-buttons" : ""}`}>
-      {showStartScreen ? <Home onStart={handleStart} showStartScreen={showStartScreen} /> : null}
-
+    <>
       {/* Mobile Warning */}
       {showMobileWarning && (
         <div className="mobile screen">
@@ -319,13 +301,6 @@ function Game() {
 
       {/* Timer */}
       <div className="timer">Time: {time}</div>
-
-      {/* Background Layer */}
-      <img
-        src="/assets/background.png"
-        alt="Background"
-        className="background"
-      />
 
       {/* Customers Layer */}
       <AnimatePresence>
@@ -449,27 +424,7 @@ function Game() {
           </button>
         </div>
       </div>
-
-      {/* High Scores */}
-      {showEndScreen && (
-        <div className="end screen end-screen">
-          <h1 className="end screen-title">Game Over</h1>
-          <p className="end screen-text" style={{ marginBottom: "-30px" }}>Your Score: {coins}</p>
-          <h2 className="end screen-title">High Scores</h2>
-          <div className="high-scores">
-            {highScores.map((score, index) => (
-              <div key={index} className="high-score-item">
-                {index + 1}. {score}
-              </div>
-            ))}
-            <br/>
-          </div>
-          <button className="end screen-button" onClick={handleRestart}>
-            Restart
-          </button>
-        </div>
-      )}
-    </div>
+    </>
   );
 }
 
