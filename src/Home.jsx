@@ -21,7 +21,7 @@ const Home = ({ onStart, showStartScreen }) => {
           </p>
           <button
             className="starting screen-button"
-            onClick={onStart} // Trigger the onStart function passed from App
+            onClick={onStart} 
           >
             Start
           </button>

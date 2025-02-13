@@ -10,7 +10,7 @@ import Home from "./Home";
 import Game from "./Game";
 
 function App() {
-  const [showStartScreen, setShowStartScreen] = useState(true); // ✅ Ensure this is managed in App.jsx
+  const [showStartScreen, setShowStartScreen] = useState(true); 
 
   const handleStart = () => {
     setShowStartScreen(false);

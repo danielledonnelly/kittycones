@@ -8,6 +8,8 @@ import MusicNoteIcon from "@mui/icons-material/MusicNote";
 import MusicOffIcon from "@mui/icons-material/MusicOff";
 import Home from "./Home";
 
+//Game does not work on localhost:5173 but does work on localhost:5173/game
+
 // Arrays of cone and scoop images
 // NOTE TO SELF: May change the variables below from labeled to numbered so that they match the naming convention of customer images
 const cones = [
