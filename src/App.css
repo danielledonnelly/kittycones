@@ -1,61 +1,65 @@
 * {
   /* NOTE TO SELF: I need to go back and add this blurb to a lot of my other web projects */
-  user-select: none;
   -webkit-user-drag: none;
+  user-select: none;
+}
+
+.about {
+  text-align: left;
 }
 
 .app-container {
-  position: relative;
-  width: 100vw;
   height: 100vh;
   overflow: hidden;
   overflow-y: hidden;
+  position: relative;
+  width: 100vw;
 }
 
 .background {
-  position: absolute;
-  min-width: 100vw !important;
-  min-height: 100% !important;
-  height: auto;
-  top: 0;
-  left: 0;
-  z-index: 1;
   background-color: #DEB1CB !important;
+  height: auto;
+  left: 0;
+  min-height: 100% !important;
+  min-width: 100vw !important;
+  position: absolute;
+  top: 0;
+  z-index: 1;
 }
 
 body {
-  margin: 0;
   display: flex;
-  place-items: center;
-  min-width: 320px;
+  margin: 0;
   min-height: 100vh;
+  min-width: 320px;
+  place-items: center;
 }
 
 .button {
   background: none;
-  padding: 10px;
-  cursor: pointer;
-  width: 120px;
-  height: 120px;
   border: none;
+  cursor: pointer;
+  height: 120px;
+  outline: none;
+  padding: 10px;
+  width: 120px;
+}
+
+.button:focus {
+  box-shadow: none;
   outline: none;
 }
 
 .button img {
-  width: 100%;
-  height: auto;
   display: block;
+  height: auto;
+  width: 100%;
 }
 
 .buttons-group {
   flex: 1 1 auto;
   display: flex;
   gap: 20px;
-}
-
-.button:focus {
-  outline: none; 
-  box-shadow: none; 
 }
 
 .cone-buttons {
@@ -68,41 +72,41 @@ body {
 }
 
 .counter {
-  position: absolute;
-  width: 100%;
-  max-height: 20vh;
+  align-items: center;
   background-color: #9F86C0;
   bottom: 0;
-  z-index: 3;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 20px 40px 30px;
   box-sizing: border-box;
   border-top: 8px solid #241843;
+  display: flex;
+  justify-content: space-between;
+  max-height: 20vh;
+  position: absolute;
+  padding: 20px 40px 30px;
+  width: 100%;
+  z-index: 3;
 }
 
 .coin-counter {
-  position: absolute;
-  top: 10px;
-  left: 10px;
-  z-index: 7;
   background: #EFDAE6;
-  color: #000;
   border: 2px solid #241843;
   border-radius: 10px;
-  padding: 10px 20px;
+  color: #000;
+  font-family: 'Roboto', sans-serif;
   font-size: 18px;
   font-weight: bold;
-  font-family: 'Roboto', sans-serif;
+  left: 10px;
+  padding: 10px 20px;
+  position: absolute;
+  top: 10px;
+  z-index: 7;
 }
 
 .customer {
-  width: 150px;
-  position: relative;
+  align-items: center;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  position: relative;
+  width: 150px;
 }
 
 .disable-buttons button:not(.screen-button){
@@ -121,10 +125,6 @@ body {
 
 .end {
   z-index: 3;
-}
-
-.end.screen-text {
-  text-align: left;
 }
 
 .end-screen {
@@ -153,6 +153,7 @@ body {
   justify-content: center;
   gap: 20px;
   margin-top: 20px;
+  width: 100%;
 }
 
 .high-scores-column {
@@ -160,6 +161,7 @@ body {
   flex-direction: column;
   align-items: flex-start;
   gap: 10px;
+  width: 100%;
 }
 
 .high-score-item {
@@ -293,6 +295,7 @@ body {
   font-family: 'Fredoka', sans-serif;
   letter-spacing: 4px;
   color: #241843;
+  z-index: 3;
 }
 
 .screen-text {
@@ -305,7 +308,7 @@ body {
   font-weight: bold; 
   border-radius: 10px;
   padding: 1%;
-  text-align: left;
+  z-index: 3;
 }
 
 .screen-button {
