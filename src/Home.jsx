@@ -13,18 +13,14 @@ const Home = () => {
         <Link to="/game">
           <button className="starting screen-button">Start</button>
         </Link>
-        <button
-          className="starting screen-button"
-          onClick={() => (window.location.href = "/about")}
-        >
-          About
-        </button>
-        <button
-          className="starting screen-button"
-          onClick={() => (window.location.href = "/leaderboard")}
-        >
-          Leaderboard
-        </button>
+
+        <Link to="/about">
+          <button className="starting screen-button">About</button>
+        </Link>
+        
+        <Link to="/leaderboard">
+          <button className="starting screen-button">Leaderboard</button>
+        </Link>
       </div>
     </>
   );

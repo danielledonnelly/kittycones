@@ -123,6 +123,10 @@ body {
   z-index: 3;
 }
 
+.end.screen-text {
+  text-align: left;
+}
+
 .end-screen {
   position: absolute;
   top: 50%;
@@ -294,13 +298,14 @@ body {
 .screen-text {
   font-size: 24px;
   line-height: 1.5;
-  margin-bottom: 30px;
+  margin-bottom: 0px;
   color: #241843;
   max-width: 70%;
   font-family: 'Fredoka', sans-serif;
   font-weight: bold; 
   border-radius: 10px;
-  padding: 3%;
+  padding: 1%;
+  text-align: left;
 }
 
 .screen-button {
