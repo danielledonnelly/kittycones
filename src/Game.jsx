@@ -86,19 +86,14 @@ function Game() {
   );
 
   useEffect(() => {
-    const timer = setInterval(() => {
-      setTime((prevTime) => {
-        if (prevTime <= 1) {
-          clearInterval(timer);
-          navigate("/game-over", { state: { coins } }); 
-          return 0;
-        }
-        return prevTime - 1;
-      });
-    }, 1000); 
-  
-    return () => clearInterval(timer);
-  }, [navigate, coins]); 
+    if (time <= 0) {
+      navigate("/game-over", { state: { coins } }); // Navigate when time is up
+    } else {
+      const timer = setTimeout(() => setTime(time - 1), 100); // Shortened time for testing
+      return () => clearTimeout(timer);
+    }
+  }, [time, navigate, coins]);  
+
 
   // ASSEMBLING AND SERVING ICE CREAM CONE LOGIC
   const handleConeClick = (cone) => {
@@ -166,35 +161,6 @@ function Game() {
       setCoins((prevCoins) => Math.max(0, prevCoins - 5));
     }
   };
-
-
-function Game() {
-  const navigate = useNavigate();
-  const [coins, setCoins] = useState(0);
-  const [time, setTime] = useState(60);
-
-  useEffect(() => {
-    const timer = setInterval(() => {
-      setTime((prevTime) => {
-        if (prevTime <= 1) {
-          clearInterval(timer);
-          navigate("/game-over", { state: { coins } }); 
-          return 0;
-        }
-        return prevTime - 1;
-      });
-    }, 1000);
-    
-    return () => clearInterval(timer);
-  }, [navigate]);
-
-  return (
-    <div>
-      <p>Time: {time}</p>
-      <p>Score: {coins}</p>
-    </div>
-  );
-}
 
   const updateHighScores = (currentScore) => {
     const updatedScores = [...highScores, currentScore]

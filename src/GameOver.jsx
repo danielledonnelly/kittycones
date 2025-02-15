@@ -8,13 +8,24 @@ const GameOver = () => {
   const [highScores, setHighScores] = useState([]);
 
   useEffect(() => {
-    // Retrieve and update high scores
     const savedScores = JSON.parse(localStorage.getItem("highScores")) || [];
-    const newHighScores = [...savedScores, coins].sort((a, b) => b - a).slice(0, 5);
     
-    localStorage.setItem("highScores", JSON.stringify(newHighScores));
-    setHighScores(newHighScores);
-  }, [coins]);
+    // Avoid duplicate entries by filtering out existing scores
+    const updatedScores = [...savedScores, coins]
+      .filter((score, index, self) => self.indexOf(score) === index) // Remove duplicates
+      .sort((a, b) => b - a) // Sort descending
+    
+    localStorage.setItem("highScores", JSON.stringify(updatedScores));
+    setHighScores(updatedScores);
+  }, [coins]); // Runs when game ends  
+
+  useEffect(() => {
+    setHighScores(() => {
+      const savedScores = JSON.parse(localStorage.getItem("highScores")) || [];
+      return savedScores;
+    });
+  }, []);
+  
 
   return (
     <div className="end screen end-screen">
