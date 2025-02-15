@@ -90,15 +90,15 @@ function Game() {
       setTime((prevTime) => {
         if (prevTime <= 1) {
           clearInterval(timer);
-          handleGameEnd();
+          navigate("/game-over", { state: { coins } }); 
           return 0;
         }
         return prevTime - 1;
       });
-    }, 1000);
-
+    }, 1000); 
+  
     return () => clearInterval(timer);
-  }, []);
+  }, [navigate, coins]); 
 
   // ASSEMBLING AND SERVING ICE CREAM CONE LOGIC
   const handleConeClick = (cone) => {
@@ -167,31 +167,34 @@ function Game() {
     }
   };
 
-  // RESTART LOGIC
-  const handleRestart = () => {
-    setSelectedCone(null);
-    setSelectedScoops([]);
-    setTime(60); // Reset the timer
-    setCoins(0); // Reset coins
-    setNextCustomerId(4); // Reset next customer ID
-    setCustomerOrders(
-      generateCustomerOrders(
-        cones,
-        scoops,
-        Array.from({ length: 3 }, (_, i) => `customer${i + 1}.svg`)
-      )
-    ); // Regenerate customer orders
-    setCustomerImages(
-      Array.from({ length: 3 }, (_, i) => `customer${i + 1}.svg`)
-    ); // Reset customer images
-  };
 
-  const handleGameEnd = () => {
-    console.log("handleGameEnd called"); // Debugging
-    console.log("Final Coins at Game End:", coins); // Debugging
-    updateHighScores(coins); // Save the current score
-    navigate("/game-over");
-  };
+function Game() {
+  const navigate = useNavigate();
+  const [coins, setCoins] = useState(0);
+  const [time, setTime] = useState(60);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setTime((prevTime) => {
+        if (prevTime <= 1) {
+          clearInterval(timer);
+          navigate("/game-over", { state: { coins } }); 
+          return 0;
+        }
+        return prevTime - 1;
+      });
+    }, 1000);
+    
+    return () => clearInterval(timer);
+  }, [navigate]);
+
+  return (
+    <div>
+      <p>Time: {time}</p>
+      <p>Score: {coins}</p>
+    </div>
+  );
+}
 
   const updateHighScores = (currentScore) => {
     const updatedScores = [...highScores, currentScore]

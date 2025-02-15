@@ -288,12 +288,7 @@ body {
   margin-bottom: 20px;
   font-family: 'Fredoka', sans-serif;
   letter-spacing: 4px;
-  color: transparent;
-  text-shadow: 
-    1px 1px 2px #241843,
-    -1px -1px 2px white,
-    1px -1px 2px white, 
-    -1px 1px 2px white;
+  color: #241843;
 }
 
 .screen-text {
@@ -306,11 +301,6 @@ body {
   font-weight: bold; 
   border-radius: 10px;
   padding: 3%;
-  text-shadow: 
-    1px 1px 2px white, 
-    -1px -1px 2px white,
-    1px -1px 2px white, 
-    -1px 1px 2px white;
 }
 
 .screen-button {
