@@ -1,5 +1,7 @@
 * {
   /* NOTE TO SELF: I need to go back and add this blurb to a lot of my other web projects */
+  /* Remove margin where possible */
+  
   -webkit-user-drag: none;
   user-select: none;
 }

@@ -1,4 +1,5 @@
 import { Routes, Route } from "react-router-dom";
+import { GameProvider } from "./GameContext";
 import "./App.css";
 import Home from "./Home";
 import Game from "./Game";
@@ -8,6 +9,7 @@ import Leaderboard from "./Leaderboard";
 
 function App() {
   return (
+    <GameProvider>
     <div className="app-container">
       <img
         src="/assets/background.png"
@@ -22,6 +24,7 @@ function App() {
         <Route path="/leaderboard" element={<Leaderboard />} />
       </Routes>
     </div>
+    </GameProvider>
   );
 }
 

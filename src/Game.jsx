@@ -1,10 +1,11 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "motion/react";
 import music from "/assets/music.mp3";
 import { IconButton } from "@mui/material";
 import MusicNoteIcon from "@mui/icons-material/MusicNote";
 import MusicOffIcon from "@mui/icons-material/MusicOff";
+import { GameContext } from "./GameContext";
 
 // Arrays of cone and scoop images
 // NOTE TO SELF: May change the variables below from labeled to numbered so that they match the naming convention of customer images
@@ -36,6 +37,7 @@ const generateCustomerOrders = (cones, scoops, customerImages) => {
 
 function Game() {
   const navigate = useNavigate(); // Declare the navigate hook
+  const { coins, setCoins, highScores, setHighScores } = useContext(GameContext);
   const [isMusicEnabled, setIsMusicEnabled] = useState(false);
   const audioRef = useRef(null);
 
@@ -61,20 +63,20 @@ function Game() {
   const [nextCustomerId, setNextCustomerId] = useState(4);
 
   // STATISTICS
-  const [coins, setCoins] = useState(0); // State to track the player's coins
+  // const [coins, setCoins] = useState(0); // State to track the player's coins
 
   const [time, setTime] = useState(60); // State to track the remaining time
 
-  const [highScores, setHighScores] = useState(() => {
-    // State to hold high scores, initialized by reading from localStorage
-    try {
-      const savedScores = localStorage.getItem("highScores"); // Try to retrieve saved scores from localStorage
-      return savedScores ? JSON.parse(savedScores) : []; // If scores exist, parse and use them; otherwise, initialize with an empty array
-    } catch (error) {
-      console.error("Error reading from localStorage:", error); // Log any errors that occur while accessing localStorage.
-      return []; // Default to an empty array if an error occurs
-    }
-  });
+  // const [highScores, setHighScores] = useState(() => {
+  //   // State to hold high scores, initialized by reading from localStorage
+  //   try {
+  //     const savedScores = localStorage.getItem("highScores"); // Try to retrieve saved scores from localStorage
+  //     return savedScores ? JSON.parse(savedScores) : []; // If scores exist, parse and use them; otherwise, initialize with an empty array
+  //   } catch (error) {
+  //     console.error("Error reading from localStorage:", error); // Log any errors that occur while accessing localStorage.
+  //     return []; // Default to an empty array if an error occurs
+  //   }
+  // });
 
   const [customerOrders, setCustomerOrders] = useState(() =>
     // State for managing customer orders
