@@ -1,30 +1,12 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
+import { GameContext } from "./GameContext";
 
 const GameOver = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const [coins] = useState(location.state?.coins || 0);
-  const [highScores, setHighScores] = useState([]);
+  const { coins, highScores } = useContext(GameContext);
 
-  useEffect(() => {
-    const savedScores = JSON.parse(localStorage.getItem("highScores")) || [];
-
-    // Avoid duplicate entries by filtering out existing scores
-    const updatedScores = [...savedScores, coins]
-      .filter((score, index, self) => self.indexOf(score) === index) // Remove duplicates
-      .sort((a, b) => b - a); // Sort descending
-
-    localStorage.setItem("highScores", JSON.stringify(updatedScores));
-    setHighScores(updatedScores);
-  }, [coins]); // Runs when game ends  
-
-  useEffect(() => {
-    setHighScores(() => {
-      const savedScores = JSON.parse(localStorage.getItem("highScores")) || [];
-      return savedScores;
-    });
-  }, []);
 
   return (
     <div className="end screen end-screen">

@@ -37,7 +37,7 @@ const generateCustomerOrders = (cones, scoops, customerImages) => {
 
 function Game() {
   const navigate = useNavigate(); // Declare the navigate hook
-  const { coins, setCoins, highScores, setHighScores } = useContext(GameContext);
+  const { coins, setCoins, updateHighScores } = useContext(GameContext);
   const [isMusicEnabled, setIsMusicEnabled] = useState(false);
   const audioRef = useRef(null);
 
@@ -89,7 +89,8 @@ function Game() {
 
   useEffect(() => {
     if (time <= 0) {
-      navigate("/game-over", { state: { coins } }); // Navigate when time is up
+      updateHighScores(coins); // Update high scores when time is up
+      navigate("/game-over"); // Navigate when time is up
     } else {
       const timer = setTimeout(() => setTime(time - 1), 100); // Shortened time for testing
       return () => clearTimeout(timer);
@@ -164,23 +165,7 @@ function Game() {
     }
   };
 
-  const updateHighScores = (currentScore) => {
-    const updatedScores = [...highScores, currentScore]
-      .filter((score) => score > 0) // Ignore invalid scores
-      .sort((a, b) => b - a) // Sort descending
-      .slice(0, 10); // Top 10 scores
 
-    setHighScores(updatedScores);
-    try {
-      const scoresString = JSON.stringify(updatedScores);
-      if (scoresString) {
-        localStorage.setItem("highScores", scoresString);
-        console.log("Updated High Scores:", updatedScores); // Debugging
-      }
-    } catch (error) {
-      console.error("Error saving to localStorage:", error);
-    }
-  };
 
   // MOBILE WARNING
   const [showMobileWarning, setShowMobileWarning] = useState(
