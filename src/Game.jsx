@@ -92,10 +92,14 @@ function Game() {
       updateHighScores(coins); // Update high scores when time is up
       navigate("/game-over"); // Navigate when time is up
     } else {
-      const timer = setTimeout(() => setTime(time - 1), 100); // Shortened time for testing
+      const timer = setTimeout(() => setTime(time - 1), 500); // Shortened time for testing
       return () => clearTimeout(timer);
     }
   }, [time, navigate, coins]);  
+
+  useEffect(() => {
+    setCoins(0); // Reset coins at the start of a new game
+  }, []);
 
 
   // ASSEMBLING AND SERVING ICE CREAM CONE LOGIC
