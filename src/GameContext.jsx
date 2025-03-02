@@ -6,6 +6,9 @@ export function GameProvider({ children }) {
   const [coins, setCoins] = useState(0);
   const [showInitialsModal, setShowInitialsModal] = useState(false);
   const [pendingScore, setPendingScore] = useState(null);
+  const [globalScores, setGlobalScores] = useState([]);
+  const [isLoadingGlobalScores, setIsLoadingGlobalScores] = useState(false);
+  const [globalScoreError, setGlobalScoreError] = useState(null);
   
   // Add music state with localStorage persistence
   const [isMusicEnabled, setIsMusicEnabled] = useState(() => {
@@ -55,6 +58,78 @@ export function GameProvider({ children }) {
     }
   });
 
+  // Fetch global scores from Val.town
+  const fetchGlobalScores = async () => {
+    setIsLoadingGlobalScores(true);
+    setGlobalScoreError(null);
+    
+    try {
+      // Using the user's actual Val.town URL
+      const valTownUrl = 'https://danielledonnelly-leaderboardkvstore.web.val.run/scores';
+      console.log("Fetching global scores from:", valTownUrl);
+      
+      const response = await fetch(valTownUrl);
+      
+      console.log("Response status:", response.status);
+      
+      if (!response.ok) {
+        console.error("Error response from Val.town:", await response.text());
+        throw new Error(`Failed to fetch global scores: ${response.status} ${response.statusText}`);
+      }
+      
+      const data = await response.json();
+      console.log("Received global scores:", data);
+      setGlobalScores(data);
+    } catch (error) {
+      console.error("Error fetching global scores:", error);
+      setGlobalScoreError(error.message);
+    } finally {
+      setIsLoadingGlobalScores(false);
+    }
+  };
+
+  // Submit score to Val.town global leaderboard
+  const submitGlobalScore = async (initials, score) => {
+    try {
+      // Using the user's actual Val.town URL
+      const valTownUrl = 'https://danielledonnelly-leaderboardkvstore.web.val.run/submit';
+      console.log("Submitting score to:", valTownUrl, { initials, score });
+      
+      const response = await fetch(valTownUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ initials, score }),
+      });
+      
+      console.log("Submit response status:", response.status);
+      
+      if (!response.ok) {
+        console.error("Error response from Val.town:", await response.text());
+        throw new Error(`Failed to submit score: ${response.status} ${response.statusText}`);
+      }
+      
+      const data = await response.json();
+      console.log("Submit response data:", data);
+      
+      // Update global scores with the new data
+      if (data.success && data.topScores) {
+        setGlobalScores(data.topScores);
+      }
+      
+      return true;
+    } catch (error) {
+      console.error("Error submitting global score:", error);
+      return false;
+    }
+  };
+
+  // Fetch global scores when component mounts
+  useEffect(() => {
+    fetchGlobalScores();
+  }, []);
+
   const checkHighScore = (currentScore) => {
     // If there are fewer than 10 scores, it's a high score
     if (highScores.length < 10) {
@@ -76,7 +151,7 @@ export function GameProvider({ children }) {
     return false;
   };
 
-  const saveHighScoreWithInitials = (initials) => {
+  const saveHighScoreWithInitials = async (initials) => {
     if (!pendingScore) return;
     
     const newScore = { initials, score: pendingScore };
@@ -94,6 +169,9 @@ export function GameProvider({ children }) {
     } catch (error) {
       console.error("Error saving to localStorage:", error);
     }
+    
+    // Also submit to global leaderboard
+    await submitGlobalScore(initials, pendingScore);
   };
 
   const updateHighScores = (currentScore) => {
@@ -133,7 +211,12 @@ export function GameProvider({ children }) {
         pendingScore,
         cancelInitialsEntry,
         isMusicEnabled,
-        toggleMusic
+        toggleMusic,
+        globalScores,
+        isLoadingGlobalScores,
+        globalScoreError,
+        fetchGlobalScores,
+        submitGlobalScore
       }}
     >
       {children}

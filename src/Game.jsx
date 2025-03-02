@@ -78,7 +78,7 @@ function Game() {
         navigate("/game-over"); // Only navigate if not a high score
       }
     } else {
-      const timer = setTimeout(() => setTime(time - 1), 500); // Shortened time for testing
+      const timer = setTimeout(() => setTime(time - 1), 100); // Shortened time for testing
       return () => clearTimeout(timer);
     }
   }, [time, navigate, coins]);

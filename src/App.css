@@ -308,6 +308,7 @@ body {
 .screen-title {
   font-size: 80px;
   font-weight: bold;
+  margin-top: 0;
   margin-bottom: 20px;
   font-family: 'Fredoka', sans-serif;
   letter-spacing: 4px;
@@ -715,4 +716,24 @@ body {
 .screen-button:disabled {
   background-color: #ccc;
   cursor: not-allowed;
+}
+
+.home-buttons-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 20px;
+  width: 100%;
+}
+
+.home-buttons-row .screen-button {
+  min-width: 150px;
+}
+
+@media (max-width: 600px) {
+  .home-buttons-row {
+    flex-direction: column;
+    align-items: center;
+  }
 }

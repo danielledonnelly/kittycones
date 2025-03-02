@@ -11,17 +11,19 @@ const Home = () => {
           and keep the line moving quickly to get more coins!
         </p> */}
         
-        <Link to="/game">
-          <button className="starting screen-button">Start</button>
-        </Link>
+        <div className="home-buttons-row">
+          <Link to="/game">
+            <button className="starting screen-button">Start</button>
+          </Link>
 
-        <Link to="/about">
-          <button className="starting screen-button">About</button>
-        </Link>
-        
-        <Link to="/leaderboard">
-          <button className="starting screen-button">Leaderboard</button>
-        </Link>
+          <Link to="/about">
+            <button className="starting screen-button">About</button>
+          </Link>
+          
+          <Link to="/leaderboard">
+            <button className="starting screen-button">Leaderboard</button>
+          </Link>
+        </div>
       </div>
     </>
   );
