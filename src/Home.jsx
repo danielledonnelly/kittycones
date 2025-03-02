@@ -10,6 +10,7 @@ const Home = () => {
           then clicking their order bubble. Serve customers as fast as you can
           and keep the line moving quickly to get more coins!
         </p> */}
+        
         <Link to="/game">
           <button className="starting screen-button">Start</button>
         </Link>

@@ -4,6 +4,7 @@ const About = () => {
   return (
     <div className="end screen end-screen">
       <h1 className="about screen-title">About Kitty Cones</h1>
+      
       <p className="about screen-text">
         Kitty Cones is a fun and fast-paced game where you serve ice cream to 
         hungry kitties! Click on the ingredients and match their orders before 

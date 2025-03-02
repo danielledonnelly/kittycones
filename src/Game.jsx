@@ -1,10 +1,6 @@
 import { useState, useRef, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "motion/react";
-import music from "/assets/music.mp3";
-import { IconButton } from "@mui/material";
-import MusicNoteIcon from "@mui/icons-material/MusicNote";
-import MusicOffIcon from "@mui/icons-material/MusicOff";
 import { GameContext } from "./GameContext";
 
 // Arrays of cone and scoop images
@@ -37,21 +33,8 @@ const generateCustomerOrders = (cones, scoops, customerImages) => {
 
 function Game() {
   const navigate = useNavigate(); // Declare the navigate hook
-  const { coins, setCoins, updateHighScores } = useContext(GameContext);
-  const [isMusicEnabled, setIsMusicEnabled] = useState(false);
-  const audioRef = useRef(null);
-
-  useEffect(() => {
-    if (audioRef.current) {
-      audioRef.current.volume = 0.2;
-      if (isMusicEnabled) {
-        audioRef.current.play();
-      } else {
-        audioRef.current.pause();
-      }
-    }
-  }, [isMusicEnabled]);
-
+  const { coins, setCoins, updateHighScores, checkHighScore } = useContext(GameContext);
+  
   const [selectedCone, setSelectedCone] = useState(null); // State to track which cone the player selects.
   const [selectedScoops, setSelectedScoops] = useState([]); // State to track the scoops the player selects.
 
@@ -89,13 +72,16 @@ function Game() {
 
   useEffect(() => {
     if (time <= 0) {
-      updateHighScores(coins); // Update high scores when time is up
-      navigate("/game-over"); // Navigate when time is up
+      // updateHighScores(coins); // Update high scores when time is up
+      // Check if it's a high score first
+      if (!checkHighScore(coins)) {
+        navigate("/game-over"); // Only navigate if not a high score
+      }
     } else {
       const timer = setTimeout(() => setTime(time - 1), 500); // Shortened time for testing
       return () => clearTimeout(timer);
     }
-  }, [time, navigate, coins]);  
+  }, [time, navigate, coins]);
 
   useEffect(() => {
     setCoins(0); // Reset coins at the start of a new game
@@ -235,29 +221,6 @@ function Game() {
 
       {/* Coin Counter */}
       <div className="coin-counter">Coins: {coins}</div>
-
-      {/* Music */}
-      <audio ref={audioRef} loop autoPlay muted={!isMusicEnabled}>
-        <source src={music} type="audio/mpeg" />
-        Your browser does not support the audio element.
-      </audio>
-
-      {/* Music Toggle Button */}
-      {/* <div className="mute-button"> */}
-      <IconButton
-        className="mute-button"
-        sx={{
-          position: "fixed",
-          top: "15px",
-          right: "130px",
-          zIndex: 3,
-          color: isMusicEnabled ? "#EFDAE6" : "medium-grey",
-        }}
-        onClick={() => setIsMusicEnabled(!isMusicEnabled)}
-      >
-        {isMusicEnabled ? <MusicNoteIcon /> : <MusicOffIcon />}
-      </IconButton>
-      {/* </div> */}
 
       {/* Timer */}
       <div className="timer">Time: {time}</div>
