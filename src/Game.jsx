@@ -48,7 +48,7 @@ function Game() {
   // STATISTICS
   // const [coins, setCoins] = useState(0); // State to track the player's coins
 
-  const [time, setTime] = useState(60); // State to track the remaining time
+  const [time, setTime] = useState(30); // State to track the remaining time
 
   // const [highScores, setHighScores] = useState(() => {
   //   // State to hold high scores, initialized by reading from localStorage
@@ -78,7 +78,7 @@ function Game() {
         navigate("/game-over"); // Only navigate if not a high score
       }
     } else {
-      const timer = setTimeout(() => setTime(time - 1), 100); // Shortened time for testing
+      const timer = setTimeout(() => setTime(time - 1), 1000); // Shortened time for testing
       return () => clearTimeout(timer);
     }
   }, [time, navigate, coins]);
