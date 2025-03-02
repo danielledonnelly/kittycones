@@ -108,6 +108,7 @@ const Leaderboard = () => {
         <Link to="/">
           <button className="screen-button">Home</button>
         </Link>
+        {/*
         <button 
           className="screen-button secondary" 
           onClick={clearAllScores}
@@ -126,6 +127,7 @@ const Leaderboard = () => {
         >
           {isLoadingGlobalScores ? "Refreshing..." : "Refresh Global Scores"}
         </button>
+        */}
       </div>
     </div>
   );
