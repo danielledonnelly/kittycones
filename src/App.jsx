@@ -1,4 +1,4 @@
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useLocation } from "react-router-dom";
 import { GameProvider, GameContext } from "./GameContext";
 import { useContext, useEffect, useRef } from "react";
 import "./App.css";
@@ -26,6 +26,8 @@ function AppContent() {
   
   const navigate = useNavigate();
   const audioRef = useRef(null);
+  const location = useLocation();
+  const isGameRoute = location.pathname === "/game";
   
   // Control the global audio element
   useEffect(() => {
@@ -77,7 +79,7 @@ function AppContent() {
       <img
         src="/assets/background.png"
         alt="Background"
-        className="home-background"
+        className={isGameRoute ? "game-background" : "home-background"}
       />
       <Routes>
         <Route path="/" element={<Home />} />

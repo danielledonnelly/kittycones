@@ -189,7 +189,17 @@ body {
 
 .home-background {
   position: fixed;
-  /* z-index: 9!important; */
+  min-width: 100vw !important;
+  min-height: 100% !important;
+  height: auto;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  background-color: #DEB1CB !important;
+}
+
+.game-background {
+  position: fixed;
   min-width: 100vw !important;
   min-height: 100% !important;
   height: auto;
@@ -486,6 +496,13 @@ body {
 }
 
 @media (max-width: 600px) {
+  .home-background {
+    z-index: 3; 
+  }
+  
+  .game-background {
+    z-index: 1;
+  }
 
   .background {
     left: -650px;
@@ -582,6 +599,7 @@ body {
   .mute-button {
     right: 100px !important;
     top: 8px !important;
+    z-index: 3 !important;
   }
 
   .order::before {
