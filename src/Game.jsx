@@ -291,10 +291,13 @@ function Game() {
         {/* Assembled Ice Cream */}
         <div className="ice-cream">
           {selectedCone && (
-            <img
+            <motion.img
               src={`/assets/${selectedCone}`}
               alt="Selected Cone"
               className="ice-cream-cone"
+              initial={{ scale: 0.5, y: 100, opacity: 0 }}
+              animate={{ scale: 1, y: 0, opacity: 1 }}
+              transition={{ type: "spring", duration: 0.5 }}
             />
           )}
           {selectedScoops.map((scoop, index) => (
@@ -303,7 +306,7 @@ function Game() {
               src={`/assets/${scoop}`}
               alt={`Scoop ${index + 1}`}
               className="ice-cream-scoop"
-              style={{ bottom: `${210 + index * 50}px` }}
+              style={{ bottom: `${220 + index * 40}px` }}
             />
           ))}
         </div>
