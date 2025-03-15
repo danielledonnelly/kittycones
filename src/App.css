@@ -61,11 +61,13 @@ body {
 .buttons-group {
   flex: 1 1 auto;
   display: flex;
-  gap: 20px;
+  gap: 5px;
 }
 
 .cone-buttons {
-  margin-top: -40px; 
+  display: flex;
+  align-items: flex-end;
+  gap: 0;
 }
 
 .cone-order {
@@ -81,7 +83,7 @@ body {
   border-top: 8px solid #241843;
   display: flex;
   justify-content: space-between;
-  max-height: 20vh;
+  max-height: 30vh;
   position: absolute;
   padding: 20px 40px 30px;
   width: 100%;
@@ -261,7 +263,6 @@ body {
   cursor: pointer;
   z-index: 1; 
   position: absolute;
-  bottom: 105%;
   display: flex;
   flex-direction: column-reverse;
   align-items: center;
@@ -353,15 +354,17 @@ body {
 
 .restart-button {
   flex: 0 0 auto;
-  width: 120px;
-  height: 120px;
-  outline: none; 
+  width: 180px !important;
+  height: 180px !important;
+  outline: none;
+  align-self: flex-end;
+  margin-bottom: -20px;
 }
 
 .restart-button img {
-  width: 100%;
+  width: 180%;
   height: auto;
-  display: block;
+  transform: translateX(-22%);
 }
 
 .timer {
@@ -445,8 +448,8 @@ body {
     max-width: 100px;
   }
 
-  .customer {
-    max-width: 80px;
+  .customer-image {
+    transform: translateY(10%);
   }
 
   .ice-cream-cone {
@@ -456,6 +459,10 @@ body {
   .ice-cream-scoop {
     width: 80%;
     transform: translate(-68%, 30%);
+  }
+
+  .order {
+    top: 80px;
   }
 
   
@@ -559,7 +566,7 @@ body {
 
   .counter {
     max-height: 40vh;
-    min-height: 30vh;
+    min-height: 35vh;
     position: absolute;
     bottom: 0; 
     left: 0; 
@@ -610,6 +617,7 @@ body {
     width: 120px; 
     height: 300px;
     visibility: hidden;
+  
   }
 
   .cone-order {
@@ -762,4 +770,37 @@ body {
     flex-direction: column;
     align-items: center;
   }
+}
+
+.cone-stand-button {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 180px !important;
+  height: 180px !important;
+}
+
+.stand-image {
+  position: absolute;
+  bottom: 0;
+  z-index: 1;
+  width: 180%;
+  transform: translateX(-22%);
+}
+
+.scoop-tub-button {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 180px !important;
+  height: 180px !important;
+}
+
+.tub-image {
+  position: relative;
+  width: 180%;
+  height: auto;
+  transform: translateX(-22%);
 }

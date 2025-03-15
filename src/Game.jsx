@@ -226,8 +226,7 @@ function Game() {
       <div className="timer">Time: {time}</div>
 
       {/* Customers Layer */}
-      <AnimatePresence>
-        <div
+      <div
           style={{
             position: "absolute",
             bottom: "30px",
@@ -238,6 +237,9 @@ function Game() {
             zIndex: 2,
           }}
         >
+
+      <AnimatePresence mode="popLayout">
+
           {customerImages.slice(0, 3).map((customer, index) => (
             <motion.div
               key={customer} // Unique identifier
@@ -283,9 +285,8 @@ function Game() {
               />
             </motion.div>
           ))}
-        </div>
       </AnimatePresence>
-
+      </div>
       {/* Counter */}
       <div className="counter">
         {/* Assembled Ice Cream */}
@@ -313,26 +314,34 @@ function Game() {
 
         {/* Buttons for Cones */}
         <div className="buttons-group cone-buttons">
-          {cones.map((cone) => (
+          {cones.map((cone, index) => (
             <button
               key={cone}
               onClick={() => handleConeClick(cone)}
-              className="button"
+              className="button cone-stand-button"
             >
-              <img src={`/assets/${cone}`} alt={cone} />
+              <img 
+                src={`/assets/cone-stand${index + 1}.png`} 
+                alt={`stand ${index + 1}`} 
+                className="stand-image"
+              />
             </button>
           ))}
         </div>
 
         {/* Buttons for Scoops */}
         <div className="buttons-group scoop-buttons">
-          {scoops.map((scoop) => (
+          {scoops.map((scoop, index) => (
             <button
               key={scoop}
               onClick={() => handleScoopClick(scoop)}
-              className="button"
+              className="button scoop-tub-button"
             >
-              <img src={`/assets/${scoop}`} alt={scoop} />
+              <img 
+                src={`/assets/tub${index + 1}.png`} 
+                alt={`tub ${index + 1}`} 
+                className="tub-image"
+              />
             </button>
           ))}
         </div>
