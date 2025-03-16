@@ -12,6 +12,8 @@ import { useNavigate } from "react-router-dom";
 import { IconButton } from "@mui/material";
 import MusicNoteIcon from "@mui/icons-material/MusicNote";
 import MusicOffIcon from "@mui/icons-material/MusicOff";
+import FastForwardIcon from "@mui/icons-material/FastForward";
+import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import music from "/assets/music.mp3";
 
 function AppContent() {
@@ -21,7 +23,9 @@ function AppContent() {
     saveHighScoreWithInitials,
     cancelInitialsEntry,
     isMusicEnabled,
-    toggleMusic
+    toggleMusic,
+    isRushHourMode,
+    toggleRushHourMode
   } = useContext(GameContext);
   
   const navigate = useNavigate();
@@ -61,6 +65,23 @@ function AppContent() {
         Your browser does not support the audio element.
       </audio>
       
+      {/* Rush Hour Mode Toggle Button */}
+      <IconButton
+        className="rush-hour-button"
+        sx={{
+          position: "fixed",
+          top: "15px",
+          right: "170px",
+          zIndex: 9999,
+          color: "#5E558F",
+        }}
+        onClick={toggleRushHourMode}
+        title={isRushHourMode ? "Switch to normal mode" : "Switch to Rush Hour mode"}
+        disableRipple={true}
+      >
+        {isRushHourMode ? <FastForwardIcon /> : <PlayArrowIcon />}
+      </IconButton>
+      
       {/* Global Music Toggle Button */}
       <IconButton
         className="mute-button"
@@ -69,9 +90,10 @@ function AppContent() {
           top: "15px",
           right: "130px",
           zIndex: 9999,
-          color: isMusicEnabled ? "#EFDAE6" : "medium-grey",
+          color: isMusicEnabled ? "#EFDAE6" : "#5E558F",
         }}
         onClick={toggleMusic}
+        disableRipple={true}
       >
         {isMusicEnabled ? <MusicNoteIcon /> : <MusicOffIcon />}
       </IconButton>

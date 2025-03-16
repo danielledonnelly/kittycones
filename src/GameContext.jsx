@@ -13,11 +13,25 @@ export function GameProvider({ children }) {
   // Add music state with localStorage persistence
   const [isMusicEnabled, setIsMusicEnabled] = useState(() => {
     try {
+      // Always start with music disabled by default
       const savedMusicSetting = localStorage.getItem("isMusicEnabled");
-      return savedMusicSetting ? JSON.parse(savedMusicSetting) : false;
+      // Only enable if explicitly set to true in localStorage
+      return savedMusicSetting === "true" ? true : false;
     } catch (error) {
       console.error("Error reading music setting from localStorage:", error);
-      return false;
+      return false; // Default to disabled
+    }
+  });
+  
+  // Add Rush Hour mode state with localStorage persistence
+  const [isRushHourMode, setIsRushHourMode] = useState(() => {
+    try {
+      const savedModeSetting = localStorage.getItem("isRushHourMode");
+      // Default to normal mode (false)
+      return savedModeSetting === "true" ? true : false;
+    } catch (error) {
+      console.error("Error reading Rush Hour mode from localStorage:", error);
+      return false; // Default to normal mode
     }
   });
 
@@ -29,10 +43,24 @@ export function GameProvider({ children }) {
       console.error("Error saving music setting to localStorage:", error);
     }
   }, [isMusicEnabled]);
+  
+  // Save Rush Hour mode to localStorage when it changes
+  useEffect(() => {
+    try {
+      localStorage.setItem("isRushHourMode", JSON.stringify(isRushHourMode));
+    } catch (error) {
+      console.error("Error saving Rush Hour mode to localStorage:", error);
+    }
+  }, [isRushHourMode]);
 
   // Function to toggle music state
   const toggleMusic = () => {
     setIsMusicEnabled(prev => !prev);
+  };
+  
+  // Function to toggle Rush Hour mode
+  const toggleRushHourMode = () => {
+    setIsRushHourMode(prev => !prev);
   };
 
   const [highScores, setHighScores] = useState(() => {
@@ -216,7 +244,9 @@ export function GameProvider({ children }) {
         isLoadingGlobalScores,
         globalScoreError,
         fetchGlobalScores,
-        submitGlobalScore
+        submitGlobalScore,
+        isRushHourMode,
+        toggleRushHourMode
       }}
     >
       {children}

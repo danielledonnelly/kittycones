@@ -1,7 +1,6 @@
 * {
   /* NOTE TO SELF: I need to go back and add this blurb to a lot of my other web projects */
   /* Remove margin where possible */
-  
   -webkit-user-drag: none;
   user-select: none;
 }
@@ -25,7 +24,6 @@
   min-height: 100% !important;
   min-width: 100vw !important;
   position: absolute;
-  top: 0;
   z-index: 1;
 }
 
@@ -109,6 +107,7 @@ body {
   align-items: center;
   display: flex;
   flex-direction: column;
+  flex-grow: 1;
   position: relative;
   width: 150px;
 }
@@ -216,7 +215,6 @@ body {
   width: 220px;
   height: 220px;
   position: relative;
-  margin-top: -50px;
 }
 
 .ice-cream-cone {
@@ -771,7 +769,6 @@ body {
     align-items: center;
   }
 }
-
 .cone-stand-button {
   position: relative;
   display: flex;
