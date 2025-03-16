@@ -47,7 +47,7 @@ function Game() {
 
   const [customerImages, setCustomerImages] = useState(
     // State to hold a list of customer images
-    Array.from({ length: 3 }, (_, i) => `customer${i + 1}.svg`)
+    Array.from({ length: 3 }, (_, i) => `customer${i + 1}.png`)
   );
 
   const [nextCustomerId, setNextCustomerId] = useState(4);
@@ -63,7 +63,7 @@ function Game() {
     generateCustomerOrders(
       cones,
       scoops,
-      Array.from({ length: 3 }, (_, i) => `customer${i + 1}.svg`)
+      Array.from({ length: 3 }, (_, i) => `customer${i + 1}.png`)
     )
   );
 
@@ -146,12 +146,12 @@ function Game() {
               updatedImages.splice(index, 1);
               
               // Add a new customer
-              let nextCustomer = `customer${nextCustomerId}.svg`;
+              let nextCustomer = `customer${nextCustomerId}.png`;
               let currentId = nextCustomerId;
               
               while (updatedImages.includes(nextCustomer)) {
                 currentId = currentId + 1 > 10 ? 1 : currentId + 1;
-                nextCustomer = `customer${currentId}.svg`;
+                nextCustomer = `customer${currentId}.png`;
               }
               
               updatedImages.push(nextCustomer);
@@ -161,7 +161,7 @@ function Game() {
             setCustomerOrders(prev => {
               const updatedOrders = [...prev];
               updatedOrders.splice(index, 1);
-              const newOrder = generateCustomerOrders(cones, scoops, [`customer${nextCustomerId}.svg`])[0];
+              const newOrder = generateCustomerOrders(cones, scoops, [`customer${nextCustomerId}.png`])[0];
               updatedOrders.push(newOrder);
               return updatedOrders;
             });
@@ -237,12 +237,12 @@ function Game() {
           updatedImages.splice(customerIndex, 1); // Remove served customer
 
           // Find the next customer that is not already on screen
-          let nextCustomer = `customer${nextCustomerId}.svg`;
+          let nextCustomer = `customer${nextCustomerId}.png`;
           let currentId = nextCustomerId;
 
           while (updatedImages.includes(nextCustomer)) {
             currentId = currentId + 1 > 10 ? 1 : currentId + 1; // Cycle back to 1 after reaching 10
-            nextCustomer = `customer${currentId}.svg`;
+            nextCustomer = `customer${currentId}.png`;
           }
 
           updatedImages.push(nextCustomer); // Add the next customer
@@ -273,7 +273,7 @@ function Game() {
           const updatedOrders = [...prevOrders];
           updatedOrders.splice(customerIndex, 1); // Remove served order
           const newOrder = generateCustomerOrders(cones, scoops, [
-            `customer${nextCustomerId}.svg`,
+            `customer${nextCustomerId}.png`,
           ])[0];
           updatedOrders.push(newOrder); // Add new order
           return updatedOrders;
