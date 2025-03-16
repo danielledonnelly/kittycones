@@ -69,15 +69,40 @@ function Game() {
 
   // Reset customer positions when the game starts or mode changes
   useEffect(() => {
-    // Position initial customers differently based on mode
-    if (isRushHourMode) {
-      // For Rush Hour mode, stagger positions from right
-      setCustomerPositions([300, 200, 100]);
-    } else {
-      // For normal mode, use centered positions
-      setCustomerPositions([0, 0, 0]);
+    // Position initial customers differently based on mode - only runs on initial mount
+    if (!customerPositions.some(pos => pos !== 0)) {
+      // Only initialize positions if not already set
+      if (isRushHourMode) {
+        // For Rush Hour mode, stagger positions from right
+        setCustomerPositions([300, 200, 100]);
+      } else {
+        // For normal mode, use centered positions
+        setCustomerPositions([0, 0, 0]);
+      }
     }
-  }, [isRushHourMode]);
+  }, []); // No dependency on isRushHourMode to prevent repositioning on mode change
+
+  // Handle mode transition
+  useEffect(() => {
+    // This effect handles transition between modes
+    if (isRushHourMode) {
+      // When switching TO Rush Hour mode, set positions based on current visual positions
+      // For customers already displayed in normal mode, they're at x: 0 visually
+      // So we need to update their positions to match what they're showing visually
+      setCustomerPositions(prev => {
+        // Copy their current positions to maintain existing Rush Hour customers if any
+        const newPositions = [...prev];
+        
+        // Ensure the positions array matches the customers array length 
+        // and update positions to match what's visually on screen
+        while (newPositions.length < customerImages.length) {
+          newPositions.push(0); // Add positions for any missing customers at center position
+        }
+        
+        return newPositions;
+      });
+    }
+  }, [isRushHourMode, customerImages.length]);
   
   // Customer container styles with consistent spacing
   const getCustomerContainerStyles = () => {
@@ -98,7 +123,6 @@ function Game() {
     if (!isRushHourMode) return;
     
     const moveInterval = setInterval(() => {
-      // Continuous leftward movement without stopping
       setCustomerPositions(prev => {
         const newPositions = prev.map(pos => pos - 0.7); // Slightly slower movement
         
@@ -112,7 +136,7 @@ function Game() {
           }
         });
         
-        // Remove customers that have left the screen (in reverse order to avoid index issues)
+        // Handle customers that have left the screen
         if (customersToRemove.length > 0) {
           // Sort in reverse order to avoid index shifting problems when removing
           customersToRemove.sort((a, b) => b - a).forEach(index => {
@@ -155,7 +179,7 @@ function Game() {
     }, 50); // Faster interval for smoother movement
     
     return () => clearInterval(moveInterval);
-  }, [nextCustomerId, isRushHourMode]);
+  }, [isRushHourMode, nextCustomerId]);
 
   useEffect(() => {
     if (time <= 0) {
@@ -233,13 +257,12 @@ function Game() {
           newPositions.splice(customerIndex, 1); // Remove position of served customer
           
           // In both modes, new customers should start from the right
-          // But they're handled differently in the animation
           if (isRushHourMode) {
-            newPositions.push(300); // Rush Hour mode - start far to the right and continuously move
+            newPositions.push(300); // Start far to the right in Rush Hour mode
           } else {
-            newPositions.push(0); // Normal mode - this value doesn't matter for animation
-                                  // since normal mode ignores customerPositions for x value
-                                  // and just animates from 300 to 0
+            // In normal mode, the position value doesn't affect the animation
+            // but we still need to maintain the array correctly
+            newPositions.push(0);
           }
           
           return newPositions;
@@ -358,8 +381,15 @@ function Game() {
               }}
               exit={{ opacity: 0, x: -300 }} // Exit to the left
               transition={{ 
-                duration: 0.7,
-                x: { type: isRushHourMode ? "tween" : "spring", stiffness: 100, damping: 15 }
+                // Conditional duration - normal mode gets slower animation
+                duration: isRushHourMode ? 0.7 : 1.2,
+                // Different animation physics for each mode
+                x: { 
+                  type: isRushHourMode ? "tween" : "spring", 
+                  stiffness: isRushHourMode ? 100 : 70, // Lower stiffness for normal mode = slower animation
+                  damping: isRushHourMode ? 15 : 18, // Higher damping for normal mode = more gentle motion
+                  mass: isRushHourMode ? 1 : 1.5, // Higher mass for normal mode = slower animation
+                }
               }} 
             >
               {/* Ice Cream Order */}
@@ -415,13 +445,14 @@ function Game() {
               }
               transition={{ 
                 type: "spring", 
-                duration: 0.3, // Faster duration
-                stiffness: 400, // Higher stiffness for snappier animation
-                damping: 17, // Balanced damping
+                duration: 0.2, // Faster duration (was 0.3)
+                stiffness: 500, // Higher stiffness for snappier animation (was 400)
+                damping: 15, // Lower damping for quicker settling (was 17)
+                mass: 0.7, // Lower mass for faster movement (was not specified)
                 ...(orderSuccess && { 
-                  y: { duration: 0.3 }, // Faster success animation
-                  x: { duration: 0.3 },
-                  opacity: { duration: 0.2, delay: 0.1 } // Faster fade with less delay
+                  y: { duration: 0.2 }, // Faster success animation (was 0.3)
+                  x: { duration: 0.2 }, // Faster success animation (was 0.3)
+                  opacity: { duration: 0.15, delay: 0.05 } // Faster fade with less delay (was 0.2, 0.1)
                 })
               }}
             />
@@ -445,14 +476,14 @@ function Game() {
               }
               transition={{
                 type: "spring",
-                stiffness: 500, // Higher stiffness for snappier animation
-                damping: 18, // Slightly increased damping
-                mass: 0.8, // Lower mass for faster movement
-                delay: index * 0.05, // Reduced delay between scoops
+                stiffness: 600, // Higher stiffness for faster, snappier animation (was 500)
+                damping: 16, // Lower damping for quicker settling (was 18)
+                mass: 0.6, // Lower mass for faster movement (was 0.8)
+                delay: index * 0.03, // Reduced delay between scoops (was 0.05)
                 ...(orderSuccess && { 
-                  y: { duration: 0.3 }, // Faster success animation
-                  x: { duration: 0.3 },
-                  opacity: { duration: 0.2, delay: 0.1 + (index * 0.03) } // Faster fade with less staggered delay
+                  y: { duration: 0.2 }, // Faster success animation (was 0.3)
+                  x: { duration: 0.2 }, // Faster success animation (was 0.3)
+                  opacity: { duration: 0.15, delay: 0.05 + (index * 0.02) } // Faster fade with less staggered delay (was 0.2, 0.1 + index * 0.03)
                 })
               }}
             />
