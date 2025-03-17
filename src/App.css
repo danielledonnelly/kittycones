@@ -241,12 +241,19 @@ body {
   position: fixed !important;
   top: 15px !important;
   right: 130px !important;
-  z-index: 9999 !important;
+  z-index: 10 !important;
   color: #5E558F !important;
+}
+
+/* Ensure mute button always has the same color */
+.mute-button svg {
+  color: #5E558F !important;
+  fill: #5E558F !important;
 }
 
 .mute-button.MuiIconButton-root {
   background-color: transparent !important;
+  color: #5E558F !important;
 }
 
 .mute-button.MuiIconButton-root:hover {
@@ -365,6 +372,28 @@ body {
 .restart-button img {
   flex-grow: 1;
   height: auto;
+}
+
+.rush-hour-button {
+  position: fixed !important;
+  top: 15px !important;
+  right: 170px !important;
+  z-index: 10 !important;
+  color: #5E558F !important;
+}
+
+.rush-hour-button svg {
+  color: #5E558F !important;
+  fill: #5E558F !important;
+}
+
+.rush-hour-button.MuiIconButton-root {
+  background-color: transparent !important;
+  color: #5E558F !important;
+}
+
+.rush-hour-button.MuiIconButton-root:hover {
+  background-color: transparent !important;
 }
 
 .timer {
@@ -610,7 +639,7 @@ body {
     z-index: 2;
   }
 
-  .mute-button {
+  .mute-button, .rush-hour-button {
     right: 100px !important;
     top: 8px !important;
     z-index: 3 !important;
