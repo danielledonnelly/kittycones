@@ -8,6 +8,7 @@ import About from "./About";
 import GameOver from "./GameOver";
 import Leaderboard from "./Leaderboard";
 import InitialsModal from "./InitialsModal";
+import Layout from "./Layout";
 import { useNavigate } from "react-router-dom";
 import { IconButton } from "@mui/material";
 import MusicNoteIcon from "@mui/icons-material/MusicNote";
@@ -104,11 +105,16 @@ function AppContent() {
         className={isGameRoute ? "game-background" : "home-background"}
       />
       <Routes>
-        <Route path="/" element={<Home />} />
+        {/* Use our Layout component for Home, About, and Leaderboard to show animated kitties */}
+        <Route element={<Layout />}>
+          <Route path="/" element={<Home />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/leaderboard" element={<Leaderboard />} />
+        </Route>
+        
+        {/* Direct routes without animated kitties */}
         <Route path="/game" element={<Game />} />
-        <Route path="/about" element={<About />} />
         <Route path="/game-over" element={<GameOver />} />
-        <Route path="/leaderboard" element={<Leaderboard />} />
       </Routes>
       
       {showInitialsModal && (
