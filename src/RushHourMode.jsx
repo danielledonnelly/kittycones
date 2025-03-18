@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { motion, AnimatePresence } from "motion/react";
 
 function RushHourMode({ 
   rushHourCats, 
@@ -59,56 +60,88 @@ function RushHourMode({
     return () => clearInterval(moveInterval);
   }, [isRushHourInitialized, rushHourNextCatId, setRushHourCats, setRushHourPositions, setRushHourNextCatId, setCustomerOrders, generateCustomerOrders, cones, scoops]);
 
-  return (
-    rushHourCats.map((cat, index) => (
-      cat && cat.image && (
-        <div
-          key={cat.id}
-          className="customer"
-          style={{
-            position: 'absolute',
-            left: `${rushHourPositions[index]}px`,
-            bottom: '0',
-            width: '220px',
-            zIndex: Math.floor(rushHourPositions[index])
-          }}
-        >
-          {customerOrders[index] && (
-            <div
-              className="order"
-              onClick={() => handleOrderClick(customerOrders[index], index, cat.id)}
-            >
-              {customerOrders[index]?.cone && (
-                <img
-                  className="cone-order"
-                  src={`/assets/${customerOrders[index].cone}`}
-                  alt="Cone"
-                />
-              )}
-              {customerOrders[index]?.scoops?.map((scoop, scoopIndex) => (
-                <img
-                  key={scoopIndex}
-                  className="scoop-order"
-                  src={`/assets/${scoop}`}
-                  alt={`Scoop ${scoopIndex + 1}`}
-                  style={{
-                    "--scoop-index": scoopIndex,
-                  }}
-                />
-              ))}
-            </div>
-          )}
+  // Helper function to handle z-index for customers
+  const getZIndexForCat = (position, isExiting = false) => {
+    // If the cat is exiting, it should be behind other cats
+    if (isExiting) return 1;
+    // Otherwise, cats further right (higher position) have lower z-index
+    return Math.floor(position);
+  };
 
-          <img
-            className="customer-image"
-            src={`/assets/${cat.image}`}
-            alt={`Customer ${index + 1}`}
-            onClick={() => handleOrderClick(customerOrders[index], index, cat.id)}
-            style={{ cursor: 'pointer' }}
-          />
-        </div>
-      )
-    ))
+  return (
+    <AnimatePresence>
+      {rushHourCats.map((cat, index) => (
+        cat && cat.image && (
+          <motion.div
+            key={cat.id}
+            className="customer"
+            initial={{ 
+              opacity: 1,
+              zIndex: getZIndexForCat(rushHourPositions[index])
+            }}
+            animate={{ 
+              opacity: 1, 
+              x: 0,
+              zIndex: getZIndexForCat(rushHourPositions[index])
+            }}
+            exit={{ 
+              opacity: 1, 
+              x: -window.innerWidth,
+              zIndex: getZIndexForCat(rushHourPositions[index], true)
+            }}
+            transition={{ 
+              duration: 1.2,
+              x: { 
+                type: "spring", 
+                stiffness: 70,
+                damping: 18,
+                mass: 1.5,
+              }
+            }}
+            style={{
+              position: 'absolute',
+              left: `${rushHourPositions[index]}px`,
+              bottom: '0',
+              width: '220px'
+            }}
+          >
+            {customerOrders[index] && (
+              <div
+                className="order"
+                onClick={() => handleOrderClick(customerOrders[index], index, cat.id)}
+              >
+                {customerOrders[index]?.cone && (
+                  <img
+                    className="cone-order"
+                    src={`/assets/${customerOrders[index].cone}`}
+                    alt="Cone"
+                  />
+                )}
+                {customerOrders[index]?.scoops?.map((scoop, scoopIndex) => (
+                  <img
+                    key={scoopIndex}
+                    className="scoop-order"
+                    src={`/assets/${scoop}`}
+                    alt={`Scoop ${scoopIndex + 1}`}
+                    style={{
+                      "--scoop-index": scoopIndex,
+                    }}
+                  />
+                ))}
+              </div>
+            )}
+
+            <img
+              className="customer-image"
+              src={`/assets/${cat.image}`}
+              alt={`Customer ${index + 1}`}
+              onClick={() => handleOrderClick(customerOrders[index], index, cat.id)}
+              style={{ cursor: 'pointer' }}
+            />
+          </motion.div>
+        )
+      ))}
+    </AnimatePresence>
   );
 }
 

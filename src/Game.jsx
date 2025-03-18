@@ -476,19 +476,19 @@ function Game() {
           setCustomerOrders(prevOrders => {
             let updatedOrders = [...prevOrders];
             updatedOrders.splice(customerIndex, 1);
-            const newOrder = generateCustomerOrders(cones, scoops, [
+        const newOrder = generateCustomerOrders(cones, scoops, [
               `customer${currentId}.png`,
-            ])[0];
+        ])[0];
             updatedOrders.push(newOrder);
-            return updatedOrders;
-          });
+        return updatedOrders;
+      });
 
           setNextCustomerId(currentId + 1 > 10 ? 1 : currentId + 1);
         }
         
         // Clear the assembled ice cream and reset animation state
-        setSelectedCone(null);
-        setSelectedScoops([]);
+      setSelectedCone(null);
+      setSelectedScoops([]);
         setOrderSuccess(false);
       }, 300);
     } else {
@@ -624,29 +624,29 @@ function Game() {
                 }}
               >
               {customerOrders[index] && (
-                <div
-                  className="order"
-                  onClick={() => handleOrderClick(customerOrders[index], index)}
-                >
-                  {customerOrders[index]?.cone && (
-                    <img
-                      className="cone-order"
-                      src={`/assets/${customerOrders[index].cone}`}
-                      alt="Cone"
-                    />
-                  )}
+              <div
+                className="order"
+                onClick={() => handleOrderClick(customerOrders[index], index)}
+              >
+                {customerOrders[index]?.cone && (
+                  <img
+                    className="cone-order"
+                    src={`/assets/${customerOrders[index].cone}`}
+                    alt="Cone"
+                  />
+                )}
                   {customerOrders[index]?.scoops?.map((scoop, scoopIndex) => (
-                    <img
-                      key={scoopIndex}
-                      className="scoop-order"
-                      src={`/assets/${scoop}`}
-                      alt={`Scoop ${scoopIndex + 1}`}
-                      style={{
-                        "--scoop-index": scoopIndex,
-                      }}
-                    />
-                  ))}
-                </div>
+                  <img
+                    key={scoopIndex}
+                    className="scoop-order"
+                    src={`/assets/${scoop}`}
+                    alt={`Scoop ${scoopIndex + 1}`}
+                    style={{
+                      "--scoop-index": scoopIndex,
+                    }}
+                  />
+                ))}
+              </div>
               )}
 
               <img
