@@ -610,7 +610,7 @@ function Game() {
                   zIndex: getZIndexForNormalMode(index, true)
                 }}
                 transition={{ 
-                  duration: 1.2,
+                  duration: .7,
                   x: { 
                     type: "spring", 
                     stiffness: 70,
