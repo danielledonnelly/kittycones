@@ -82,7 +82,8 @@ body {
   background-color: #9F86C0;
   bottom: 0;
   box-sizing: border-box;
-  border-top: 8px solid #241843;
+  border-top: 4px solid #241843;
+  border-bottom: 16px solid #241843;
   display: flex;
   justify-content: space-between;
   max-height: 30vh;

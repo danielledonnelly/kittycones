@@ -437,7 +437,7 @@ function Game() {
             setRushHourCats(prev => {
               return prev.map(cat => {
                 if (cat && cat.id === catId) {
-                  return { ...cat, image: null };
+                  return { ...cat, image: null, served: true };
                 }
                 return cat;
               });
@@ -448,29 +448,29 @@ function Game() {
               const newCats = [...prev];
               // Instead of replacing with empty string, set image to null
               if (newCats[customerIndex]) {
-                newCats[customerIndex] = { ...newCats[customerIndex], image: null };
+                newCats[customerIndex] = { ...newCats[customerIndex], image: null, served: true };
               }
               return newCats;
             });
           }
         } else {
           // Normal mode behavior
-          let currentId = nextCustomerId;
+        let currentId = nextCustomerId;
           let nextCustomer = `customer${currentId}.png`;
           
           // Update customer images
           setCustomerImages(prevImages => {
             let updatedImages = [...prevImages];
             updatedImages.splice(customerIndex, 1);
-            
-            while (updatedImages.includes(nextCustomer)) {
+
+        while (updatedImages.includes(nextCustomer)) {
               currentId = currentId + 1 > 10 ? 1 : currentId + 1;
               nextCustomer = `customer${currentId}.png`;
-            }
-            
+        }
+
             updatedImages.push(nextCustomer);
-            return updatedImages;
-          });
+        return updatedImages;
+      });
 
           // Add new order for the new customer
           setCustomerOrders(prevOrders => {
