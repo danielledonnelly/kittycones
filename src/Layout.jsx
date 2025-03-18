@@ -1,16 +1,25 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext, useRef } from "react";
 import { Outlet } from "react-router-dom";
+import { GameContext } from "./GameContext";
 
 // Component for the animated kitties background
 export const AnimatedKitties = () => {
   const [kitties, setKitties] = useState([]);
+  const { isRushHourMode } = useContext(GameContext);
+  const kittiesInitialized = useRef(false);
   
+  // Initialize kitties only once, not when rush hour mode changes
   useEffect(() => {
+    if (kittiesInitialized.current) return;
+    kittiesInitialized.current = true;
+    
     // Create initial kitties
     const newKitties = [];
     const kittyCount = 8; // More kitties for a fuller screen
     
     for (let i = 0; i < kittyCount; i++) {
+      // Ensure direction and movement are consistent
+      const direction = Math.random() > 0.5 ? 1 : -1; // 1 = facing right, -1 = facing left
       newKitties.push({
         id: i,
         image: `customer${(i % 10) + 1}.png`,
@@ -19,41 +28,54 @@ export const AnimatedKitties = () => {
         speed: Math.random() * 1 + 0.5, // Random speed
         bobPhase: Math.random() * Math.PI * 2, // Random starting phase for head bobbing
         scale: Math.random() * 0.2 + 0.3, // Random size between 0.3 and 0.5
-        direction: Math.random() > 0.5 ? 1 : -1, // Random direction (left or right)
+        direction: direction, // Facing direction: 1 = right, -1 = left
       });
     }
     
     setKitties(newKitties);
+  }, []); // Empty dependency array - only run once
+  
+  // Animation loop - separate effect to update positions
+  useEffect(() => {
+    if (kitties.length === 0) return;
     
-    // Animation loop
     const animationInterval = setInterval(() => {
       setKitties(prevKitties => {
         return prevKitties.map(kitty => {
-          // Move kitty horizontally based on direction
-          let newX = kitty.x + (kitty.speed * kitty.direction);
+          // Apply speed multiplier when in Rush Hour mode
+          const speedMultiplier = isRushHourMode ? 3.0 : 1.0;
           
-          // Reset position when it moves off-screen
-          if (newX > window.innerWidth + 150 && kitty.direction > 0) {
+          // Move kitty in the opposite direction of facing
+          // If kitty.direction = 1 (facing right), move left (negative x change)
+          // If kitty.direction = -1 (facing left), move right (positive x change)
+          let newX = kitty.x + (kitty.speed * speedMultiplier * -kitty.direction);
+          
+          // Reset position when it moves off-screen (reversed conditions)
+          if (newX > window.innerWidth + 150 && -kitty.direction > 0) {
             newX = -150;
-          } else if (newX < -150 && kitty.direction < 0) {
+          } else if (newX < -150 && -kitty.direction < 0) {
             newX = window.innerWidth + 150;
           }
           
-          // Update bob phase for head movement
-          const newBobPhase = (kitty.bobPhase + 0.05) % (Math.PI * 2);
+          // Update bob phase for head movement (faster in Rush Hour mode)
+          const bobIncrement = isRushHourMode ? 0.15 : 0.05;
+          const newBobPhase = (kitty.bobPhase + bobIncrement) % (Math.PI * 2);
+          
+          // More pronounced vertical movement in Rush Hour mode
+          const verticalMoveFactor = isRushHourMode ? 1.5 : 0.5;
           
           return {
             ...kitty,
             x: newX,
             bobPhase: newBobPhase,
-            y: kitty.y + Math.sin(newBobPhase) * 0.5, // Subtle vertical movement
+            y: kitty.y + Math.sin(newBobPhase) * verticalMoveFactor, // Vertical movement adjusted by mode
           };
         });
       });
     }, 16); // ~60fps
     
     return () => clearInterval(animationInterval);
-  }, []);
+  }, [kitties.length, isRushHourMode]);
   
   return (
     <div className="animated-kitties-container">
