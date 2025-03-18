@@ -2,6 +2,7 @@ import { useState, useRef, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "motion/react";
 import { GameContext } from "./GameContext";
+import RushHourMode from "./RushHourMode";
 
 // Arrays of cone and scoop images
 // NOTE TO SELF: May change the variables below from labeled to numbered so that they match the naming convention of customer images
@@ -79,6 +80,8 @@ function Game() {
   const [isRushHourInitialized, setIsRushHourInitialized] = useState(false);
   // Add a state to track the next cat ID to use in Rush Hour mode
   const [rushHourNextCatId, setRushHourNextCatId] = useState(1);
+  // Add unique identifiers for each cat in Rush Hour mode
+  const [rushHourCatIds, setRushHourCatIds] = useState([]);
 
   // Reset customer positions when the game starts or mode changes
   useEffect(() => {
@@ -131,16 +134,16 @@ function Game() {
       };
     } else {
       // Normal mode uses flexbox
-      return {
-        position: "absolute",
-        bottom: "30px",
-        left: 0,
-        width: "100%",
-        display: "flex",
+    return {
+      position: "absolute",
+      bottom: "30px",
+      left: 0,
+      width: "100%",
+      display: "flex",
         justifyContent: "space-evenly",
         transition: "transform 0.7s",
-        zIndex: 2,
-      };
+      zIndex: 2,
+    };
     }
   };
   
@@ -188,8 +191,13 @@ function Game() {
       
       // If transitioning from normal mode, preserve existing cats
       if (customerImages.length > 0) {
-        // Start with existing visible cats
-        initialCats = [...customerImages];
+        // Start with existing visible cats, but convert them to objects with ids
+        initialCats = customerImages.map((catImage, index) => {
+          return { 
+            image: catImage, 
+            id: `cat-${Date.now()}-${index}` 
+          };
+        });
         
         // Calculate their current positions - in normal mode they're evenly spaced
         const normalSpacing = screenWidth / customerImages.length;
@@ -217,7 +225,11 @@ function Game() {
       if (catsToAdd > 0) {
         for (let i = 0; i < catsToAdd; i++) {
           const newCatImg = `customer${nextCatId}.png`;
-          initialCats.push(newCatImg);
+          // Add cats as objects with unique IDs
+          initialCats.push({
+            image: newCatImg,
+            id: `cat-${Date.now()}-${initialCats.length}`
+          });
           
           // Position new cats off-screen to the right
           // Start from right edge of screen plus spacing between each additional cat
@@ -259,12 +271,11 @@ function Game() {
   useEffect(() => {
     // If we're switching FROM Rush Hour TO normal mode
     if (!isRushHourMode && rushHourCats.length > 0 && customerImages.length === 0) {
-      // Take the visible Rush Hour cats (ones that aren't empty strings from being served)
-      // and use them to initialize the normal mode
-      const visibleCats = rushHourCats.filter(cat => cat !== "");
+      // Take the visible Rush Hour cats (ones that have a valid image property) and use them for normal mode
+      const visibleCats = rushHourCats.filter(cat => cat && cat.image);
       
-      // Only take up to 5 cats for normal mode
-      const catsForNormalMode = visibleCats.slice(0, 5);
+      // Only take up to 5 cats for normal mode, and extract just the image paths
+      const catsForNormalMode = visibleCats.slice(0, 5).map(cat => cat.image);
       
       // If we don't have enough cats, add some
       const catsToAdd = 5 - catsForNormalMode.length;
@@ -281,7 +292,7 @@ function Game() {
       // Preserve orders for existing cats and only generate for new ones
       setCustomerOrders(prevOrders => {
         // Calculate how many existing orders we can reuse
-        const existingCats = rushHourCats.filter(cat => cat !== "");
+        const existingCats = rushHourCats.filter(cat => cat && cat.image);
         const reuseOrdersCount = Math.min(existingCats.length, 5); // At most 5 for normal mode
         
         // Determine if we need to generate any new orders
@@ -325,11 +336,14 @@ function Game() {
           // Update cats array too
           setRushHourCats(prevCats => {
             const newCats = [...prevCats];
-            newCats.shift();
+            newCats.shift(); // Remove leftmost cat
             
-            // Add new cat using the next ID in sequence
+            // Add new cat using the next ID in sequence, as an object
             const newCatImg = `customer${rushHourNextCatId}.png`;
-            newCats.push(newCatImg);
+            newCats.push({
+              image: newCatImg,
+              id: `cat-${Date.now()}-${newCats.length}`
+            });
             
             // Update the next cat ID for future use, cycling through 1-10
             setRushHourNextCatId(prevId => prevId % 10 + 1);
@@ -337,7 +351,7 @@ function Game() {
             // Update orders
             setCustomerOrders(prevOrders => {
               const newOrders = [...prevOrders];
-              newOrders.shift();
+              newOrders.shift(); // Remove leftmost order
               
               // Generate new order for the new cat
               const newOrder = generateCustomerOrders(
@@ -390,8 +404,8 @@ function Game() {
     setSelectedScoops((prevScoops) => [...prevScoops, scoop]);
   };
 
-  // Handle click for Rush Hour mode
-  const handleOrderClick = (customerOrder, customerIndex) => {
+  // Handle click for Rush Hour mode - Modified to use cat objects
+  const handleOrderClick = (customerOrder, customerIndex, catId = null) => {
     if (!selectedCone || selectedScoops.length === 0) return;
 
     const isConeMatch = customerOrder?.cone === selectedCone;
@@ -408,19 +422,39 @@ function Game() {
       // Increment coins
       setCoins((prevCoins) => prevCoins + 15);
 
+      // Immediately remove the order for this customer
+      setCustomerOrders(prevOrders => {
+        const updatedOrders = [...prevOrders];
+        updatedOrders[customerIndex] = null;
+        return updatedOrders;
+      });
+
       // Set a timeout to reset the ice cream after the animation
       setTimeout(() => {
         if (isRushHourMode) {
-          // For Rush Hour mode, simply mark the cat as invisible by replacing its image
-          // But keep its position in the array so other cats continue moving as normal
-          setRushHourCats(prev => {
-            const newCats = [...prev];
-            // Replace with empty string to make it invisible, but keep its position
-            newCats[customerIndex] = "";
-            return newCats;
-          });
+          // Find the cat by ID and mark it as served (set image to null)
+          if (catId) {
+            setRushHourCats(prev => {
+              return prev.map(cat => {
+                if (cat && cat.id === catId) {
+                  return { ...cat, image: null };
+                }
+                return cat;
+              });
+            });
+          } else {
+            // Fallback to using the index (keep old behavior as backup)
+            setRushHourCats(prev => {
+              const newCats = [...prev];
+              // Instead of replacing with empty string, set image to null
+              if (newCats[customerIndex]) {
+                newCats[customerIndex] = { ...newCats[customerIndex], image: null };
+              }
+              return newCats;
+            });
+          }
         } else {
-          // Normal mode behavior remains unchanged
+          // Normal mode behavior
           let currentId = nextCustomerId;
           let nextCustomer = `customer${currentId}.png`;
           
@@ -437,8 +471,8 @@ function Game() {
             updatedImages.push(nextCustomer);
             return updatedImages;
           });
-          
-          // Update customer orders
+
+          // Add new order for the new customer
           setCustomerOrders(prevOrders => {
             let updatedOrders = [...prevOrders];
             updatedOrders.splice(customerIndex, 1);
@@ -448,7 +482,7 @@ function Game() {
             updatedOrders.push(newOrder);
             return updatedOrders;
           });
-          
+
           setNextCustomerId(currentId + 1 > 10 ? 1 : currentId + 1);
         }
         
@@ -546,73 +580,25 @@ function Game() {
       {/* Customers Layer */}
       <div style={getCustomerContainerStyles()}>
         {isRushHourMode ? (
-          /* Rush Hour Mode - ultra simple implementation */
-          rushHourCats.map((cat, index) => (
-            cat && (
-              <div
-                key={`cat-${index}-${cat}`}
-                className="customer"
-                style={{
-                  position: 'absolute',
-                  left: `${rushHourPositions[index]}px`,
-                  bottom: '0',
-                  width: '220px'
-                }}
-              >
-                {/* Ice Cream Order */}
-                {customerOrders[index] && (
-                  <div
-                    className="order"
-                    onClick={() => handleOrderClick(customerOrders[index], index)}
-                  >
-                    {/* Cone */}
-                    {customerOrders[index]?.cone && (
-                      <img
-                        className="cone-order"
-                        src={`/assets/${customerOrders[index].cone}`}
-                        alt="Cone"
-                      />
-                    )}
-                    {/* Scoops */}
-                    {customerOrders[index]?.scoops?.map((scoop, scoopIndex) => (
-                      <img
-                        key={scoopIndex}
-                        className="scoop-order"
-                        src={`/assets/${scoop}`}
-                        alt={`Scoop ${scoopIndex + 1}`}
-                        style={{
-                          "--scoop-index": scoopIndex,
-                        }}
-                      />
-                    ))}
-                  </div>
-                )}
-
-                {/* Customer Image */}
-                <img
-                  className="customer-image"
-                  src={`/assets/${cat}`}
-                  alt={`Customer ${index + 1}`}
-                  onClick={() => handleOrderClick(customerOrders[index], index)}
-                  style={{ cursor: 'pointer' }}
-                />
-              </div>
-            )
-          ))
+          <RushHourMode
+            rushHourCats={rushHourCats}
+            rushHourPositions={rushHourPositions}
+            customerOrders={customerOrders}
+            handleOrderClick={handleOrderClick}
+          />
         ) : (
-          /* Normal Mode - with updated exit animation */
-          <AnimatePresence mode="popLayout">
+      <AnimatePresence mode="popLayout">
             {customerImages.map((customer, index) => (
-              <motion.div
+            <motion.div
                 key={customer}
-                layout
-                className="customer"
+              layout
+              className="customer"
                 initial={{ 
                   opacity: 1, 
                   x: 300, 
                   zIndex: getZIndexForNormalMode(index) 
                 }}
-                animate={{ 
+              animate={{ 
                   opacity: 1, 
                   x: 0, 
                   scale: 1, 
@@ -620,8 +606,8 @@ function Game() {
                 }}
                 exit={{ 
                   opacity: 1, 
-                  x: -window.innerWidth, // Move completely off screen to the left
-                  zIndex: getZIndexForNormalMode(index, true) // Low z-index when exiting
+                  x: -window.innerWidth,
+                  zIndex: getZIndexForNormalMode(index, true)
                 }}
                 transition={{ 
                   duration: 1.2,
@@ -637,12 +623,11 @@ function Game() {
                   position: "relative"
                 }}
               >
-                {/* Ice Cream Order */}
+              {customerOrders[index] && (
                 <div
                   className="order"
                   onClick={() => handleOrderClick(customerOrders[index], index)}
                 >
-                  {/* Cone */}
                   {customerOrders[index]?.cone && (
                     <img
                       className="cone-order"
@@ -650,7 +635,6 @@ function Game() {
                       alt="Cone"
                     />
                   )}
-                  {/* Scoops */}
                   {customerOrders[index]?.scoops?.map((scoop, scoopIndex) => (
                     <img
                       key={scoopIndex}
@@ -663,18 +647,18 @@ function Game() {
                     />
                   ))}
                 </div>
+              )}
 
-                {/* Customer Image */}
-                <img
-                  className="customer-image"
-                  src={`/assets/${customer}`}
-                  alt={`Customer ${index + 1}`}
-                  onClick={() => handleOrderClick(customerOrders[index], index)}
-                  style={{ cursor: 'pointer' }}
-                />
-              </motion.div>
-            ))}
-          </AnimatePresence>
+              <img
+                className="customer-image"
+                src={`/assets/${customer}`}
+                alt={`Customer ${index + 1}`}
+                onClick={() => handleOrderClick(customerOrders[index], index)}
+                style={{ cursor: 'pointer' }}
+              />
+            </motion.div>
+          ))}
+      </AnimatePresence>
         )}
       </div>
       {/* Counter */}

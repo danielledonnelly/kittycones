@@ -114,7 +114,11 @@ body {
   flex-grow: 1;
   position: relative;
   width: 150px;
-  margin-bottom: 4%;
+  margin-bottom: 10%;
+}
+
+.customer-image {
+  max-width: 400px;
 }
 
 .disable-buttons button:not(.screen-button){
@@ -245,17 +249,6 @@ body {
   color: #5E558F !important;
 }
 
-/* Ensure mute button always has the same color */
-.mute-button svg {
-  color: #5E558F !important;
-  fill: #5E558F !important;
-}
-
-.mute-button.MuiIconButton-root {
-  background-color: transparent !important;
-  color: #5E558F !important;
-}
-
 .mute-button.MuiIconButton-root:hover {
   background-color: transparent !important;
 }
@@ -321,14 +314,21 @@ body {
 }
 
 .screen-title {
-  font-size: 80px;
+  font-size: 100px;
   font-weight: bold;
   margin-top: 0;
   margin-bottom: 20px;
   font-family: 'Fredoka', sans-serif;
   letter-spacing: 4px;
-  color: #241843;
+  color: #5E558F;
   z-index: 3;
+  text-shadow: 
+    /* Inner outline */
+    -1px -1px 0 white,
+    1px -1px 0 white,
+    -1px 1px 0 white,
+    1px 1px 0 white;
+  filter: drop-shadow(0 0 2px white) drop-shadow(0 0 4px white);
 }
 
 .screen-text {
@@ -346,9 +346,9 @@ body {
 
 .screen-button {
   width: 150px;
-  background-color: #241843;
+  background-color: #5E558F;
   color: #FFF;
-  border: none;
+  border: 3px solid white;
   border-radius: 8px;
   padding: 12px 24px;
   margin: 5px;
@@ -356,6 +356,7 @@ body {
   font-weight: bold;
   cursor: pointer;
   font-family: 'Lato', sans-serif;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
 }
 
 .starting {
@@ -379,16 +380,6 @@ body {
   top: 15px !important;
   right: 170px !important;
   z-index: 10 !important;
-  color: #5E558F !important;
-}
-
-.rush-hour-button svg {
-  color: #5E558F !important;
-  fill: #5E558F !important;
-}
-
-.rush-hour-button.MuiIconButton-root {
-  background-color: transparent !important;
   color: #5E558F !important;
 }
 
@@ -478,11 +469,11 @@ body {
   }
 
   .customer {
-    margin-bottom: 2%;
+    margin-bottom: 4%;
   }
 
   .customer-image {
-    max-width: 500px;
+    max-width: 400px;
   }
 
   .ice-cream-cone {
@@ -759,7 +750,7 @@ body {
   text-align: center;
   text-transform: uppercase;
   background-color: white;
-  color: #241843;
+  color: #5E558F;
 }
 
 .initial-input:focus {
@@ -789,7 +780,7 @@ body {
   flex-direction: row;
   justify-content: center;
   gap: 20px;
-  margin-top: 20px;
+  margin-top: auto;
   width: 100%;
 }
 
@@ -854,6 +845,300 @@ body {
 /* Make sure the starting screen content appears above the animated kitties */
 .starting.screen {
   position: relative;
-  z-index: 3;
-  background-color: rgba(239, 218, 230, 0.8); /* Semi-transparent background */
+  z-index: 10;
+  background-color: transparent;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 80vh;
+  padding-top: 50px;
+  padding-bottom: 50px;
+}
+
+.home-title-container {
+  width: 100%;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+/* Title Styles */
+.home-title {
+  font-family: 'Fredoka', sans-serif;
+  font-size: 125px;
+  font-weight: bold;
+  letter-spacing: 16px;
+  color: #DEB1CB;
+  text-shadow: 
+    /* Thicker white middle outline for better separation */
+    -3px -3px 0 white,
+    -3px -2px 0 white,
+    -3px -1px 0 white,
+    -3px 0px 0 white,
+    -3px 1px 0 white,
+    -3px 2px 0 white,
+    -3px 3px 0 white,
+    
+    -2px -3px 0 white,
+    -2px 3px 0 white,
+    
+    -1px -3px 0 white,
+    -1px 3px 0 white,
+    
+    0px -3px 0 white,
+    0px 3px 0 white,
+    
+    1px -3px 0 white,
+    1px 3px 0 white,
+    
+    2px -3px 0 white,
+    2px 3px 0 white,
+    
+    3px -3px 0 white,
+    3px -2px 0 white,
+    3px -1px 0 white,
+    3px 0px 0 white,
+    3px 1px 0 white,
+    3px 2px 0 white,
+    3px 3px 0 white,
+    
+    /* Dark purple outer outline with adequate spacing between steps */
+    -6px -6px 0 #241843,
+    -6px -5px 0 #241843,
+    -6px -4px 0 #241843,
+    -6px -3px 0 #241843,
+    -6px -2px 0 #241843,
+    -6px -1px 0 #241843,
+    -6px 0px 0 #241843,
+    -6px 1px 0 #241843,
+    -6px 2px 0 #241843,
+    -6px 3px 0 #241843,
+    -6px 4px 0 #241843,
+    -6px 5px 0 #241843,
+    -6px 6px 0 #241843,
+    
+    -5px -6px 0 #241843,
+    -5px 6px 0 #241843,
+    
+    -4px -6px 0 #241843, 
+    -4px 6px 0 #241843,
+    
+    -3px -6px 0 #241843,
+    -3px 6px 0 #241843,
+    
+    -2px -6px 0 #241843,
+    -2px 6px 0 #241843,
+    
+    -1px -6px 0 #241843,
+    -1px 6px 0 #241843,
+    
+    0px -6px 0 #241843,
+    0px 6px 0 #241843,
+    
+    1px -6px 0 #241843,
+    1px 6px 0 #241843,
+    
+    2px -6px 0 #241843,
+    2px 6px 0 #241843,
+    
+    3px -6px 0 #241843,
+    3px 6px 0 #241843,
+    
+    4px -6px 0 #241843,
+    4px 6px 0 #241843,
+    
+    5px -6px 0 #241843,
+    5px 6px 0 #241843,
+    
+    6px -6px 0 #241843,
+    6px -5px 0 #241843,
+    6px -4px 0 #241843,
+    6px -3px 0 #241843,
+    6px -2px 0 #241843,
+    6px -1px 0 #241843,
+    6px 0px 0 #241843,
+    6px 1px 0 #241843,
+    6px 2px 0 #241843,
+    6px 3px 0 #241843,
+    6px 4px 0 #241843,
+    6px 5px 0 #241843,
+    6px 6px 0 #241843;
+  margin-bottom: 30px;
+}
+
+/* Home Button Styles */
+.home-nav-button {
+  background-color: #241843;
+  color: white;
+  font-family: 'Lato', sans-serif;
+  font-weight: bold;
+  font-size: 18px;
+  padding: 12px 24px;
+  margin: 5px;
+  min-width: 150px;
+  border: 3px solid white;
+  border-radius: 8px;
+  box-shadow: none;
+  transition: transform 0.2s ease, background-color 0.2s ease;
+  cursor: pointer;
+}
+
+.home-nav-button:hover {
+  background-color: #352a64;
+  transform: scale(1.1);
+}
+
+@media (max-width: 1600px) {
+  .home-title {
+    font-size: 60px;
+    letter-spacing: 8px;
+    text-shadow: 
+      /* Thicker white middle outline */
+      -2px -2px 0 white,
+      -2px -1px 0 white,
+      -2px 0px 0 white,
+      -2px 1px 0 white,
+      -2px 2px 0 white,
+      
+      -1px -2px 0 white,
+      -1px 2px 0 white,
+      
+      0px -2px 0 white,
+      0px 2px 0 white,
+      
+      1px -2px 0 white,
+      1px 2px 0 white,
+      
+      2px -2px 0 white,
+      2px -1px 0 white,
+      2px 0px 0 white,
+      2px 1px 0 white,
+      2px 2px 0 white,
+      
+      /* Moderate dark purple outer outline with better spacing */
+      -4px -4px 0 #241843,
+      -4px -3px 0 #241843,
+      -4px -2px 0 #241843,
+      -4px -1px 0 #241843,
+      -4px 0px 0 #241843,
+      -4px 1px 0 #241843,
+      -4px 2px 0 #241843,
+      -4px 3px 0 #241843,
+      -4px 4px 0 #241843,
+      
+      -3px -4px 0 #241843,
+      -3px 4px 0 #241843,
+      
+      -2px -4px 0 #241843,
+      -2px 4px 0 #241843,
+      
+      -1px -4px 0 #241843,
+      -1px 4px 0 #241843,
+      
+      0px -4px 0 #241843,
+      0px 4px 0 #241843,
+      
+      1px -4px 0 #241843,
+      1px 4px 0 #241843,
+      
+      2px -4px 0 #241843,
+      2px 4px 0 #241843,
+      
+      3px -4px 0 #241843,
+      3px 4px 0 #241843,
+      
+      4px -4px 0 #241843,
+      4px -3px 0 #241843,
+      4px -2px 0 #241843,
+      4px -1px 0 #241843,
+      4px 0px 0 #241843,
+      4px 1px 0 #241843,
+      4px 2px 0 #241843,
+      4px 3px 0 #241843,
+      4px 4px 0 #241843;
+  }
+
+  .home-nav-button {
+    padding: 10px 20px;
+    font-size: 16px;
+  }
+}
+
+/* Game Component Styles */
+.game-customer-container {
+  position: absolute;
+  bottom: 30px;
+  left: 0;
+  width: 100%;
+  height: 300px;
+  overflow: visible;
+  z-index: 2;
+}
+
+.game-customer-container.normal-mode {
+  display: flex;
+  justify-content: space-evenly;
+  transition: transform 0.7s;
+}
+
+.game-customer {
+  width: 220px;
+  position: relative;
+  cursor: pointer;
+}
+
+.game-customer.rush-hour {
+  position: absolute;
+  bottom: 0;
+  width: 220px;
+}
+
+.game-ice-cream-scoop {
+  position: absolute;
+  left: 50%;
+  margin-left: -125px;
+}
+
+/* Animation States */
+.game-ice-cream-initial {
+  transform: scale(1.5) translateY(-100px);
+  opacity: 1;
+}
+
+.game-ice-cream-success {
+  transform: scale(1) translateY(-100px) translateX(150px);
+  opacity: 0;
+}
+
+.game-ice-cream-normal {
+  transform: scale(1) translateY(0) translateX(0);
+  opacity: 1;
+}
+
+/* Customer Animation States */
+.customer-enter {
+  opacity: 1;
+  transform: translateX(300px);
+}
+
+.customer-normal {
+  opacity: 1;
+  transform: translateX(0) scale(1);
+}
+
+.customer-exit {
+  opacity: 1;
+  transform: translateX(-100vw);
+}
+
+/* Transition Durations */
+.ice-cream-transition {
+  transition: transform 0.2s, opacity 0.15s;
+}
+
+.ice-cream-transition.success {
+  transition: transform 0.2s, opacity 0.15s 0.05s;
+}
+
+.customer-transition {
+  transition: transform 1.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
