@@ -1,5 +1,5 @@
 import React from 'react';
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 
 function RushHourMode({ 
   rushHourCats, 
@@ -8,25 +8,20 @@ function RushHourMode({
   handleOrderClick 
 }) {
   return (
-    <AnimatePresence>
+    <>
       {rushHourCats.map((cat, index) => (
         cat && cat.image && !cat.served && (
           <motion.div
             key={cat.id}
             className="customer"
-            initial={{ opacity: 1, x: 0 }}
             animate={{
               left: `${rushHourPositions[index]}px`,
               opacity: 1
             }}
-            exit={{ 
-              opacity: 0, 
-              x: -200,
-              transition: { duration: 0.3 }
-            }}
             transition={{ 
               type: "tween",
-              duration: 0.1
+              duration: 0.1,
+              ease: "linear"
             }}
             style={{
               position: 'absolute',
@@ -73,7 +68,7 @@ function RushHourMode({
           </motion.div>
         )
       ))}
-    </AnimatePresence>
+    </>
   );
 }
 

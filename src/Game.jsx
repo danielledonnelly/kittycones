@@ -48,13 +48,13 @@ function Game() {
 
   const [customerImages, setCustomerImages] = useState(
     // State to hold a list of customer images
-    Array.from({ length: 5 }, (_, i) => `customer${i + 1}.png`)
+    Array.from({ length: 4 }, (_, i) => `customer${i + 1}.png`)
   );
 
   const [nextCustomerId, setNextCustomerId] = useState(6);
   
   // Add state to track customer positions
-  const [customerPositions, setCustomerPositions] = useState([0, 0, 0, 0, 0]);
+  const [customerPositions, setCustomerPositions] = useState([0, 0, 0, 0]);
 
   // STATISTICS
   const [time, setTime] = useState(30); // State to track the remaining time
@@ -64,7 +64,7 @@ function Game() {
     generateCustomerOrders(
       cones,
       scoops,
-      Array.from({ length: 5 }, (_, i) => `customer${i + 1}.png`)
+      Array.from({ length: 4 }, (_, i) => `customer${i + 1}.png`)
     )
   );
 
@@ -72,7 +72,7 @@ function Game() {
   const [lineOffset, setLineOffset] = useState(0);
 
   // Add state to track which positions are occupied in Rush Hour mode
-  const [occupiedPositions, setOccupiedPositions] = useState([true, true, true, true, true]);
+  const [occupiedPositions, setOccupiedPositions] = useState([true, true, true, true]);
 
   // For Rush Hour mode, create a fixed array of cats that move together
   const [rushHourCats, setRushHourCats] = useState([]);
@@ -93,7 +93,7 @@ function Game() {
         setCustomerPositions([200, 100, 0, -100, -200]);
       } else {
         // For normal mode, use centered positions
-        setCustomerPositions([0, 0, 0, 0, 0]);
+        setCustomerPositions([0, 0, 0, 0]);
       }
     }
   }, []); // No dependency on isRushHourMode to prevent repositioning on mode change
@@ -103,22 +103,23 @@ function Game() {
     // This effect handles transition between modes
     if (isRushHourMode) {
       // When switching TO Rush Hour mode, set positions based on current visual positions
-      // For customers already displayed in normal mode, they're at x: 0 visually
-      // So we need to update their positions to match what they're showing visually
-      setCustomerPositions(prev => {
-        // Copy their current positions to maintain existing Rush Hour customers if any
-        const newPositions = [...prev];
-        
-        // Ensure the positions array matches the customers array length 
-        // and update positions to match what's visually on screen
-        while (newPositions.length < customerImages.length) {
-          newPositions.push(0); // Add positions for any missing customers at center position
-        }
-        
-        return newPositions;
+      const screenWidth = window.innerWidth;
+      const sectionWidth = screenWidth / 4;
+      
+      // Calculate positions for the initial 4 cats
+      const initialPositions = Array.from({ length: 4 }, (_, i) => {
+        return (i * sectionWidth) + (sectionWidth/2 - 110);
       });
+      
+      // Add positions for additional cats off-screen to the right
+      const rightEdgePos = screenWidth;
+      const additionalPositions = Array.from({ length: 5 }, (_, i) => {
+        return rightEdgePos + (i * sectionWidth);
+      });
+      
+      setRushHourPositions([...initialPositions, ...additionalPositions]);
     }
-  }, [isRushHourMode, customerImages.length]);
+  }, [isRushHourMode]);
   
   // Completely simplified container styles for Rush Hour mode
   const getCustomerContainerStyles = () => {
@@ -129,21 +130,21 @@ function Game() {
         left: 0,
         width: "100%",
         height: "300px",
-        overflow: "visible", // Allow cats to be visible outside container
-        zIndex: 2
+        overflow: "visible",
+        zIndex: 2,
+        transition: "none"
       };
     } else {
-      // Normal mode uses flexbox
-    return {
-      position: "absolute",
-      bottom: "30px",
-      left: 0,
-      width: "100%",
-      display: "flex",
+      return {
+        position: "absolute",
+        bottom: "30px",
+        left: 0,
+        width: "100%",
+        display: "flex",
         justifyContent: "space-evenly",
-        transition: "transform 0.7s",
-      zIndex: 2,
-    };
+        zIndex: 2,
+        transition: "none"
+      };
     }
   };
   
@@ -151,9 +152,9 @@ function Game() {
   const getCustomerStyle = (index) => {
     if (isRushHourMode) {
       // Fixed positioning for Rush Hour mode, with specific left positions
-      // Divide screen into 5 equal sections
+      // Divide screen into 4 equal sections
       const screenWidth = window.innerWidth;
-      const sectionWidth = screenWidth / 5;
+      const sectionWidth = screenWidth / 4;
       
       // Position cats in a line off to the right, based on their index
       return {
@@ -174,7 +175,7 @@ function Game() {
   // Reset occupied positions when the game starts or mode changes
   useEffect(() => {
     if (isRushHourMode) {
-      setOccupiedPositions([true, true, true, true, true]);
+      setOccupiedPositions([true, true, true, true]);
     }
   }, [isRushHourMode]);
 
@@ -182,7 +183,7 @@ function Game() {
   useEffect(() => {
     if (isRushHourMode && !isRushHourInitialized) {
       const screenWidth = window.innerWidth;
-      const spacing = 300; // Fixed spacing between cats
+      const sectionWidth = screenWidth / 4; // Use 4 sections for consistent spacing
       
       // Create initial arrays for Rush Hour mode
       let initialCats = [];
@@ -199,70 +200,58 @@ function Game() {
           };
         });
         
-        // Calculate their current positions - in normal mode they're evenly spaced
-        const normalSpacing = screenWidth / customerImages.length;
+        // Calculate their current positions - evenly spaced across the screen
         initialPositions = customerImages.map((_, index) => {
-          // In normal mode, cats are evenly distributed with flexbox
-          // We need to estimate their absolute positions for Rush Hour mode
-          return (index * normalSpacing) + (normalSpacing/2 - 110);
+          return (index * sectionWidth) + (sectionWidth/2 - 110);
         });
         
         // Update nextCatId to continue from where we left off
-        // Extract numbers from customerImages filenames like "customer5.png" to get 5
         const existingIds = customerImages.map(img => {
           const match = img.match(/customer(\d+)\.png/);
           return match ? parseInt(match[1]) : 0;
         });
         nextCatId = Math.max(...existingIds, 0) + 1;
-        if (nextCatId > 10) nextCatId = 1; // Cycle back to 1 if we exceed 10
+        if (nextCatId > 10) nextCatId = 1;
       }
       
-      // Add more cats off-screen to the right (for continuous movement)
-      const catsToAdd = 10 - initialCats.length;
+      // Add more cats off-screen to the right with the same spacing
+      const catsToAdd = 5 - initialCats.length;
       const existingOrdersCount = customerOrders.length;
       let newOrders = [];
       
       if (catsToAdd > 0) {
         for (let i = 0; i < catsToAdd; i++) {
           const newCatImg = `customer${nextCatId}.png`;
-          // Add cats as objects with unique IDs
           initialCats.push({
             image: newCatImg,
             id: `cat-${Date.now()}-${initialCats.length}`
           });
           
-          // Position new cats off-screen to the right
-          // Start from right edge of screen plus spacing between each additional cat
+          // Position new cats off-screen to the right with the same spacing
+          // Start with a small extra space for the first new cat
           const rightEdgePos = screenWidth;
-          initialPositions.push(rightEdgePos + (i * spacing));
+          const extraOffset = i === 0 ? sectionWidth/4 : 0; // Add quarter section width for first new cat
+          initialPositions.push(rightEdgePos + extraOffset + (i * sectionWidth));
           
-          // Generate order only for the new cat
           const newOrder = generateCustomerOrders(cones, scoops, [newCatImg])[0];
           newOrders.push(newOrder);
           
-          // Move to next cat ID, cycling back to 1 after reaching 10
           nextCatId = nextCatId % 10 + 1;
         }
       }
       
-      // Update state with our calculated values
       setRushHourCats(initialCats);
       setRushHourPositions(initialPositions);
-      setRushHourNextCatId(nextCatId); // Remember where to start for the next cat
+      setRushHourNextCatId(nextCatId);
       setIsRushHourInitialized(true);
       
-      // Update orders by preserving existing ones and adding new ones
       if (newOrders.length > 0 || initialCats.length !== existingOrdersCount) {
         setCustomerOrders(prevOrders => {
-          // Keep all existing orders
           const preservedOrders = prevOrders.slice(0, Math.min(prevOrders.length, initialCats.length - newOrders.length));
-          
-          // Return combined orders: preserved existing orders + new orders for new cats
           return [...preservedOrders, ...newOrders];
         });
       }
     } else if (!isRushHourMode) {
-      // Reset when exiting Rush Hour mode
       setIsRushHourInitialized(false);
     }
   }, [isRushHourMode, isRushHourInitialized, customerImages, customerOrders, cones, scoops]);
@@ -321,6 +310,9 @@ function Game() {
     
     const moveInterval = setInterval(() => {
       setRushHourPositions(prev => {
+        const screenWidth = window.innerWidth;
+        const sectionWidth = screenWidth / 4; // Use 4 sections for consistent spacing
+        
         // Move all cats left by fixed amount
         const newPositions = prev.map(pos => pos - 2);
         
@@ -329,23 +321,23 @@ function Game() {
           // Remove leftmost cat
           newPositions.shift();
           
-          // Add new cat at right end (based on rightmost cat's position)
+          // Add new cat at right end with the same spacing
           const rightmostPos = newPositions[newPositions.length - 1];
-          newPositions.push(rightmostPos + 300);
+          newPositions.push(rightmostPos + sectionWidth);
           
           // Update cats array too
           setRushHourCats(prevCats => {
             const newCats = [...prevCats];
             newCats.shift(); // Remove leftmost cat
             
-            // Add new cat using the next ID in sequence, as an object
+            // Add new cat using the next ID in sequence
             const newCatImg = `customer${rushHourNextCatId}.png`;
             newCats.push({
               image: newCatImg,
               id: `cat-${Date.now()}-${newCats.length}`
             });
             
-            // Update the next cat ID for future use, cycling through 1-10
+            // Update the next cat ID for future use
             setRushHourNextCatId(prevId => prevId % 10 + 1);
             
             // Update orders
