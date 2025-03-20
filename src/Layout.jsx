@@ -23,7 +23,7 @@ export const AnimatedKitties = () => {
     
     // Create initial kitties
     const newKitties = [];
-    const kittyCount = 5;
+    const kittyCount = 4;
     
     // Ensure unique cat types (no duplicates)
     const availableTypes = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
@@ -40,7 +40,7 @@ export const AnimatedKitties = () => {
     for (let i = 0; i < kittyCount; i++) {
       const direction = Math.random() > 0.5 ? 1 : -1;
       
-      const segmentMargin = screenSegmentWidth * 0.2;
+      const segmentMargin = screenSegmentWidth * 0.3;
       const segmentStart = i * screenSegmentWidth + segmentMargin;
       const segmentEnd = (i + 1) * screenSegmentWidth - segmentMargin;
       const segmentWidth = segmentEnd - segmentStart;
@@ -79,6 +79,15 @@ export const AnimatedKitties = () => {
     
     // Update the audio source and play
     meowAudio.current.src = selectedMeow;
+    meowAudio.current.volume = 1.0; // Set volume to 100% for maximum meow power!
+    
+    // Adjust pitch and speed for Rush Hour mode
+    if (isRushHourMode) {
+      meowAudio.current.playbackRate = 2.0; // Double speed and higher pitched for Rush Hour
+    } else {
+      meowAudio.current.playbackRate = 0.8; // Slightly slower for normal mode
+    }
+    
     meowAudio.current.play().catch(error => {
       console.log("Audio play failed:", error);
     });
@@ -106,7 +115,7 @@ export const AnimatedKitties = () => {
               spawnCooldown.current = true;
               setTimeout(() => {
                 spawnCooldown.current = false;
-              }, 2000);
+              }, 3000);
               
               setTimeout(() => {
                 setKitties(current => 
@@ -126,7 +135,7 @@ export const AnimatedKitties = () => {
               spawnCooldown.current = true;
               setTimeout(() => {
                 spawnCooldown.current = false;
-              }, 2000);
+              }, 3000);
               
               setTimeout(() => {
                 setKitties(current => 
