@@ -833,7 +833,7 @@ body {
   width: 100%;
   height: 100%;
   overflow: hidden;
-  pointer-events: none; /* Allow clicks to pass through to elements below */
+  pointer-events: auto; /* Allow clicks on the container */
   z-index: 2;
 }
 
@@ -841,6 +841,7 @@ body {
   position: absolute;
   transition: transform 0.3s ease-in-out;
   filter: drop-shadow(0 5px 10px rgba(0, 0, 0, 0.1));
+  pointer-events: auto; /* Ensure kitties are clickable */
 }
 
 /* Make sure the starting screen content appears above the animated kitties */
@@ -854,116 +855,57 @@ body {
   height: 80vh;
   padding-top: 50px;
   padding-bottom: 50px;
+  pointer-events: none; /* Allow clicks to pass through to kitties */
 }
 
 .home-title-container {
   width: 100%;
-  text-align: center;
-  margin-bottom: 20px;
+  pointer-events: auto; /* Make title clickable */
+}
+
+.home-buttons-row {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  pointer-events: auto; /* Make buttons clickable */
+}
+
+@keyframes shine {
+  0%, 97% {
+    background-position: 200% 0%;
+    opacity: 0;
+  }
+  98% {
+    opacity: 0.3;
+  }
+  100% {
+    background-position: -200% 0%;
+    opacity: 0;
+  }
 }
 
 /* Title Styles */
 .home-title {
   font-family: 'Fredoka', sans-serif;
-  font-size: 125px;
-  font-weight: bold;
-  letter-spacing: 16px;
-  color: #DEB1CB;
-  text-shadow: 
-    /* Thicker white middle outline for better separation */
-    -3px -3px 0 white,
-    -3px -2px 0 white,
-    -3px -1px 0 white,
-    -3px 0px 0 white,
-    -3px 1px 0 white,
-    -3px 2px 0 white,
-    -3px 3px 0 white,
-    
-    -2px -3px 0 white,
-    -2px 3px 0 white,
-    
-    -1px -3px 0 white,
-    -1px 3px 0 white,
-    
-    0px -3px 0 white,
-    0px 3px 0 white,
-    
-    1px -3px 0 white,
-    1px 3px 0 white,
-    
-    2px -3px 0 white,
-    2px 3px 0 white,
-    
-    3px -3px 0 white,
-    3px -2px 0 white,
-    3px -1px 0 white,
-    3px 0px 0 white,
-    3px 1px 0 white,
-    3px 2px 0 white,
-    3px 3px 0 white,
-    
-    /* Dark purple outer outline with adequate spacing between steps */
-    -6px -6px 0 #241843,
-    -6px -5px 0 #241843,
-    -6px -4px 0 #241843,
-    -6px -3px 0 #241843,
-    -6px -2px 0 #241843,
-    -6px -1px 0 #241843,
-    -6px 0px 0 #241843,
-    -6px 1px 0 #241843,
-    -6px 2px 0 #241843,
-    -6px 3px 0 #241843,
-    -6px 4px 0 #241843,
-    -6px 5px 0 #241843,
-    -6px 6px 0 #241843,
-    
-    -5px -6px 0 #241843,
-    -5px 6px 0 #241843,
-    
-    -4px -6px 0 #241843, 
-    -4px 6px 0 #241843,
-    
-    -3px -6px 0 #241843,
-    -3px 6px 0 #241843,
-    
-    -2px -6px 0 #241843,
-    -2px 6px 0 #241843,
-    
-    -1px -6px 0 #241843,
-    -1px 6px 0 #241843,
-    
-    0px -6px 0 #241843,
-    0px 6px 0 #241843,
-    
-    1px -6px 0 #241843,
-    1px 6px 0 #241843,
-    
-    2px -6px 0 #241843,
-    2px 6px 0 #241843,
-    
-    3px -6px 0 #241843,
-    3px 6px 0 #241843,
-    
-    4px -6px 0 #241843,
-    4px 6px 0 #241843,
-    
-    5px -6px 0 #241843,
-    5px 6px 0 #241843,
-    
-    6px -6px 0 #241843,
-    6px -5px 0 #241843,
-    6px -4px 0 #241843,
-    6px -3px 0 #241843,
-    6px -2px 0 #241843,
-    6px -1px 0 #241843,
-    6px 0px 0 #241843,
-    6px 1px 0 #241843,
-    6px 2px 0 #241843,
-    6px 3px 0 #241843,
-    6px 4px 0 #241843,
-    6px 5px 0 #241843,
-    6px 6px 0 #241843;
-  margin-bottom: 30px;
+  font-size: 100px;
+  letter-spacing: 6px;
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent; 
+  -webkit-text-stroke: 0.03em #241843;
+  /* I know what you're thinking.
+  "Dani, why are you use em here when you use px right below for the filter?"
+  Shhhhh. Don't worry about it. */
+  background-image: linear-gradient(to bottom, 
+  rgb(245, 233, 243) 20%, 
+  #f2b8da 40%, 
+  #9F86C0 90%
+  );
+  filter: drop-shadow(-0.8px -1px 0.5px white) 
+        drop-shadow(1.2px -1px 0.5px white) 
+        drop-shadow(-0.8px 1px 0.5px white) 
+        drop-shadow(1.2px 1px 0.5px white);
 }
 
 /* Home Button Styles */
@@ -990,72 +932,7 @@ body {
 
 @media (max-width: 1600px) {
   .home-title {
-    font-size: 60px;
-    letter-spacing: 8px;
-    text-shadow: 
-      /* Thicker white middle outline */
-      -2px -2px 0 white,
-      -2px -1px 0 white,
-      -2px 0px 0 white,
-      -2px 1px 0 white,
-      -2px 2px 0 white,
-      
-      -1px -2px 0 white,
-      -1px 2px 0 white,
-      
-      0px -2px 0 white,
-      0px 2px 0 white,
-      
-      1px -2px 0 white,
-      1px 2px 0 white,
-      
-      2px -2px 0 white,
-      2px -1px 0 white,
-      2px 0px 0 white,
-      2px 1px 0 white,
-      2px 2px 0 white,
-      
-      /* Moderate dark purple outer outline with better spacing */
-      -4px -4px 0 #241843,
-      -4px -3px 0 #241843,
-      -4px -2px 0 #241843,
-      -4px -1px 0 #241843,
-      -4px 0px 0 #241843,
-      -4px 1px 0 #241843,
-      -4px 2px 0 #241843,
-      -4px 3px 0 #241843,
-      -4px 4px 0 #241843,
-      
-      -3px -4px 0 #241843,
-      -3px 4px 0 #241843,
-      
-      -2px -4px 0 #241843,
-      -2px 4px 0 #241843,
-      
-      -1px -4px 0 #241843,
-      -1px 4px 0 #241843,
-      
-      0px -4px 0 #241843,
-      0px 4px 0 #241843,
-      
-      1px -4px 0 #241843,
-      1px 4px 0 #241843,
-      
-      2px -4px 0 #241843,
-      2px 4px 0 #241843,
-      
-      3px -4px 0 #241843,
-      3px 4px 0 #241843,
-      
-      4px -4px 0 #241843,
-      4px -3px 0 #241843,
-      4px -2px 0 #241843,
-      4px -1px 0 #241843,
-      4px 0px 0 #241843,
-      4px 1px 0 #241843,
-      4px 2px 0 #241843,
-      4px 3px 0 #241843,
-      4px 4px 0 #241843;
+    font-size: 90px;
   }
 
   .home-nav-button {
