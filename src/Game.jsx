@@ -266,9 +266,38 @@ function Game() {
       // Increment coins
       setCoins((prevCoins) => prevCoins + 15);
 
-      // Set a timeout to reset the ice cream after the animation
+      // Start cat exit animation
+      if (catId) {
+        setCats(prev => {
+          return prev.map(cat => {
+            if (cat && cat.id === catId) {
+              return { ...cat, exitAnimation: true };
+            }
+            return cat;
+          });
+        });
+      } else {
+        setCats(prev => {
+          const newCats = [...prev];
+          if (newCats[customerIndex]) {
+            newCats[customerIndex] = { 
+              ...newCats[customerIndex], 
+              exitAnimation: true 
+            };
+          }
+          return newCats;
+        });
+      }
+
+      // Reset ice cream assembly immediately
       setTimeout(() => {
-        // Find the cat by ID and mark it as served (set image to null)
+        setSelectedCone(null);
+        setSelectedScoops([]);
+        setOrderSuccess(false);
+      }, 300);
+
+      // Remove cat after exit animation completes
+      setTimeout(() => {
         if (catId) {
           setCats(prev => {
             return prev.map(cat => {
@@ -279,22 +308,19 @@ function Game() {
             });
           });
         } else {
-          // Fallback to using the index (keep old behavior as backup)
           setCats(prev => {
             const newCats = [...prev];
-            // Instead of replacing with empty string, set image to null
             if (newCats[customerIndex]) {
-              newCats[customerIndex] = { ...newCats[customerIndex], image: null, served: true };
+              newCats[customerIndex] = { 
+                ...newCats[customerIndex], 
+                image: null, 
+                served: true 
+              };
             }
             return newCats;
           });
         }
-        
-        // Clear the assembled ice cream and reset animation state
-        setSelectedCone(null);
-        setSelectedScoops([]);
-        setOrderSuccess(false);
-      }, 300);
+      }, 2500); // Adjusted to match new animation duration plus a small buffer
     } else {
       // Decrement coins for incorrect order
       setCoins((prevCoins) => Math.max(0, prevCoins - 5));
@@ -389,28 +415,31 @@ function Game() {
               key={cat.id}
               className="customer"
               animate={{
-                left: `${catPositions[index]}px`,
-                y: bobPhases[index] ? Math.sin(bobPhases[index]) * (isRushHourMode ? 15 : 8) : 0,
-                opacity: 1
+                x: cat.exitAnimation ? -2500 : 0
               }}
               transition={{ 
-                type: "tween",
-                duration: 0.1,
-                ease: "linear"
+                duration: 2.0,
+                ease: "easeIn",
+                type: "tween"
               }}
               style={{
                 position: 'absolute',
                 left: `${catPositions[index]}px`,
                 bottom: '0',
                 width: '220px',
-                zIndex: Math.floor(catPositions[index])
+                zIndex: cat.exitAnimation ? -1 : Math.floor(catPositions[index]),
+                pointerEvents: cat.exitAnimation ? 'none' : 'auto'
               }}
             >
-              {customerOrders[index] && (
+              {customerOrders[index] && !cat.exitAnimation && (
                 <div
                   className="order"
                   onClick={() => handleOrderClick(customerOrders[index], index, cat.id)}
-                  style={{ cursor: 'pointer' }}
+                  style={{ 
+                    cursor: 'pointer',
+                    opacity: 1,
+                    transition: 'opacity 0.3s ease-out'
+                  }}
                 >
                   {customerOrders[index]?.cone && (
                     <img
@@ -438,7 +467,10 @@ function Game() {
                 src={`/assets/${cat.image}`}
                 alt={`Customer ${index + 1}`}
                 onClick={() => handleOrderClick(customerOrders[index], index, cat.id)}
-                style={{ cursor: 'pointer' }}
+                style={{ 
+                  cursor: cat.exitAnimation ? 'default' : 'pointer',
+                  pointerEvents: cat.exitAnimation ? 'none' : 'auto'
+                }}
               />
             </motion.div>
           )
