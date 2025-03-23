@@ -101,9 +101,7 @@ body {
   flex-direction: row;
   align-items: flex-end;
   flex-wrap: nowrap;
-  gap: 20px;
-  margin-right: 1%;
-  margin-bottom: 4%;
+  gap: 2px;
 }
 
 .scoop-buttons {
@@ -111,7 +109,7 @@ body {
   flex-direction: row;
   align-items: flex-end;
   flex-wrap: wrap;
-  gap: 20px;
+  gap: 10px;
   margin-right: 1%;
   margin-bottom: 4%;
   justify-content: space-between;
@@ -672,20 +670,57 @@ body {
 
 @media (max-width: 1600px) {
   .button {
-    max-width: 120px;
+    max-width: 100px;
+  }
+
+  .counter {
+    padding: 20px 20px 30px;
+    justify-content: flex-start;
+  }
+
+  .cone-stand-button {
+    height: 100px;
+    min-width: 65px;
+    margin-top: 10%;
+    transform: scale(0.65);
+    margin-left: -5px;
+    margin-right: -5px;
   }
 
   .cone-buttons {
     flex-wrap: nowrap;
-    gap: 15px;
-    justify-content: space-between;
-    min-width: 450px;
+    gap: 0;
+    justify-content: flex-start;
+    margin-left: 6%;
   }
-
+  
   .scoop-buttons {
-    max-width: 80px;
+    flex-wrap: nowrap;
+    gap: 40px;
+    justify-content: flex-start;
+    margin-right: 4%;
+    margin-bottom: 6%;
+  }
+  
+  .scoop-tub-button {
+    transform: scale(0.65);
+    width: 65px;
+    height: 65px;
+    margin-left: 0;
+    margin-right: 0;
+  }
+  
+  .restart-button {
+    margin-right: 1%;
+    margin-left: auto;
+    transform: scale(0.7);
   }
 
+  .stand-image {
+    width: 150%;
+    max-width: 100px !important;
+  }
+  
   .customer {
     margin-bottom: 4%;
   }
@@ -730,10 +765,6 @@ body {
   .screen-button {
     padding: 10px 20px;
     font-size: 16px;
-  }
-
-  .cone-stand-button {
-    min-width: 90px;
   }
 }
 
@@ -822,7 +853,7 @@ body {
     flex-direction: row;
     flex-wrap: nowrap;
     justify-content: center;
-    gap: 2%;
+    gap: 0;
     margin-bottom: 40%;
     margin-left: 60px;
     order: 1;
@@ -835,13 +866,13 @@ body {
     position: absolute;
     right: 15px;
     bottom: 15px;
-    transform: scale(0.75);
+    transform: scale(0.65);
   }
 
   .restart-button .button {
-    width: 50px !important;
-    height: 50px !important;
-    min-width: 50px;
+    width: 45px !important;
+    height: 45px !important;
+    min-width: 45px;
     padding: 5px;
   }
 
