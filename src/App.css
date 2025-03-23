@@ -263,7 +263,10 @@ body {
 
 .home-title-container {
   width: 100%;
-  pointer-events: auto; 
+  pointer-events: none; /* Allow clicks to pass through to kitties */
+  position: absolute;
+  bottom: 30px;
+  left: 0;
 }
 
 .home-buttons-row {
@@ -272,6 +275,9 @@ body {
   justify-content: center;
   gap: 20px;
   pointer-events: auto; /* Make buttons clickable */
+  position: absolute;
+  bottom: 10px;
+  left: 0;
 }
 
 .home-nav-button {
@@ -734,6 +740,10 @@ body {
     padding: 6px 8px;
   }
 
+  .home-title-container {
+    bottom: 10px;
+  }
+
   .leaderboard-container {
     gap: 20px;
   }
@@ -783,10 +793,23 @@ body {
   }
 
   body {
-  overflow: hidden;
-  position: fixed;
-  width: 100%;
-  height: 100%;
+    overflow: hidden;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+  }
+
+  .home-nav-button {
+    font-size: 14px;
+    padding: 8px 16px;
+    min-width: 120px;
+    margin: 3px;
+  }
+
+  .home-buttons-row {
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
   }
 
   .button {
@@ -921,6 +944,13 @@ body {
     padding: 5px;
   }
 
+  .home-title {
+    position: absolute;
+    font-size: 52px;
+    bottom: 150px;
+  }
+
+ 
   .ice-cream {
     position: relative;
     transform: scale(0.6); 

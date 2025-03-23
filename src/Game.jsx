@@ -41,6 +41,43 @@ function Game() {
     isRushHourMode 
   } = useContext(GameContext);
   
+  // Create and preload audio
+  const popSound = useRef(null);
+  const plopSound = useRef(null);
+  const thudSound = useRef(null);
+  const wooshSound = useRef(null);
+  
+  useEffect(() => {
+    // Initialize audio once when component mounts
+    popSound.current = new Audio('/assets/pop.mp3');
+    popSound.current.load(); // Preload the audio
+    plopSound.current = new Audio('/assets/plop.mp3');
+    plopSound.current.load(); // Preload the audio
+    thudSound.current = new Audio('/assets/thud.mp3');
+    thudSound.current.load(); // Preload the audio
+    wooshSound.current = new Audio('/assets/woosh.mp3');
+    wooshSound.current.volume = 0.3; // Set woosh sound to 30% volume
+    wooshSound.current.load(); // Preload the audio
+    return () => {
+      if (popSound.current) {
+        popSound.current.pause();
+        popSound.current = null;
+      }
+      if (plopSound.current) {
+        plopSound.current.pause();
+        plopSound.current = null;
+      }
+      if (thudSound.current) {
+        thudSound.current.pause();
+        thudSound.current = null;
+      }
+      if (wooshSound.current) {
+        wooshSound.current.pause();
+        wooshSound.current = null;
+      }
+    };
+  }, []);
+
   const [selectedCone, setSelectedCone] = useState(null); // State to track which cone the player selects.
   const [selectedScoops, setSelectedScoops] = useState([]); // State to track the scoops the player selects.
   const [orderSuccess, setOrderSuccess] = useState(false); // New state for order success animation
@@ -239,11 +276,28 @@ function Game() {
 
   // ASSEMBLING AND SERVING ICE CREAM CONE LOGIC
   const handleConeClick = (cone) => {
-    // Function for selecting a cone
-    setSelectedCone(cone);
+    // Only allow selecting a cone if no cone is currently selected
+    if (!selectedCone) {
+      // Play sound immediately
+      if (popSound.current) {
+        popSound.current.currentTime = 0;
+        popSound.current.play().catch(error => {
+          console.warn("Sound playback failed:", error);
+        });
+      }
+      // Function for selecting a cone
+      setSelectedCone(cone);
+    }
   };
 
   const handleScoopClick = (scoop) => {
+    // Play plop sound immediately
+    if (plopSound.current) {
+      plopSound.current.currentTime = 0;
+      plopSound.current.play().catch(error => {
+        console.warn("Sound playback failed:", error);
+      });
+    }
     // Function for selecting scoops
     setSelectedScoops((prevScoops) => [...prevScoops, scoop]);
   };
@@ -260,11 +314,21 @@ function Game() {
       );
 
     if (isConeMatch && isScoopsMatch) {
+      // Play woosh sound immediately
+      if (wooshSound.current) {
+        wooshSound.current.currentTime = 0;
+        wooshSound.current.play().catch(error => {
+          console.warn("Sound playback failed:", error);
+        });
+      }
+
       // Show success animation
       setOrderSuccess(true);
       
-      // Increment coins
-      setCoins((prevCoins) => prevCoins + 15);
+      // Calculate coins based on number of scoops
+      const scoopCount = customerOrder.scoops.length;
+      const coinReward = scoopCount === 1 ? 15 : scoopCount === 2 ? 20 : 25;
+      setCoins((prevCoins) => prevCoins + coinReward);
 
       // Start cat exit animation
       if (catId) {
@@ -486,21 +550,21 @@ function Game() {
               src={`/assets/${selectedCone}`}
               alt="Selected Cone"
               className="ice-cream-cone"
-              initial={{ scale: 0.5, y: 100, opacity: 0 }}
+              initial={{ scale: 0.5, y: 100 }}
               animate={orderSuccess 
-                ? { scale: 1, y: -100, opacity: 0, x: 150 }
-                : { scale: 1, y: 0, opacity: 1, x: 0 }
+                ? { scale: 1, y: -100, x: 150, opacity: 0 }
+                : { scale: 1, y: 0, x: 0, opacity: 1 }
               }
               transition={{ 
                 type: "spring", 
-                duration: 0.2, // Faster duration (was 0.3)
-                stiffness: 500, // Higher stiffness for snappier animation (was 400)
-                damping: 15, // Lower damping for quicker settling (was 17)
-                mass: 0.7, // Lower mass for faster movement (was not specified)
+                duration: 0.2,
+                stiffness: 500,
+                damping: 15,
+                mass: 0.7,
                 ...(orderSuccess && { 
-                  y: { duration: 0.2 }, // Faster success animation (was 0.3)
-                  x: { duration: 0.2 }, // Faster success animation (was 0.3)
-                  opacity: { duration: 0.15, delay: 0.05 } // Faster fade with less delay (was 0.2, 0.1)
+                  y: { duration: 0.2 },
+                  x: { duration: 0.2 },
+                  opacity: { duration: 0.15 }
                 })
               }}
             />
@@ -515,23 +579,23 @@ function Game() {
                 bottom: `${220 + index * 40}px`,
                 position: "absolute",
                 left: "50%",
-                marginLeft: "-125px" /* Offset to properly position over cone */
+                marginLeft: "-125px"
               }}
-              initial={{ scale: 1.5, y: -100, opacity: 1 }} /* Full opacity from the start */
+              initial={{ scale: 1.5, y: -100, opacity: 1 }}
               animate={orderSuccess 
                 ? { scale: 1, y: -100, opacity: 0, x: 150 }
                 : { scale: 1, y: 0, opacity: 1, x: 0 }
               }
               transition={{
                 type: "spring",
-                stiffness: 600, // Higher stiffness for faster, snappier animation (was 500)
-                damping: 16, // Lower damping for quicker settling (was 18)
-                mass: 0.6, // Lower mass for faster movement (was 0.8)
-                delay: index * 0.03, // Reduced delay between scoops (was 0.05)
+                stiffness: 600,
+                damping: 16,
+                mass: 0.6,
+                delay: index * 0.03,
                 ...(orderSuccess && { 
-                  y: { duration: 0.2 }, // Faster success animation (was 0.3)
-                  x: { duration: 0.2 }, // Faster success animation (was 0.3)
-                  opacity: { duration: 0.15, delay: 0.05 + (index * 0.02) } // Faster fade with less staggered delay (was 0.2, 0.1 + index * 0.03)
+                  y: { duration: 0.2 },
+                  x: { duration: 0.2 },
+                  opacity: { duration: 0.15 }
                 })
               }}
             />
@@ -576,6 +640,13 @@ function Game() {
         <div className="restart-button">
           <button
             onClick={() => {
+              // Play thud sound immediately
+              if (thudSound.current) {
+                thudSound.current.currentTime = 0;
+                thudSound.current.play().catch(error => {
+                  console.warn("Sound playback failed:", error);
+                });
+              }
               setSelectedCone(null); // Clear the selected cone
               setSelectedScoops([]); // Clear the selected scoops
             }}
