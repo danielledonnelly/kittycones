@@ -96,13 +96,26 @@ body {
   z-index: 7;
 }
 
-.cone-buttons, .scoop-buttons {
+.cone-buttons {
   display: flex;
+  flex-direction: row;
   align-items: flex-end;
-  flex-wrap: wrap;
-  gap: 6px;
+  flex-wrap: nowrap;
+  gap: 20px;
   margin-right: 1%;
   margin-bottom: 4%;
+}
+
+.scoop-buttons {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin-right: 1%;
+  margin-bottom: 4%;
+  justify-content: space-between;
+  min-width: 580px;
 }
 
 .cone-order {
@@ -479,6 +492,7 @@ body {
   flex: 0 0 auto;
   outline: none;
   margin-right: 2%;
+  z-index: 1;
 }
 
 .restart-button img {
@@ -594,6 +608,42 @@ body {
   pointer-events: none; /* Allow clicks to pass through to kitties */
 }
 
+.scoop-tub-button {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transform: scale(0.85);
+  z-index: 2;
+}
+
+.tub-image {
+  position: relative;
+  width: 85%;
+  height: auto;
+  max-width: 120px;
+}
+
+.cone-stand-button {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  height: 150px;
+  min-width: 100px;
+  margin-top: 10%;
+  margin-left: 4%;
+}
+
+.stand-image {
+  position: absolute;
+  bottom: -10px;
+  z-index: 1;
+  width: 180%;
+  transform: translateX(-22%);
+}
+
 .timer {
   position: absolute;
   top: 10px;
@@ -623,6 +673,17 @@ body {
 @media (max-width: 1600px) {
   .button {
     max-width: 120px;
+  }
+
+  .cone-buttons {
+    flex-wrap: nowrap;
+    gap: 15px;
+    justify-content: space-between;
+    min-width: 450px;
+  }
+
+  .scoop-buttons {
+    max-width: 80px;
   }
 
   .customer {
@@ -670,6 +731,10 @@ body {
     padding: 10px 20px;
     font-size: 16px;
   }
+
+  .cone-stand-button {
+    min-width: 90px;
+  }
 }
 
 @media (max-width: 600px) {
@@ -711,23 +776,14 @@ body {
 
   .buttons-group {
     display: flex;
-    justify-content: space-between; 
-    gap: 0px; 
-    width: 100%;
-    padding: 10px;
+    justify-content: center !important; 
+    gap: 0; 
+    padding: 0;
   }
   
   .coin-counter, .timer {
     font-size: 14px;
     padding: 8px 16px;
-  }
-  
-  .cone-buttons,
-  .scoop-buttons {
-    display: grid; 
-    grid-template-columns: repeat(2, 1fr); 
-    justify-items: center;
-    align-items: center; 
   }
 
   .cone-order {
@@ -736,14 +792,88 @@ body {
   }
 
   .counter {
-    max-height: 35vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    max-height: 40vh;
+    padding: 10px;
+  }
+
+  .cone-buttons {
     position: absolute;
-    bottom: 0; 
-    left: 0; 
-    width: 100%; 
-    padding: 20px; 
-    box-sizing: border-box; 
-    z-index: 3;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: center;
+    width: 100%;
+    gap: 0;
+    padding: 0;
+    margin-bottom: 10%;
+    margin-left: 30%;
+    order: 2;
+    position: absolute;
+    bottom: 0;
+  }
+
+  .scoop-buttons {
+    position: absolute;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: center;
+    gap: 2%;
+    margin-bottom: 40%;
+    margin-left: 60px;
+    order: 1;
+  }
+
+  .restart-button {
+    order: 3;
+    margin-right: 0;
+    margin-top: 10px;
+    position: absolute;
+    right: 15px;
+    bottom: 15px;
+    transform: scale(0.75);
+  }
+
+  .restart-button .button {
+    width: 50px !important;
+    height: 50px !important;
+    min-width: 50px;
+    padding: 5px;
+  }
+
+  .restart-button img {
+    width: 100%;
+    min-width: 40px;
+  }
+
+  .scoop-tub-button {
+    transform: scale(0.45);
+    width: 35px;
+    height: 35px;
+  }
+
+  .cone-stand-button {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 60px;
+    max-width: 35px;
+    margin: 0 -5px;
+    transform: scale(0.6);
+    padding: 0;
+  }
+
+  .stand-image {
+    position: absolute;
+    bottom: -5px;
+    z-index: 1;
+    width: 150%;
+    transform: translateX(-15%);
   }
 
   .customer {
@@ -828,6 +958,11 @@ body {
     padding: 10px 20px;
     font-size: 16px;
   }
+
+  .home-buttons-row {
+    flex-direction: column;
+    align-items: center;
+  }
 }
 
 @media (max-width: 600px) {
@@ -835,139 +970,4 @@ body {
     flex-direction: column;
     align-items: center;
   }
-
-.cone-stand-button {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
 }
-
-.stand-image {
-  position: absolute;
-  bottom: 0;
-  z-index: 1;
-  width: 180%;
-  transform: translateX(-22%);
-}
-
-.scoop-tub-button {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.tub-image {
-  position: relative;
-  width: 180%;
-  height: auto;
-  transform: translateX(-22%);
-}
-
-}
-
-@keyframes shine {
-  0%, 97% {
-    background-position: 200% 0%;
-    opacity: 0;
-  }
-  98% {
-    opacity: 0.3;
-  }
-  100% {
-    background-position: -200% 0%;
-    opacity: 0;
-  }
-}
-
-
-@media (max-width: 1600px) {
-  .home-title {
-    font-size: 90px;
-  }
-
-  .home-nav-button {
-    padding: 10px 20px;
-    font-size: 16px;
-  }
-}
-
-/* Game Component Styles
-.game-customer-container {
-  position: absolute;
-  bottom: 30px;
-  left: 0;
-  width: 100%;
-  height: 300px;
-  overflow: visible;
-  z-index: 2;
-}
-
-.game-customer-container.normal-mode {
-  display: flex;
-  justify-content: space-evenly;
-  transition: transform 0.7s;
-}
-
-.game-customer {
-  width: 220px;
-  position: relative;
-  cursor: pointer;
-}
-
-.game-customer.rush-hour {
-  position: absolute;
-  bottom: 0;
-  width: 220px;
-}
-
-.game-ice-cream-scoop {
-  position: absolute;
-  left: 50%;
-  margin-left: -125px;
-}
-
-/* Animation States */
-/* .game-ice-cream-initial {
-  transform: scale(1.5) translateY(-100px);
-  opacity: 1;
-}
-
-.game-ice-cream-success {
-  transform: scale(1) translateY(-100px) translateX(150px);
-  opacity: 0;
-}
-
-.game-ice-cream-normal {
-  transform: scale(1) translateY(0) translateX(0);
-  opacity: 1;
-} */ */
-
-/* Customer Animation States */
-/* .customer-enter {
-  opacity: 1;
-  transform: translateX(300px);
-}
-
-.customer-normal {
-  opacity: 1;
-  transform: translateX(0) scale(1);
-}
-
-.customer-exit {
-  opacity: 1;
-  transform: translateX(-100vw);
-}
-
-.ice-cream-transition {
-  transition: transform 0.2s, opacity 0.15s;
-}
-
-.ice-cream-transition.success {
-  transition: transform 0.2s, opacity 0.15s 0.05s;
-}
-
-.customer-transition {
-  transition: transform 1.2s cubic-bezier(0.4, 0, 0.2, 1);
-} */

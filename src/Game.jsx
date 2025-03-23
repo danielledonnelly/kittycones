@@ -111,7 +111,7 @@ function Game() {
         const catId = nextCustomerId + i;
         const catImage = `customer${catId > 10 ? 1 : catId}.png`;
         additionalCats.push({
-          image: catImage,
+            image: catImage, 
           id: `cat-${Date.now()}-${initialCats.length + i}`
         });
         additionalOrders.push(generateCustomerOrders(cones, scoops, [catImage])[0]);
@@ -141,7 +141,7 @@ function Game() {
   // Continuous movement and bobbing effect
   useEffect(() => {
     if (!isInitialized) return;
-
+    
     const moveInterval = setInterval(() => {
       setCatPositions(prev => {
         const screenWidth = window.innerWidth;
@@ -180,7 +180,7 @@ function Game() {
             };
             
             newCats.push(newCat);
-
+            
             // Generate and update order for the new cat
             setCustomerOrders(prevOrders => {
               const newOrders = [...prevOrders];
@@ -298,28 +298,28 @@ function Game() {
 
       // Remove cat after exit animation completes
       setTimeout(() => {
-        if (catId) {
+          if (catId) {
           setCats(prev => {
-            return prev.map(cat => {
-              if (cat && cat.id === catId) {
-                return { ...cat, image: null, served: true };
-              }
-              return cat;
+              return prev.map(cat => {
+                if (cat && cat.id === catId) {
+                  return { ...cat, image: null, served: true };
+                }
+                return cat;
+              });
             });
-          });
-        } else {
+          } else {
           setCats(prev => {
-            const newCats = [...prev];
-            if (newCats[customerIndex]) {
+              const newCats = [...prev];
+              if (newCats[customerIndex]) {
               newCats[customerIndex] = { 
                 ...newCats[customerIndex], 
                 image: null, 
                 served: true 
               };
-            }
-            return newCats;
-          });
-        }
+              }
+              return newCats;
+            });
+          }
       }, 2500); // Adjusted to match new animation duration plus a small buffer
     } else {
       // Decrement coins for incorrect order
@@ -414,52 +414,53 @@ function Game() {
             <motion.div
               key={cat.id}
               className="customer"
-              animate={{
-                x: cat.exitAnimation ? -2500 : 0
-              }}
-              transition={{ 
-                duration: 2.0,
-                ease: "easeIn",
+              animate={{ 
+                x: cat.exitAnimation ? -2500 : 0,
+                y: cat.exitAnimation ? 0 : Math.sin(bobPhases[index]) * (isRushHourMode ? 15 : 8)
+                }}
+                transition={{ 
+                duration: cat.exitAnimation ? 2.0 : 0.1,
+                ease: cat.exitAnimation ? "easeIn" : "linear",
                 type: "tween"
-              }}
-              style={{
+                }}
+                style={{
                 position: 'absolute',
                 left: `${catPositions[index]}px`,
                 bottom: '0',
                 width: '220px',
-                zIndex: cat.exitAnimation ? -1 : Math.floor(catPositions[index]),
+                zIndex: cat.exitAnimation ? -10 : Math.floor(catPositions[index]),
                 pointerEvents: cat.exitAnimation ? 'none' : 'auto'
               }}
             >
               {customerOrders[index] && !cat.exitAnimation && (
-                <div
-                  className="order"
+              <div
+                className="order"
                   onClick={() => handleOrderClick(customerOrders[index], index, cat.id)}
                   style={{ 
                     cursor: 'pointer',
                     opacity: 1,
                     transition: 'opacity 0.3s ease-out'
                   }}
-                >
-                  {customerOrders[index]?.cone && (
-                    <img
-                      className="cone-order"
-                      src={`/assets/${customerOrders[index].cone}`}
-                      alt="Cone"
-                    />
-                  )}
+              >
+                {customerOrders[index]?.cone && (
+                  <img
+                    className="cone-order"
+                    src={`/assets/${customerOrders[index].cone}`}
+                    alt="Cone"
+                  />
+                )}
                   {customerOrders[index]?.scoops?.map((scoop, scoopIndex) => (
-                    <img
-                      key={scoopIndex}
-                      className="scoop-order"
-                      src={`/assets/${scoop}`}
-                      alt={`Scoop ${scoopIndex + 1}`}
-                      style={{
-                        "--scoop-index": scoopIndex,
-                      }}
-                    />
-                  ))}
-                </div>
+                  <img
+                    key={scoopIndex}
+                    className="scoop-order"
+                    src={`/assets/${scoop}`}
+                    alt={`Scoop ${scoopIndex + 1}`}
+                    style={{
+                      "--scoop-index": scoopIndex,
+                    }}
+                  />
+                ))}
+              </div>
               )}
 
               <img
@@ -474,7 +475,7 @@ function Game() {
               />
             </motion.div>
           )
-        ))}
+          ))}
       </div>
       {/* Counter */}
       <div className="counter">
