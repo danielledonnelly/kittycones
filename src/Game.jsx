@@ -47,6 +47,9 @@ function Game() {
   const thudSound = useRef(null);
   const wooshSound = useRef(null);
   
+  // Add state for floating coin amounts
+  const [floatingCoins, setFloatingCoins] = useState([]);
+
   useEffect(() => {
     // Initialize audio once when component mounts
     popSound.current = new Audio('/assets/pop.mp3');
@@ -77,7 +80,7 @@ function Game() {
       }
     };
   }, []);
-
+  
   const [selectedCone, setSelectedCone] = useState(null); // State to track which cone the player selects.
   const [selectedScoops, setSelectedScoops] = useState([]); // State to track the scoops the player selects.
   const [orderSuccess, setOrderSuccess] = useState(false); // New state for order success animation
@@ -285,8 +288,8 @@ function Game() {
           console.warn("Sound playback failed:", error);
         });
       }
-      // Function for selecting a cone
-      setSelectedCone(cone);
+    // Function for selecting a cone
+    setSelectedCone(cone);
     }
   };
 
@@ -329,6 +332,20 @@ function Game() {
       const scoopCount = customerOrder.scoops.length;
       const coinReward = scoopCount === 1 ? 15 : scoopCount === 2 ? 20 : 25;
       setCoins((prevCoins) => prevCoins + coinReward);
+
+      // Add floating coin amount
+      const catPosition = catPositions[customerIndex];
+      setFloatingCoins(prev => [...prev, {
+        id: Date.now(),
+        amount: coinReward,
+        x: catPosition + 80, // Adjusted to move more to the left
+        y: 200 // Start position above cat
+      }]);
+
+      // Remove floating coin after animation
+      setTimeout(() => {
+        setFloatingCoins(prev => prev.filter(coin => coin.id !== Date.now()));
+      }, 2000); // Increased to 2 seconds
 
       // Start cat exit animation
       if (catId) {
@@ -656,6 +673,37 @@ function Game() {
           </button>
         </div>
       </div>
+
+      {/* Add floating coin amounts */}
+      {floatingCoins.map(coin => (
+        <motion.div
+          key={coin.id}
+          className="floating-coin"
+          initial={{ y: 0, opacity: 1 }}
+          animate={{ 
+            y: -100, // Increased movement distance
+            opacity: 0
+          }}
+          transition={{ 
+            duration: 2, // Increased duration
+            ease: "easeOut"
+          }}
+          style={{
+            position: 'absolute',
+            left: `${coin.x}px`,
+            bottom: '450px', // Increased height to appear higher above cats
+            color: '#EFDAE6', // Changed to match game's pink color
+            fontSize: '28px', // Slightly larger text
+            fontWeight: 'bold',
+            textShadow: '2px 2px 4px rgba(0,0,0,0.5)',
+            pointerEvents: 'none',
+            zIndex: 1000,
+            fontFamily: 'Fredoka, sans-serif' // Match game's font
+          }}
+        >
+          +{coin.amount}
+        </motion.div>
+      ))}
     </>
   );
 }
