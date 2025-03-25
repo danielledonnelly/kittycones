@@ -46,6 +46,7 @@ function Game() {
   const plopSound = useRef(null);
   const thudSound = useRef(null);
   const wooshSound = useRef(null);
+  const angrySound = useRef(null);
   
   // Add state for floating coin amounts
   const [floatingCoins, setFloatingCoins] = useState([]);
@@ -61,6 +62,8 @@ function Game() {
     wooshSound.current = new Audio('/assets/woosh.mp3');
     wooshSound.current.volume = 0.3; // Set woosh sound to 30% volume
     wooshSound.current.load(); // Preload the audio
+    angrySound.current = new Audio('/assets/angry.mp3');
+    angrySound.current.load(); // Preload the audio
     return () => {
       if (popSound.current) {
         popSound.current.pause();
@@ -77,6 +80,10 @@ function Game() {
       if (wooshSound.current) {
         wooshSound.current.pause();
         wooshSound.current = null;
+      }
+      if (angrySound.current) {
+        angrySound.current.pause();
+        angrySound.current = null;
       }
     };
   }, []);
@@ -403,6 +410,13 @@ function Game() {
           }
       }, 2500); // Adjusted to match new animation duration plus a small buffer
     } else {
+      // Play angry sound for incorrect order
+      if (angrySound.current) {
+        angrySound.current.currentTime = 0;
+        angrySound.current.play().catch(error => {
+          console.warn("Sound playback failed:", error);
+        });
+      }
       // Decrement coins for incorrect order
       setCoins((prevCoins) => Math.max(0, prevCoins - 5));
     }
