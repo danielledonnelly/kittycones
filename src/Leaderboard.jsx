@@ -1,6 +1,7 @@
-import { useEffect, useState, useContext } from "react";
 import { Link } from "react-router-dom";
+import { useEffect, useState, useContext } from "react";
 import { GameContext } from "./GameContext";
+import { Button } from "@radix-ui/themes";
 
 const Leaderboard = () => {
   const { 
@@ -62,74 +63,90 @@ const Leaderboard = () => {
   }
 
   return (
-    <div className="end screen end-screen">
-      <h1 className="screen-title">Leaderboards</h1>
-      
-      <div className="leaderboard-container">
-        <div className="leaderboard-column">
-          <h2>Local Leaderboard</h2>
-          <div className="high-scores">
-            {displayHighScores.map((scoreData, index) => (
-              <div key={index} className="high-score-item">
-                <span className={`rank-number ${index < 9 ? 'single-digit' : ''}`}>{index + 1}.</span>
-                {scoreData.score ? `   ${scoreData.initials || ""}      ${scoreData.score} pts` : ""}
+    <>
+      <div className="counter">
+        <div className="buttons-group" style={{ visibility: 'hidden' }}>
+          <button className="button" disabled></button>
+          <button className="button" disabled></button>
+        </div>
+        <div className="ice-cream" style={{ visibility: 'hidden' }}></div>
+        <div className="restart-button" style={{ visibility: 'hidden' }}></div>
+      </div>
+
+      <div className="starting screen">
+        <div className="home-title-container">
+          <h1 className="home-title">KITTY CONES</h1>
+        </div>
+
+        <div className="home-buttons-row">
+          <Link to="/game" style={{ textDecoration: 'none' }}>
+            <Button size="3" variant="soft">Start</Button>
+          </Link>
+
+          <Link to="/about" style={{ textDecoration: 'none' }}>
+            <Button size="3" variant="soft">About</Button>
+          </Link>
+          
+          <Link to="/" style={{ textDecoration: 'none' }}>
+            <Button size="3" variant="soft">Home</Button>
+          </Link>
+        </div>
+
+        <div className="end screen end-screen" style={{ top: '30%' }}>
+          <h1 className="screen-title">High Scores</h1>
+          
+          <div className="leaderboard-container">
+            <div className="leaderboard-column">
+              <h2>Local Leaderboard</h2>
+              <div className="high-scores">
+                {displayHighScores.map((scoreData, index) => (
+                  <div key={index} className="high-score-item">
+                    <span className={`rank-number ${index < 9 ? 'single-digit' : ''}`}>{index + 1}.</span>
+                    {scoreData.score ? `   ${scoreData.initials || ""}      ${scoreData.score} pts` : ""}
+                  </div>
+                ))}
               </div>
-            ))}
+              <Button 
+                size="3" 
+                variant="soft" 
+                onClick={clearAllScores}
+                disabled={isClearing}
+                style={{ marginTop: '20px' }}
+              >
+                Clear All Scores
+              </Button>
+            </div>
+            <div className="leaderboard-column">
+              <h2>Global Leaderboard</h2>
+              {isLoadingGlobalScores ? (
+                <p>Loading global scores...</p>
+              ) : globalScoreError ? (
+                <div>
+                  <p>Error loading global scores</p>
+                  <Button 
+                    size="3" 
+                    variant="soft" 
+                    onClick={fetchGlobalScores}
+                    style={{ marginTop: '10px' }}
+                  >
+                    Retry
+                  </Button>
+                </div>
+              ) : (
+                <div className="high-scores">
+                  {displayGlobalScores.map((scoreData, index) => (
+                    <div key={index} className="high-score-item">
+                      <span className={`rank-number ${index < 9 ? 'single-digit' : ''}`}>{index + 1}.</span>
+                      {scoreData.score ? `   ${scoreData.initials || ""}      ${scoreData.score} pts` : ""}
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
           </div>
         </div>
-        <div className="leaderboard-column">
-          <h2>Global Leaderboard</h2>
-          {isLoadingGlobalScores ? (
-            <p>Loading global scores...</p>
-          ) : globalScoreError ? (
-            <div>
-              <p>Error loading global scores</p>
-              <button 
-                className="screen-button" 
-                onClick={fetchGlobalScores}
-                style={{ marginTop: '10px', width: 'auto' }}
-              >
-                Retry
-              </button>
-            </div>
-          ) : (
-            <div className="high-scores">
-              {displayGlobalScores.map((scoreData, index) => (
-                <div key={index} className="high-score-item">
-                  <span className={`rank-number ${index < 9 ? 'single-digit' : ''}`}>{index + 1}.</span>
-                  {scoreData.score ? `   ${scoreData.initials || ""}      ${scoreData.score} pts` : ""}
-                </div>
-              ))}
-            </div>
-          )}
-        </div>
       </div>
-      <div className="button-group">
-        <Link to="/">
-          <button className="screen-button">Home</button>
-        </Link>
-        {/*
-        <button 
-          className="screen-button secondary" 
-          onClick={clearAllScores}
-          style={{ 
-            backgroundColor: isClearing ? "#cccccc" : "#ff6b6b",
-            cursor: isClearing ? "not-allowed" : "pointer" 
-          }}
-          disabled={isClearing}
-        >
-          {isClearing ? "Clearing..." : "Clear All Scores"}
-        </button>
-        <button 
-          className="screen-button" 
-          onClick={fetchGlobalScores}
-          disabled={isLoadingGlobalScores}
-        >
-          {isLoadingGlobalScores ? "Refreshing..." : "Refresh Global Scores"}
-        </button>
-        */}
-      </div>
-    </div>
+    </>
   );
 };
 

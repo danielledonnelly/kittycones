@@ -38,7 +38,8 @@ function Game() {
     setCoins, 
     updateHighScores, 
     checkHighScore, 
-    isRushHourMode 
+    isRushHourMode,
+    isSoundEnabled 
   } = useContext(GameContext);
   
   // Create and preload audio
@@ -60,9 +61,10 @@ function Game() {
     thudSound.current = new Audio('/assets/thud.mp3');
     thudSound.current.load(); // Preload the audio
     wooshSound.current = new Audio('/assets/woosh.mp3');
-    wooshSound.current.volume = 0.3; // Set woosh sound to 30% volume
+    wooshSound.current.volume = 0.3; // Quiet woosh
     wooshSound.current.load(); // Preload the audio
     angrySound.current = new Audio('/assets/angry.mp3');
+    angrySound.current.volume = 0.2; // Quiet meow
     angrySound.current.load(); // Preload the audio
     return () => {
       if (popSound.current) {
@@ -283,31 +285,32 @@ function Game() {
     setCoins(0); // Reset coins at the start of a new game
   }, []);
 
+  const playSound = (soundRef) => {
+    if (isSoundEnabled && soundRef.current) {
+      soundRef.current.currentTime = 0;
+      soundRef.current.play().catch(error => {
+        console.warn("Sound playback failed:", error);
+      });
+    }
+  };
 
   // ASSEMBLING AND SERVING ICE CREAM CONE LOGIC
   const handleConeClick = (cone) => {
     // Only allow selecting a cone if no cone is currently selected
     if (!selectedCone) {
       // Play sound immediately
-      if (popSound.current) {
-        popSound.current.currentTime = 0;
-        popSound.current.play().catch(error => {
-          console.warn("Sound playback failed:", error);
-        });
-      }
-    // Function for selecting a cone
-    setSelectedCone(cone);
+      playSound(popSound);
+      // Function for selecting a cone
+      setSelectedCone(cone);
     }
   };
 
   const handleScoopClick = (scoop) => {
+    // Only allow adding scoops if a cone is selected
+    if (!selectedCone) return;
+    
     // Play plop sound immediately
-    if (plopSound.current) {
-      plopSound.current.currentTime = 0;
-      plopSound.current.play().catch(error => {
-        console.warn("Sound playback failed:", error);
-      });
-    }
+    playSound(plopSound);
     // Function for selecting scoops
     setSelectedScoops((prevScoops) => [...prevScoops, scoop]);
   };
@@ -325,12 +328,7 @@ function Game() {
 
     if (isConeMatch && isScoopsMatch) {
       // Play woosh sound immediately
-      if (wooshSound.current) {
-        wooshSound.current.currentTime = 0;
-        wooshSound.current.play().catch(error => {
-          console.warn("Sound playback failed:", error);
-        });
-      }
+      playSound(wooshSound);
 
       // Show success animation
       setOrderSuccess(true);
@@ -345,14 +343,14 @@ function Game() {
       setFloatingCoins(prev => [...prev, {
         id: Date.now(),
         amount: coinReward,
-        x: catPosition + 80, // Adjusted to move more to the left
-        y: 200 // Start position above cat
+        x: catPosition + 80,
+        y: 200
       }]);
 
       // Remove floating coin after animation
       setTimeout(() => {
         setFloatingCoins(prev => prev.filter(coin => coin.id !== Date.now()));
-      }, 2000); // Increased to 2 seconds
+      }, 2000);
 
       // Start cat exit animation
       if (catId) {
@@ -364,7 +362,7 @@ function Game() {
             return cat;
           });
         });
-      } else {
+      
         setCats(prev => {
           const newCats = [...prev];
           if (newCats[customerIndex]) {
@@ -386,43 +384,36 @@ function Game() {
 
       // Remove cat after exit animation completes
       setTimeout(() => {
-          if (catId) {
+        if (catId) {
           setCats(prev => {
-              return prev.map(cat => {
-                if (cat && cat.id === catId) {
-                  return { ...cat, image: null, served: true };
-                }
-                return cat;
-              });
+            return prev.map(cat => {
+              if (cat && cat.id === catId) {
+                return { ...cat, image: null, served: true };
+              }
+              return cat;
             });
-          } else {
+          });
+        } else {
           setCats(prev => {
-              const newCats = [...prev];
-              if (newCats[customerIndex]) {
+            const newCats = [...prev];
+            if (newCats[customerIndex]) {
               newCats[customerIndex] = { 
                 ...newCats[customerIndex], 
                 image: null, 
                 served: true 
               };
-              }
-              return newCats;
-            });
-          }
-      }, 2500); // Adjusted to match new animation duration plus a small buffer
+            }
+            return newCats;
+          });
+        }
+      }, 2500);
     } else {
       // Play angry sound for incorrect order
-      if (angrySound.current) {
-        angrySound.current.currentTime = 0;
-        angrySound.current.play().catch(error => {
-          console.warn("Sound playback failed:", error);
-        });
-      }
+      playSound(angrySound);
       // Decrement coins for incorrect order
       setCoins((prevCoins) => Math.max(0, prevCoins - 5));
     }
   };
-
-
 
   // MOBILE WARNING
   const [showMobileWarning, setShowMobileWarning] = useState(

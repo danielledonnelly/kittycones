@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from "react-router-dom";
+import { Button } from "@radix-ui/themes";
 
 const Home = () => {
   return (
@@ -25,15 +26,15 @@ const Home = () => {
         
         <div className="home-buttons-row">
           <Link to="/game" style={{ textDecoration: 'none' }}>
-            <button className="home-nav-button">Start</button>
+            <Button size="3" variant="soft">Start</Button>
           </Link>
 
           <Link to="/about" style={{ textDecoration: 'none' }}>
-            <button className="home-nav-button">About</button>
+            <Button size="3" variant="soft">About</Button>
           </Link>
           
           <Link to="/leaderboard" style={{ textDecoration: 'none' }}>
-            <button className="home-nav-button">Leaderboard</button>
+            <Button size="3" variant="soft">Leaderboard</Button>
           </Link>
         </div>
       </div>

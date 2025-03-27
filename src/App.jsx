@@ -24,7 +24,8 @@ function AppContent() {
     saveHighScoreWithInitials,
     cancelInitialsEntry,
     isMusicEnabled,
-    toggleMusic,
+    isSoundEnabled,
+    toggleAudio,
     isRushHourMode,
     toggleRushHourMode
   } = useContext(GameContext);
@@ -93,7 +94,7 @@ function AppContent() {
           zIndex: 9999,
           color: isMusicEnabled ? "#EFDAE6" : "#5E558F",
         }}
-        onClick={toggleMusic}
+        onClick={toggleAudio}
         disableRipple={true}
       >
         {isMusicEnabled ? <MusicNoteIcon /> : <MusicOffIcon />}

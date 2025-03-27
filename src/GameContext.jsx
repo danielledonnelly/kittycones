@@ -23,6 +23,17 @@ export function GameProvider({ children }) {
     }
   });
   
+  // Add sound effects state with localStorage persistence
+  const [isSoundEnabled, setIsSoundEnabled] = useState(() => {
+    try {
+      const savedSoundSetting = localStorage.getItem("isSoundEnabled");
+      return savedSoundSetting === "true" ? true : false;
+    } catch (error) {
+      console.error("Error reading sound setting from localStorage:", error);
+      return false; // Default to disabled
+    }
+  });
+  
   // Add Rush Hour mode state with localStorage persistence
   const [isRushHourMode, setIsRushHourMode] = useState(() => {
     try {
@@ -44,6 +55,15 @@ export function GameProvider({ children }) {
     }
   }, [isMusicEnabled]);
   
+  // Save sound effects setting to localStorage when it changes
+  useEffect(() => {
+    try {
+      localStorage.setItem("isSoundEnabled", JSON.stringify(isSoundEnabled));
+    } catch (error) {
+      console.error("Error saving sound setting to localStorage:", error);
+    }
+  }, [isSoundEnabled]);
+  
   // Save Rush Hour mode to localStorage when it changes
   useEffect(() => {
     try {
@@ -54,8 +74,9 @@ export function GameProvider({ children }) {
   }, [isRushHourMode]);
 
   // Function to toggle music state
-  const toggleMusic = () => {
+  const toggleAudio = () => {
     setIsMusicEnabled(prev => !prev);
+    setIsSoundEnabled(prev => !prev);
   };
   
   // Function to toggle Rush Hour mode
@@ -239,7 +260,8 @@ export function GameProvider({ children }) {
         pendingScore,
         cancelInitialsEntry,
         isMusicEnabled,
-        toggleMusic,
+        isSoundEnabled,
+        toggleAudio,
         globalScores,
         isLoadingGlobalScores,
         globalScoreError,
