@@ -41,7 +41,7 @@ const About = () => {
             time runs out. The faster you serve, the more coins you earn!
           </p>
           <p className="screen-text">
-            Challenge yourself to beat your high score and climb the leaderboard!
+            Challenge yourself to beat your high score and climb the leaderboard! This game was made by Dani Donnelly.
           </p>
         </div>
       </div>
