@@ -1,5 +1,7 @@
 import { motion } from "motion/react";
 import { useGame } from "./useGame";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function Game() {
   const {
@@ -22,6 +24,17 @@ export default function Game() {
     cones,
     scoops
   } = useGame();
+  
+  const navigate = useNavigate();
+
+  // Ensure we navigate away when time is up
+  useEffect(() => {
+    if (time <= 0) {
+      setTimeout(() => {
+        navigate("/game-over");
+      }, 100);
+    }
+  }, [time, navigate]);
 
   return (
     <>

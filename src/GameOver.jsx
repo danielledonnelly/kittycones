@@ -1,10 +1,9 @@
-import { Link, useLocation, useNavigate } from "react-router-dom";
-import { useEffect, useState, useContext } from "react";
+import { Link } from "react-router-dom";
+import { useContext } from "react";
 import { GameContext } from "./GameContext";
+import { Button } from "@radix-ui/themes";
 
 const GameOver = () => {
-  const location = useLocation();
-  const navigate = useNavigate();
   const { 
     coins, 
     highScores, 
@@ -37,7 +36,7 @@ const GameOver = () => {
   return (
     <div className="end screen end-screen">
       <h1 className="end screen-title">Game Over</h1>
-      <p className="end screen-text">Your Score: {coins}</p>
+      <p className="end screen-text">Your Score: {coins || 0}</p>
       
       <div className="leaderboard-container">
         <div className="leaderboard-column">
@@ -58,13 +57,14 @@ const GameOver = () => {
           ) : globalScoreError ? (
             <div>
               <p>Error loading global scores</p>
-              <button 
-                className="screen-button" 
+              <Button 
+                size="3" 
+                variant="soft" 
                 onClick={fetchGlobalScores}
-                style={{ marginTop: '10px', width: 'auto' }}
+                style={{ marginTop: '10px' }}
               >
                 Retry
-              </button>
+              </Button>
             </div>
           ) : (
             <div className="high-scores">
@@ -80,11 +80,11 @@ const GameOver = () => {
       </div>
       
       <div className="button-group">
-        <Link to="/game">
-          <button className="end screen-button">Restart</button>
+        <Link to="/game" style={{ textDecoration: 'none' }}>
+          <Button size="3" variant="soft">Play Again</Button>
         </Link>
-        <Link to="/">
-          <button className="end screen-button">Home</button>
+        <Link to="/" style={{ textDecoration: 'none' }}>
+          <Button size="3" variant="soft">Home</Button>
         </Link>
       </div>
     </div>

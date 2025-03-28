@@ -106,6 +106,8 @@ export function useGame() {
 
   // STATISTICS
   const [time, setTime] = useState(30); // State to track the remaining time
+  // Use a ref to track if the game is over to prevent infinite loops
+  const gameOverRef = useRef(false);
 
   const [customerOrders, setCustomerOrders] = useState(() =>
     // State for managing customer orders
@@ -192,7 +194,7 @@ export function useGame() {
 
   // Continuous movement and bobbing effect
   useEffect(() => {
-    if (!isInitialized) return;
+    if (!isInitialized || time <= 0 || gameOverRef.current) return;
     
     const moveInterval = setInterval(() => {
       setCatPositions(prev => {
@@ -256,7 +258,7 @@ export function useGame() {
     }, 16);
     
     return () => clearInterval(moveInterval);
-  }, [isInitialized, isRushHourMode]);
+  }, [isInitialized, isRushHourMode, time]);
 
   // Simplified container styles
   const getCustomerContainerStyles = () => {
@@ -272,14 +274,24 @@ export function useGame() {
   };
 
   useEffect(() => {
+    // Skip this effect if game is already over
+    if (gameOverRef.current) return;
+    
     if (time <= 0) {
-      // updateHighScores(coins); // Update high scores when time is up
-      // Check if it's a high score first
-      if (!checkHighScore(coins)) {
-        navigate("/game-over"); // Only navigate if not a high score
+      // Mark game as over
+      gameOverRef.current = true;
+      
+      // Check if it's a high score
+      if (checkHighScore(coins)) {
+        // Let the initials modal from GameContext handle this
+      } else {
+        // Navigate to game over on next tick to avoid state updates during render
+        setTimeout(() => {
+          navigate("/game-over");
+        }, 0);
       }
     } else {
-      const timer = setTimeout(() => setTime(time - 1), 1000); // Shortened time for testing
+      const timer = setTimeout(() => setTime(time - 1), 1000);
       return () => clearTimeout(timer);
     }
   }, [time, navigate, coins, checkHighScore]);
