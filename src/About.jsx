@@ -33,7 +33,7 @@ const About = () => {
         </div>
 
         <div className="end screen end-screen" style={{ top: '30%' }}>
-          <h1 className="screen-title">About Kitty Cones</h1>
+          <h1 className="screen-title">About</h1>
           
           <p className="screen-text">
             Kitty Cones is a fun and fast-paced game where you serve ice cream to 

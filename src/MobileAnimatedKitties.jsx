@@ -1,15 +1,13 @@
 import { useEffect, useState, useContext, useRef } from "react";
-import { Outlet } from "react-router-dom";
-import { GameContext } from "./GameContext";
 import meow1 from "/assets/meow1.mp3?v=2";
 import meow2 from "/assets/meow2.mp3?v=2";
 import meow3 from "/assets/meow3.mp3?v=2";
 import meow4 from "/assets/meow4.mp3?v=2";
 import meow5 from "/assets/meow5.mp3?v=2";
-import { MobileAnimatedKitties } from "./MobileAnimatedKitties";
+import { GameContext } from "./GameContext";
 
-// Component for the animated kitties background
-export const AnimatedKitties = () => {
+// Component for the animated kitties background on mobile
+export const MobileAnimatedKitties = () => {
   const [kitties, setKitties] = useState([]);
   const { isRushHourMode } = useContext(GameContext);
   const kittiesInitialized = useRef(false);
@@ -22,9 +20,9 @@ export const AnimatedKitties = () => {
     if (kittiesInitialized.current) return;
     kittiesInitialized.current = true;
     
-    // Create initial kitties
+    // Create initial kitties - maximum 3 for mobile
     const newKitties = [];
-    const kittyCount = 4;
+    const kittyCount = 3;
     
     // Ensure unique cat types (no duplicates)
     const availableTypes = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
@@ -47,16 +45,16 @@ export const AnimatedKitties = () => {
       const segmentWidth = segmentEnd - segmentStart;
       const xPos = segmentStart + Math.random() * segmentWidth;
       
-      const speedVariation = 0.5 + (i / kittyCount) * 0.8;
+      const speedVariation = 0.3 + (i / kittyCount) * 0.4; // Slower base speed for mobile
       
       newKitties.push({
         id: i,
         image: `customer${availableTypes[i % availableTypes.length]}.png`,
         x: xPos,
         y: fixedHeight,
-        speed: Math.random() * 0.6 + speedVariation,
+        speed: Math.random() * 0.3 + speedVariation, // Reduced speed for mobile
         bobPhase: Math.random() * Math.PI * 2,
-        scale: 2.0,
+        scale: 1.5, // Smaller scale for mobile
         direction: direction,
         entryOffset: -250,
         exitOffset: window.innerWidth + 250,
@@ -69,7 +67,6 @@ export const AnimatedKitties = () => {
 
   // Handle kitty click
   const handleKittyClick = (e) => {
-    console.log("Kitty clicked!"); // Add debug log
     // Randomly select a meow sound
     const randomIndex = Math.floor(Math.random() * meowSounds.length);
     const selectedMeow = meowSounds[randomIndex];
@@ -80,13 +77,13 @@ export const AnimatedKitties = () => {
     
     // Update the audio source and play
     meowAudio.current.src = selectedMeow;
-    meowAudio.current.volume = 1.0; // Set volume to 100% for maximum meow power!
+    meowAudio.current.volume = 1.0;
     
     // Adjust pitch and speed for Rush Hour mode
     if (isRushHourMode) {
-      meowAudio.current.playbackRate = 2.0; // Double speed and higher pitched for Rush Hour
+      meowAudio.current.playbackRate = 2.0;
     } else {
-      meowAudio.current.playbackRate = 0.8; // Slightly slower for normal mode
+      meowAudio.current.playbackRate = 0.8;
     }
     
     meowAudio.current.play().catch(error => {
@@ -103,7 +100,7 @@ export const AnimatedKitties = () => {
         const isAnyKittySpawning = prevKitties.some(kitty => kitty.spawning);
         
         return prevKitties.map(kitty => {
-          const speedMultiplier = isRushHourMode ? 3.0 : 1.0;
+          const speedMultiplier = isRushHourMode ? 2.0 : 0.5; // Reduced speed multiplier for mobile
           
           let newX = kitty.x + (kitty.speed * speedMultiplier * -kitty.direction);
           let isSpawning = kitty.spawning;
@@ -116,7 +113,7 @@ export const AnimatedKitties = () => {
               spawnCooldown.current = true;
               setTimeout(() => {
                 spawnCooldown.current = false;
-              }, 3000);
+              }, 4000); // Longer cooldown for mobile
               
               setTimeout(() => {
                 setKitties(current => 
@@ -124,7 +121,7 @@ export const AnimatedKitties = () => {
                     k.id === kitty.id ? { ...k, spawning: false } : k
                   )
                 );
-              }, 1500);
+              }, 2000); // Longer spawn animation for mobile
             } else {
               newX = kitty.exitOffset + 50;
             }
@@ -136,7 +133,7 @@ export const AnimatedKitties = () => {
               spawnCooldown.current = true;
               setTimeout(() => {
                 spawnCooldown.current = false;
-              }, 3000);
+              }, 4000); // Longer cooldown for mobile
               
               setTimeout(() => {
                 setKitties(current => 
@@ -144,15 +141,15 @@ export const AnimatedKitties = () => {
                     k.id === kitty.id ? { ...k, spawning: false } : k
                   )
                 );
-              }, 1500);
+              }, 2000); // Longer spawn animation for mobile
             } else {
               newX = kitty.entryOffset - 50;
             }
           }
           
-          const bobIncrement = isRushHourMode ? 0.10 : 0.03;
+          const bobIncrement = isRushHourMode ? 0.08 : 0.02; // Slower bobbing for mobile
           const newBobPhase = (kitty.bobPhase + bobIncrement) % (Math.PI * 2);
-          const verticalMoveFactor = isRushHourMode ? 1.0 : 0.3;
+          const verticalMoveFactor = isRushHourMode ? 0.7 : 0.2; // Reduced vertical movement for mobile
           
           return {
             ...kitty,
@@ -181,12 +178,12 @@ export const AnimatedKitties = () => {
               position: 'absolute',
               left: `${kitty.x}px`,
               top: `${kitty.y}px`,
-              transform: `scale(${kitty.scale}) translateY(${Math.sin(kitty.bobPhase) * 10}px) scaleX(${kitty.direction})`,
+              transform: `scale(${kitty.scale}) translateY(${Math.sin(kitty.bobPhase) * 8}px) scaleX(${kitty.direction})`,
               transition: 'transform 0.3s ease-in-out',
               zIndex: 1000,
               cursor: 'pointer',
               pointerEvents: 'auto',
-              width: '220px',
+              width: '180px', // Smaller width for mobile
               height: 'auto',
             }}
             onClick={(e) => {
@@ -209,29 +206,4 @@ export const AnimatedKitties = () => {
       })}
     </div>
   );
-};
-
-const Layout = () => {
-  const [isMobile, setIsMobile] = useState(window.innerWidth <= 600);
-
-  useEffect(() => {
-    const handleResize = () => {
-      setIsMobile(window.innerWidth <= 600);
-    };
-
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
-
-  return (
-    <div className="app-container">
-      {/* Background with animated kitties that appears on all screens */}
-      {isMobile ? <MobileAnimatedKitties /> : <AnimatedKitties />}
-      
-      {/* The Outlet will render the current route */}
-      <Outlet />
-    </div>
-  );
-};
-
-export default Layout; 
+}; 

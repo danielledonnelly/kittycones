@@ -21,8 +21,10 @@ export default function Game() {
     handleOrderClick,
     resetOrder,
     getCustomerContainerStyles,
+    getZIndexForNormalMode,
     cones,
-    scoops
+    scoops,
+    isMobile
   } = useGame();
   
   const navigate = useNavigate();
@@ -64,51 +66,52 @@ export default function Game() {
               className="customer"
               animate={{ 
                 x: cat.exitAnimation ? -2500 : 0,
-                y: cat.exitAnimation ? 0 : Math.sin(bobPhases[index]) * (catPositions[index] ? 15 : 8)
-                }}
-                transition={{ 
+                y: cat.exitAnimation ? 0 : Math.sin(bobPhases[index]) * (catPositions[index] ? (isMobile ? 10 : 15) : (isMobile ? 5 : 8))
+              }}
+              transition={{ 
                 duration: cat.exitAnimation ? 2.0 : 0.1,
                 ease: cat.exitAnimation ? "easeIn" : "linear",
                 type: "tween"
-                }}
-                style={{
+              }}
+              style={{
                 position: 'absolute',
                 left: `${catPositions[index]}px`,
                 bottom: '0',
-                width: '220px',
+                width: isMobile ? '120px' : '220px',
                 zIndex: cat.exitAnimation ? -10 : Math.floor(catPositions[index]),
                 pointerEvents: cat.exitAnimation ? 'none' : 'auto'
               }}
             >
               {customerOrders[index] && !cat.exitAnimation && (
-              <div
-                className="order"
+                <div
+                  className="order"
                   onClick={() => handleOrderClick(customerOrders[index], index, cat.id)}
                   style={{ 
                     cursor: 'pointer',
                     opacity: 1,
-                    transition: 'opacity 0.3s ease-out'
+                    transition: 'opacity 0.3s ease-out',
+                    transform: isMobile ? 'scale(0.6)' : 'scale(1)'
                   }}
-              >
-                {customerOrders[index]?.cone && (
-                  <img
-                    className="cone-order"
-                    src={`/assets/${customerOrders[index].cone}`}
-                    alt="Cone"
-                  />
-                )}
+                >
+                  {customerOrders[index]?.cone && (
+                    <img
+                      className="cone-order"
+                      src={`/assets/${customerOrders[index].cone}`}
+                      alt="Cone"
+                    />
+                  )}
                   {customerOrders[index]?.scoops?.map((scoop, scoopIndex) => (
-                  <img
-                    key={scoopIndex}
-                    className="scoop-order"
-                    src={`/assets/${scoop}`}
-                    alt={`Scoop ${scoopIndex + 1}`}
-                    style={{
-                      "--scoop-index": scoopIndex,
-                    }}
-                  />
-                ))}
-              </div>
+                    <img
+                      key={scoopIndex}
+                      className="scoop-order"
+                      src={`/assets/${scoop}`}
+                      alt={`Scoop ${scoopIndex + 1}`}
+                      style={{
+                        "--scoop-index": scoopIndex,
+                      }}
+                    />
+                  ))}
+                </div>
               )}
 
               <img
@@ -118,12 +121,13 @@ export default function Game() {
                 onClick={() => handleOrderClick(customerOrders[index], index, cat.id)}
                 style={{ 
                   cursor: cat.exitAnimation ? 'default' : 'pointer',
-                  pointerEvents: cat.exitAnimation ? 'none' : 'auto'
+                  pointerEvents: cat.exitAnimation ? 'none' : 'auto',
+                  transform: isMobile ? 'scale(0.6)' : 'scale(1)'
                 }}
               />
             </motion.div>
           )
-          ))}
+        ))}
       </div>
       {/* Counter */}
       <div className="counter">

@@ -91,7 +91,7 @@ body {
   min-width: 580px;
 }
 
-/* If you want to see something funny, remove the styling below and watching what happens to the cats */
+/* If you want to see something funny, remove the styling below and watching what happens to the cats in-game */
 .cone-order {
   position: absolute;
   width: 100%;
@@ -143,24 +143,7 @@ body {
 
 .end {
   z-index: 3;
-}
-
-.end-screen {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 90%;
-  max-width: 1000px;
-  height: 60%;
-  padding: 30px;
-  background-color: #efdae6ef;
-  border-radius: 20px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
+  height: 40px;
 }
 
 .game-background {
@@ -299,7 +282,6 @@ body {
   bottom: 0;
   width: 100%;
 }
-
 
 /* Initials Modal Styles */
 .modal-overlay {
@@ -517,9 +499,10 @@ body {
 }
 
 .screen-title {
-  font-size: 100px;
+  position: relative;
+  font-size: 80px;
   font-weight: bold;
-  margin-top: 0;
+  margin-top: -40px;
   margin-bottom: 20px;
   font-family: 'Fredoka', sans-serif;
   letter-spacing: 4px;
@@ -649,6 +632,117 @@ body {
   padding-left: 0px;
 }
 
+/* Radix UI Custom Styling */
+.rt-Button.rt-variant-soft {
+  background-color: #241843; /* Dark purple */
+  border: 2px solid white;
+  color: white;
+  font-family: 'Fredoka', sans-serif;
+  font-size: 22px;
+  min-width: 180px;
+  min-height: 60px;
+  cursor: pointer;
+  padding: 15px 25px;
+}
+
+.rt-Button.rt-variant-soft:hover {
+  background-color: #352a64; /* Slightly lighter dark purple for hover */
+  cursor: pointer;
+}
+
+.rt-Card {
+  background-color: rgba(239, 218, 230, 0.95) !important;
+  border: 4px solid #241843 !important;
+  border-radius: 20px !important;
+  padding: 25px !important;
+}
+
+.rt-Text, .rt-TableCell {
+  color: #241843 !important;
+  font-family: 'Lato', sans-serif !important;
+}
+
+.rt-Heading {
+  color: #241843 !important;
+  font-family: 'Fredoka', sans-serif !important;
+}
+
+.rt-Table {
+  border: 2px solid #241843 !important;
+  border-radius: 10px !important;
+  overflow: hidden !important;
+}
+
+.rt-TableRow:nth-child(odd) {
+  background-color: rgba(208, 174, 219, 0.4) !important;
+}
+
+.rt-TableRow:hover {
+  background-color: rgba(208, 174, 219, 0.7) !important;
+}
+
+.rt-TableCell {
+  border-bottom: 1px solid #241843 !important;
+  padding: 10px 15px !important;
+}
+
+/* Make sure Home buttons row maintains original styling */
+.home-buttons-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+}
+
+/* Additional Radix UI Custom Styling */
+.about-card, .leaderboard-card {
+  width: 100%;
+  height: 100%;
+  background-color: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+/* Make sure the leaderboard tables use original styling */
+.leaderboard-card .rt-TableRoot {
+  background-color: transparent !important;
+  border: none !important;
+}
+
+.leaderboard-card .rt-TableRow {
+  background-color: transparent !important;
+}
+
+.leaderboard-card .rt-TableCell {
+  border-bottom: none !important;
+  padding: 0 !important;
+}
+
+.leaderboard-card .high-score-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+/* Make sure buttons inside the counter use original styling */
+.counter .rt-Button {
+  margin: 0;
+  box-shadow: none;
+  transform: none;
+}
+
+/* Keep the original font styles for text */
+.about-card .rt-Text, .leaderboard-card .rt-Text {
+  text-align: left;
+  margin-bottom: 15px;
+  font-size: 18px;
+  line-height: 1.5;
+  color: #241843;
+}
+
+
 @media (max-width: 1600px) {
   .button {
     max-width: 100px;
@@ -738,7 +832,7 @@ body {
   }
 
   .screen-title {
-    font-size: 42px;
+    font-size: 60px;
   }
 
   .screen-text {
@@ -1005,121 +1099,9 @@ body {
     height: auto;
     margin-right: 10%;
   }
-}
 
-@media (max-width: 600px) {
   .home-buttons-row {
     flex-direction: column;
     align-items: center;
   }
-}
-
-/* Radix UI Custom Styling */
-.rt-Button.rt-variant-soft {
-  background-color: #241843; /* Dark purple */
-  border: 2px solid white;
-  color: white;
-  font-family: 'Fredoka', sans-serif;
-  font-size: 22px;
-  min-width: 180px;
-  min-height: 60px;
-  cursor: pointer;
-  padding: 15px 25px;
-}
-
-.rt-Button.rt-variant-soft:hover {
-  background-color: #352a64; /* Slightly lighter dark purple for hover */
-  cursor: pointer;
-}
-
-.rt-Card {
-  background-color: rgba(239, 218, 230, 0.95) !important;
-  border: 4px solid #241843 !important;
-  border-radius: 20px !important;
-  padding: 25px !important;
-}
-
-.rt-Text, .rt-TableCell {
-  color: #241843 !important;
-  font-family: 'Lato', sans-serif !important;
-}
-
-.rt-Heading {
-  color: #241843 !important;
-  font-family: 'Fredoka', sans-serif !important;
-}
-
-.rt-Table {
-  border: 2px solid #241843 !important;
-  border-radius: 10px !important;
-  overflow: hidden !important;
-}
-
-.rt-TableRow:nth-child(odd) {
-  background-color: rgba(208, 174, 219, 0.4) !important;
-}
-
-.rt-TableRow:hover {
-  background-color: rgba(208, 174, 219, 0.7) !important;
-}
-
-.rt-TableCell {
-  border-bottom: 1px solid #241843 !important;
-  padding: 10px 15px !important;
-}
-
-/* Make sure Home buttons row maintains original styling */
-.home-buttons-row {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  gap: 20px;
-}
-
-/* Additional Radix UI Custom Styling */
-.about-card, .leaderboard-card {
-  width: 100%;
-  height: 100%;
-  background-color: transparent !important;
-  border: none !important;
-  box-shadow: none !important;
-}
-
-/* Make sure the leaderboard tables use original styling */
-.leaderboard-card .rt-TableRoot {
-  background-color: transparent !important;
-  border: none !important;
-}
-
-.leaderboard-card .rt-TableRow {
-  background-color: transparent !important;
-}
-
-.leaderboard-card .rt-TableCell {
-  border-bottom: none !important;
-  padding: 0 !important;
-}
-
-.leaderboard-card .high-score-item {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
-}
-
-/* Make sure buttons inside the counter use original styling */
-.counter .rt-Button {
-  margin: 0;
-  box-shadow: none;
-  transform: none;
-}
-
-/* Keep the original font styles for text */
-.about-card .rt-Text, .leaderboard-card .rt-Text {
-  text-align: left;
-  margin-bottom: 15px;
-  font-size: 18px;
-  line-height: 1.5;
-  color: #241843;
 }

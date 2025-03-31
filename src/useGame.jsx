@@ -103,18 +103,29 @@ export function useGame() {
   const [cats, setCats] = useState([]);
   const [isInitialized, setIsInitialized] = useState(false);
   const [bobPhases, setBobPhases] = useState([]);
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 600);
 
   // STATISTICS
   const [time, setTime] = useState(30); // State to track the remaining time
   // Use a ref to track if the game is over to prevent infinite loops
   const gameOverRef = useRef(false);
 
+  // Add resize handler for mobile detection
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 600);
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   const [customerOrders, setCustomerOrders] = useState(() =>
     // State for managing customer orders
     generateCustomerOrders(
       cones,
       scoops,
-      Array.from({ length: 4 }, (_, i) => `customer${i + 1}.png`)
+      Array.from({ length: isMobile ? 2 : 4 }, (_, i) => `customer${i + 1}.png`)
     )
   );
 
@@ -130,10 +141,10 @@ export function useGame() {
       // Only initialize positions if not already set
       if (isRushHourMode) {
         // For Rush Hour mode, set initial offsets for animation
-        setCatPositions([200, 100, 0, -100, -200]);
+        setCatPositions(isMobile ? [100, -100] : [200, 100, 0, -100, -200]);
       } else {
         // For normal mode, use centered positions
-        setCatPositions([0, 0, 0, 0]);
+        setCatPositions(isMobile ? [0, 0] : [0, 0, 0, 0]);
       }
     }
   }, []); // No dependency on isRushHourMode to prevent repositioning on mode change
@@ -142,46 +153,47 @@ export function useGame() {
   useEffect(() => {
     if (!isInitialized) {
       const screenWidth = window.innerWidth;
-      const sectionWidth = screenWidth / 4;
+      const sectionWidth = screenWidth / (isMobile ? 2 : 4);
       
       // Initialize cats with IDs and images
-      const initialCats = customerImages.map((image, index) => ({
+      const initialCats = customerImages.slice(0, isMobile ? 2 : 4).map((image, index) => ({
         image,
         id: `cat-${Date.now()}-${index}`
       }));
 
       // Initialize bob phases for each cat
-      const initialBobPhases = Array(initialCats.length + 5).fill(0).map(() => 
+      const initialBobPhases = Array(initialCats.length + (isMobile ? 2 : 5)).fill(0).map(() => 
         Math.random() * Math.PI * 2
       );
 
       // Initialize orders for the initial cats
-      const initialOrders = generateCustomerOrders(cones, scoops, customerImages);
+      const initialOrders = generateCustomerOrders(cones, scoops, customerImages.slice(0, isMobile ? 2 : 4));
 
       // Add additional cats off-screen and their orders
       const additionalCats = [];
       const additionalOrders = [];
-      for (let i = 0; i < 5; i++) {
+      const additionalCount = isMobile ? 2 : 5;
+      for (let i = 0; i < additionalCount; i++) {
         const catId = nextCustomerId + i;
         const catImage = `customer${catId > 10 ? 1 : catId}.png`;
         additionalCats.push({
-            image: catImage, 
+          image: catImage, 
           id: `cat-${Date.now()}-${initialCats.length + i}`
         });
         additionalOrders.push(generateCustomerOrders(cones, scoops, [catImage])[0]);
       }
 
       // Calculate initial positions with equal spacing
-      const initialPositions = Array.from({ length: 4 }, (_, i) => {
-        return (i * sectionWidth) + (sectionWidth/2 - 110);
+      const initialPositions = Array.from({ length: isMobile ? 2 : 4 }, (_, i) => {
+        return (i * sectionWidth) + (sectionWidth/2 - (isMobile ? 60 : 110));
       });
       
       // Calculate the position where the last visible cat will be
       const lastVisibleCatPos = initialPositions[initialPositions.length - 1];
       
       // Add positions for additional cats off-screen with the same spacing
-      const additionalPositions = Array.from({ length: 5 }, (_, i) => {
-        return lastVisibleCatPos + ((i + 1) * sectionWidth);
+      const additionalPositions = Array.from({ length: additionalCount }, (_, i) => {
+        return lastVisibleCatPos + ((i + 1) * (isMobile ? sectionWidth * 0.8 : sectionWidth));
       });
 
       setCats([...initialCats, ...additionalCats]);
@@ -190,7 +202,7 @@ export function useGame() {
       setBobPhases(initialBobPhases);
       setIsInitialized(true);
     }
-  }, [isInitialized, customerImages, nextCustomerId]);
+  }, [isInitialized, customerImages, nextCustomerId, isMobile]);
 
   // Continuous movement and bobbing effect
   useEffect(() => {
@@ -199,10 +211,10 @@ export function useGame() {
     const moveInterval = setInterval(() => {
       setCatPositions(prev => {
         const screenWidth = window.innerWidth;
-        const sectionWidth = screenWidth / 4;
+        const sectionWidth = screenWidth / (isMobile ? 2 : 4);
         
-        // Move all cats left by fixed amount
-        const newPositions = prev.map(pos => pos - (isRushHourMode ? 4 : 2));
+        // Move all cats left by fixed amount - slower on mobile
+        const newPositions = prev.map(pos => pos - (isRushHourMode ? (isMobile ? 2 : 4) : (isMobile ? 1 : 2)));
         
         // Check if leftmost cat is off-screen
         if (newPositions[0] < -250) {
@@ -251,14 +263,14 @@ export function useGame() {
         return newPositions;
       });
 
-      // Update bob phases for animation - increased speed
+      // Update bob phases for animation - slower on mobile
       setBobPhases(prev => 
-        prev.map(phase => (phase + (isRushHourMode ? 0.15 : 0.08)) % (Math.PI * 2))
+        prev.map(phase => (phase + (isRushHourMode ? (isMobile ? 0.08 : 0.15) : (isMobile ? 0.04 : 0.08))) % (Math.PI * 2))
       );
     }, 16);
     
     return () => clearInterval(moveInterval);
-  }, [isInitialized, isRushHourMode, time]);
+  }, [isInitialized, isRushHourMode, time, isMobile]);
 
   // Simplified container styles
   const getCustomerContainerStyles = () => {
