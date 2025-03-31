@@ -7,7 +7,8 @@
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "purgecss": "purgecss --css src/**/*.css --content src/**/*.{js,jsx,ts,tsx,html} --output src/"
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",
@@ -22,6 +23,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.17.0",
+    "@fullhuman/postcss-purgecss": "^7.0.2",
     "@types/react": "^18.3.17",
     "@types/react-dom": "^18.3.5",
     "@vitejs/plugin-react": "^4.3.4",
@@ -30,6 +32,7 @@
     "eslint-plugin-react-hooks": "^5.0.0",
     "eslint-plugin-react-refresh": "^0.4.16",
     "globals": "^15.13.0",
+    "purgecss": "^7.0.2",
     "vite": "^6.0.3"
   }
 }

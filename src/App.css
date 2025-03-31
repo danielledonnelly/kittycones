@@ -847,7 +847,7 @@ body {
   }
 }
 
-@media (max-width: 600px) {
+@media (max-width: 800px) {
   .home-background {
     z-index: 3; 
   }
@@ -919,8 +919,8 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: flex-end;
-    max-height: 40vh;
-    padding: 10px;
+    max-height: 35vh;
+    padding-bottom: 20px;
   }
 
   .cone-buttons {
@@ -930,13 +930,8 @@ body {
     flex-wrap: nowrap;
     justify-content: center;
     width: 100%;
-    gap: 0;
-    padding: 0;
-    margin-bottom: 10%;
-    margin-left: 30%;
-    order: 2;
-    position: absolute;
-    bottom: 0;
+    margin-left: 35%;
+    bottom: 10px;
   }
 
   .scoop-buttons {
@@ -945,38 +940,24 @@ body {
     flex-direction: row;
     flex-wrap: nowrap;
     justify-content: center;
-    gap: 0;
-    margin-bottom: 40%;
-    margin-left: 60px;
-    order: 1;
+    margin-left: 40%;
+    bottom: 120px;
   }
 
   .restart-button {
-    order: 3;
-    margin-right: 0;
-    margin-top: 10px;
     position: absolute;
-    right: 15px;
-    bottom: 15px;
-    transform: scale(0.65);
+    right: 0px;
+    bottom: 50px;
   }
 
-  .restart-button .button {
-    width: 45px !important;
-    height: 45px !important;
-    min-width: 45px;
-    padding: 5px;
-  }
 
   .restart-button img {
     width: 100%;
-    min-width: 40px;
+    min-width: 70px;
   }
 
   .scoop-tub-button {
     transform: scale(0.45);
-    width: 35px;
-    height: 35px;
   }
 
   .cone-stand-button {
@@ -984,23 +965,17 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    height: 60px;
     max-width: 35px;
-    margin: 0 -5px;
-    transform: scale(0.6);
-    padding: 0;
-  }
-
-  .stand-image {
-    position: absolute;
-    bottom: -5px;
-    z-index: 1;
-    width: 150%;
-    transform: translateX(-15%);
+    transform: scale(0.5);
+    padding: 30px;
   }
 
   .customer {
-    bottom: 50px !important;
+    bottom: 45% !important;
+  }
+
+  .customer-image {
+    max-width: 320px;
   }
 
   .high-scores {
@@ -1025,7 +1000,7 @@ body {
     transform: scale(0.6); 
     transform-origin: center bottom; 
     width: 120px;
-    left: -20px;
+    left: -150px;
   }
   
   .ice-cream-cone {
@@ -1037,8 +1012,6 @@ body {
   
   .ice-cream-scoop {
     position: absolute;
-    left: 50%; 
-    transform: translateX(-50%) translateY(75px);
     width: 100%; 
     z-index: 2;
   }
