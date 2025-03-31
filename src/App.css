@@ -5,10 +5,6 @@
   user-select: none;
 }
 
-.about {
-  text-align: left;
-}
-
 .animated-kitties-container {
   position: fixed;
   top: 0;
@@ -20,13 +16,6 @@
   z-index: 2;
 }
 
-.animated-kitty {
-  position: absolute;
-  transition: transform 0.3s ease-in-out;
-  filter: drop-shadow(0 5px 10px rgba(0, 0, 0, 0.1));
-  pointer-events: auto; /* Ensure kitties are clickable */
-}
-
 .app-container {
   height: 100vh;
   overflow: hidden;
@@ -36,11 +25,8 @@
 }
 
 .background {
-  background-color: #DEB1CB !important;
   height: auto;
   left: 0;
-  min-height: 100% !important;
-  min-width: 100vw !important;
   position: absolute;
   z-index: 1;
 }
@@ -63,22 +49,11 @@ body {
   width: 120px;
 }
 
-.button:focus {
-  box-shadow: none;
-  outline: none;
-}
-
 .button img {
   display: block;
   height: auto;
   width: 100%;
   min-width: 150px;
-}
-
-.buttons-group {
-  flex: 1 1 auto;
-  display: flex;
-  gap: 5px;
 }
 
 .coin-counter {
@@ -101,7 +76,7 @@ body {
   flex-direction: row;
   align-items: flex-end;
   flex-wrap: nowrap;
-  gap: 2px;
+  gap: 20px;
 }
 
 .scoop-buttons {
@@ -116,6 +91,7 @@ body {
   min-width: 580px;
 }
 
+/* If you want to see something funny, remove the styling below and watching what happens to the cats */
 .cone-order {
   position: absolute;
   width: 100%;
@@ -129,7 +105,7 @@ body {
   border-top: 4px solid #241843;
   border-bottom: 16px solid #241843;
   display: flex;
-  justify-content: space-between;
+  justify-content:space-between;
   max-height: 30vh;
   position: absolute;
   padding: 20px 40px 30px;
