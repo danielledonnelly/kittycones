@@ -8,7 +8,7 @@
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "purgecss": "purgecss --css src/**/*.css --content src/**/*.{js,jsx,ts,tsx,html} --output src/"
+    "purgecss": "purgecss --css './src/*.css' --content './src/*.jsx' --output './src/'"
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",

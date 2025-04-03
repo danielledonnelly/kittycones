@@ -13,6 +13,7 @@ const Leaderboard = () => {
     fetchGlobalScores 
   } = useContext(GameContext);
   const [isClearing, setIsClearing] = useState(false);
+  const [isClearingGlobal, setIsClearingGlobal] = useState(false);
 
   useEffect(() => {
     // Log current state of high scores for debugging
@@ -33,13 +34,31 @@ const Leaderboard = () => {
       // Also try setting it to an empty array as a fallback
       localStorage.setItem("highScores", JSON.stringify([]));
       console.log("Scores cleared successfully");
-      alert("All scores have been cleared!");
+      alert("All local scores have been cleared!");
     } catch (error) {
       console.error("Error clearing scores:", error);
       alert("There was an error clearing scores. Please check console.");
     } finally {
       setIsClearing(false);
     }
+  };
+
+  // Function to clear all global scores (this will just refresh the global scores)
+  const clearAllGlobalScores = () => {
+    setIsClearingGlobal(true);
+    
+    // Refresh global scores
+    fetchGlobalScores()
+      .then(() => {
+        alert("Global leaderboard has been refreshed!");
+      })
+      .catch(error => {
+        console.error("Error refreshing global scores:", error);
+        alert("There was an error refreshing global scores. Please try again.");
+      })
+      .finally(() => {
+        setIsClearingGlobal(false);
+      });
   };
 
   // Ensure we have exactly 10 scores for display in local leaderboard
@@ -95,7 +114,7 @@ const Leaderboard = () => {
         <div className="end screen end-screen" style={{ top: '30%' }}>
           <h1 className="screen-title">High Scores</h1>
           
-          <div className="leaderboard-container">
+          <div className="leaderboard-container" style={{ position: 'relative', zIndex: 5 }}>
             <div className="leaderboard-column">
               <h2>Local Leaderboard</h2>
               <div className="high-scores">
@@ -133,14 +152,25 @@ const Leaderboard = () => {
                   </Button>
                 </div>
               ) : (
-                <div className="high-scores">
-                  {displayGlobalScores.map((scoreData, index) => (
-                    <div key={index} className="high-score-item">
-                      <span className={`rank-number ${index < 9 ? 'single-digit' : ''}`}>{index + 1}.</span>
-                      {scoreData.score ? `   ${scoreData.initials || ""}      ${scoreData.score} pts` : ""}
-                    </div>
-                  ))}
-                </div>
+                <>
+                  <div className="high-scores">
+                    {displayGlobalScores.map((scoreData, index) => (
+                      <div key={index} className="high-score-item">
+                        <span className={`rank-number ${index < 9 ? 'single-digit' : ''}`}>{index + 1}.</span>
+                        {scoreData.score ? `   ${scoreData.initials || ""}      ${scoreData.score} pts` : ""}
+                      </div>
+                    ))}
+                  </div>
+                  <Button 
+                    size="3" 
+                    variant="soft" 
+                    onClick={clearAllGlobalScores}
+                    disabled={isClearingGlobal}
+                    style={{ marginTop: '20px' }}
+                  >
+                    Refresh Scores
+                  </Button>
+                </>
               )}
             </div>
           </div>

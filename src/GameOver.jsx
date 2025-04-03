@@ -34,11 +34,11 @@ const GameOver = () => {
   }
 
   return (
-    <div className="end screen end-screen">
-      <h1 className="end screen-title">Game Over</h1>
-      <p className="end screen-text">Your Score: {coins || 0}</p>
+    <div className="end screen end-screen" style={{ position: 'relative', zIndex: 5 }}>
+      <h1 className="screen-title">Game Over</h1>
+      <p className="screen-text">Your Score: {coins || 0}</p>
       
-      <div className="leaderboard-container">
+      <div className="leaderboard-container" style={{ position: 'relative', zIndex: 5 }}>
         <div className="leaderboard-column">
           <h2>Local Leaderboard</h2>
           <div className="high-scores">
@@ -79,10 +79,11 @@ const GameOver = () => {
         </div>
       </div>
       
-      <div className="button-group">
+      <div className="home-buttons-row" style={{ marginTop: '20px', position: 'relative', zIndex: 5 }}>
         <Link to="/game" style={{ textDecoration: 'none' }}>
           <Button size="3" variant="soft">Play Again</Button>
         </Link>
+        
         <Link to="/" style={{ textDecoration: 'none' }}>
           <Button size="3" variant="soft">Home</Button>
         </Link>

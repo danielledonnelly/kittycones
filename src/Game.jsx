@@ -133,6 +133,32 @@ export default function Game() {
       <div className="counter">
         {/* Assembled Ice Cream */}
         <div className="ice-cream">
+          
+          {selectedScoops.map((scoop, index) => (
+            <motion.img
+              key={index}
+              src={`/assets/${scoop}`}
+              alt={`Scoop ${index + 1}`}
+              className="ice-cream-scoop"
+              initial={{ scale: 1.5, y: -100, opacity: 1 }}
+              animate={orderSuccess 
+                ? { scale: 1, y: -100, opacity: 0, x: 150 }
+                : { scale: 1, y: 0, opacity: 1, x: 0 }
+              }
+              transition={{
+                type: "spring",
+                stiffness: 600,
+                damping: 16,
+                mass: 0.6,
+                delay: index * 0.03,
+                ...(orderSuccess && { 
+                  y: { duration: 0.2 },
+                  x: { duration: 0.2 },
+                  opacity: { duration: 0.15 }
+                })
+              }}
+            />
+          ))}
           {selectedCone && (
             <motion.img
               src={`/assets/${selectedCone}`}
@@ -157,39 +183,8 @@ export default function Game() {
               }}
             />
           )}
-          {selectedScoops.map((scoop, index) => (
-            <motion.img
-              key={index}
-              src={`/assets/${scoop}`}
-              alt={`Scoop ${index + 1}`}
-              className="ice-cream-scoop"
-              style={{ 
-                bottom: `${220 + index * 40}px`,
-                position: "absolute",
-                left: "50%",
-                marginLeft: "-125px"
-              }}
-              initial={{ scale: 1.5, y: -100, opacity: 1 }}
-              animate={orderSuccess 
-                ? { scale: 1, y: -100, opacity: 0, x: 150 }
-                : { scale: 1, y: 0, opacity: 1, x: 0 }
-              }
-              transition={{
-                type: "spring",
-                stiffness: 600,
-                damping: 16,
-                mass: 0.6,
-                delay: index * 0.03,
-                ...(orderSuccess && { 
-                  y: { duration: 0.2 },
-                  x: { duration: 0.2 },
-                  opacity: { duration: 0.15 }
-                })
-              }}
-            />
-          ))}
         </div>
-
+      <div className="ingredients">
         {/* Buttons for Cones */}
         <div className="buttons-group cone-buttons">
           {cones.map((cone, index) => (
@@ -234,6 +229,7 @@ export default function Game() {
           </button>
         </div>
       </div>
+    </div>
 
       {/* Add floating coin amounts */}
       {floatingCoins.map(coin => (
