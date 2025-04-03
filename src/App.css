@@ -102,8 +102,6 @@ body {
   box-sizing: border-box;
   border-top: 4px solid #241843;
   border-bottom: 16px solid #241843;
-  display: flex;
-  justify-content:space-between;
   height: 30vh;
   position: absolute;
   padding: 20px 40px 30px;
@@ -342,17 +340,19 @@ body {
 
 .leaderboard-container {
   display: flex;
-  justify-content: space-between;
   width: 100%;
-  gap: 40px;
-  margin-bottom: 30px;
+  gap: 20px;
+}
+
+.end-screen {
+  top: 35% !important;
 }
 
 .leaderboard-column {
   flex: 1;
   background-color: rgba(159, 134, 192, 0.3);
   border-radius: 15px;
-  padding: 20px;
+  padding: 10px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   border: none;
   min-width: 200px;
@@ -365,7 +365,6 @@ body {
   margin-bottom: 15px;
   text-align: center;
   border-bottom: 2px solid #9F86C0;
-  padding-bottom: 10px;
 }
 
 .mobile {
@@ -478,7 +477,7 @@ body {
   max-width: 1000px;
   height: auto;
   min-height: 60%;
-  padding: 30px;
+  padding: 20px;
   border-radius: 20px;
   display: flex;
   flex-direction: column;
@@ -491,10 +490,10 @@ body {
 
 .screen-title {
   position: relative;
-  font-size: 80px;
+  font-size: 65px;
   font-weight: bold;
   margin-top: 0;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
   font-family: 'Fredoka', sans-serif;
   letter-spacing: 4px;
   color: #5E558F;
