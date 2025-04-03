@@ -9,22 +9,18 @@
   position: fixed;
   width: 100%;
   height: 100%;
-  overflow: hidden;
   pointer-events: none; 
   z-index: 2;
 }
 
 .app-container {
   height: 100vh;
-  overflow: hidden;
-  overflow-y: hidden;
   position: relative;
   width: 100vw;
 }
 
 .background {
   height: auto;
-  left: 0;
   position: absolute;
   z-index: 1;
 }
@@ -345,7 +341,9 @@ body {
 }
 
 .end-screen {
+  position: absolute;
   top: 35% !important;
+  border: 4px solid #241843;
 }
 
 .leaderboard-column {
@@ -822,8 +820,6 @@ body {
     margin-right: 10%;
   }
 
-  .h
-
   .screen-title {
     font-size: 52px;
     padding-top: 10%;
@@ -862,26 +858,17 @@ body {
     height: 100%;
   }
 
-  .home-nav-button {
-    font-size: 14px;
-    padding: 8px 16px;
-    min-width: 120px;
-    margin: 3px;
-  }
-
   .home-buttons-row {
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
-    gap: 10px;
+    gap: 8px;
+    flex-wrap: wrap;
+    justify-content: center;
   }
 
   .button {
-    width: 60px !important;
-    height: 60px !important;
     position: relative;
     flex-direction: row;
-    right: 60px !important;
-    bottom: 0px !important;
     gap: 0px !important;
   }
     
@@ -922,7 +909,6 @@ body {
     flex-direction: row;
     flex-wrap: nowrap;
     justify-content: center;
-    background-color: #00BEEF;
   }
 
   .scoop-buttons {
@@ -930,13 +916,11 @@ body {
     flex-direction: row;
     flex-wrap: nowrap;
     justify-content: center;
-    background-color: YELLOW;
   }
 
   .restart-button {
-   
+    transform: scale(0.7);
   }
-
 
   .restart-button img {
     width: 100%;
@@ -983,7 +967,6 @@ body {
  
   .ice-cream {
     display: flex;
-    background-color: red;
     flex-direction: column;
   }
 
@@ -992,16 +975,55 @@ body {
   }
   
   .ice-cream-cone {
-
+    /* Empty class */
   }
   
   .ice-cream-scoop {
-
+    /* Empty class */
   }
 
   .leaderboard-container {
     flex-direction: column;
-    gap: 15px;
+    gap: 8px;
+    margin-top: 10px;
+  }
+
+  .leaderboard-column {
+    padding: 8px;
+  }
+
+  .leaderboard-column h2 {
+    font-size: 16px;
+    margin-bottom: 4px;
+  }
+
+  .high-scores {
+    grid-template-columns: 1fr 1fr;
+    gap: 4px;
+  }
+  
+  .high-score-item {
+    font-size: 10px;
+    padding: 2px 4px;
+  }
+
+  .rank-number {
+    min-width: 18px;
+    padding-right: 2px;
+  }
+
+  .screen-title {
+    font-size: 24px;
+    margin-bottom: 4px;
+  }
+
+  .screen-text {
+    font-size: 12px;
+    margin: 2px 0;
+  }
+
+  .end.screen {
+    padding: 10px;
   }
 
   .mute-button, .rush-hour-button {
@@ -1016,7 +1038,7 @@ body {
   }
 
   .rush-hour-button {
-  right: 130px !important;
+    right: 130px !important;
   }
 
   .scoop-order {
@@ -1040,14 +1062,25 @@ body {
     max-width: 100% !important;
   }
 
+  /* Updated button styles for mobile */
   .screen-button {
-    padding: 10px 20px;
-    font-size: 16px;
+    padding: 8px 16px;
+    font-size: 14px;
+    min-width: 120px;
+    min-height: 40px;
+  }
+
+  .rt-Button.rt-variant-soft {
+    font-size: 14px;
+    min-width: 120px;
+    min-height: 40px;
+    padding: 8px 16px;
   }
 
   .home-buttons-row {
     flex-direction: column;
     align-items: center;
+    gap: 8px;
   }
 
   .end.screen {
@@ -1056,8 +1089,22 @@ body {
     margin-right: 10%;
   }
 
-  .home-buttons-row {
-    flex-direction: column;
-    align-items: center;
+  .leaderboard-column {
+    padding: 15px;
+  }
+
+  .leaderboard-column h2 {
+    font-size: 20px;
+    margin-bottom: 10px;
+  }
+
+  .modal-buttons {
+    gap: 10px;
+  }
+
+  .initial-input {
+    width: 40px;
+    height: 40px;
+    font-size: 24px;
   }
 }

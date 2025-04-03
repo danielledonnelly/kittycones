@@ -34,7 +34,7 @@ const Leaderboard = () => {
       // Also try setting it to an empty array as a fallback
       localStorage.setItem("highScores", JSON.stringify([]));
       console.log("Scores cleared successfully");
-      alert("All local scores have been cleared!");
+      // alert("All local scores have been cleared!");
     } catch (error) {
       console.error("Error clearing scores:", error);
       alert("There was an error clearing scores. Please check console.");
@@ -50,7 +50,7 @@ const Leaderboard = () => {
     // Refresh global scores
     fetchGlobalScores()
       .then(() => {
-        alert("Global leaderboard has been refreshed!");
+        // alert("Global leaderboard has been refreshed!");
       })
       .catch(error => {
         console.error("Error refreshing global scores:", error);
