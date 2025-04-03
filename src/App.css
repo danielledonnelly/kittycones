@@ -7,12 +7,10 @@
 
 .animated-kitties-container {
   position: fixed;
-  top: 0;
-  left: 0;
   width: 100%;
   height: 100%;
   overflow: hidden;
-  pointer-events: none; /* Changed from auto to none to allow clicks to pass through */
+  pointer-events: none; 
   z-index: 2;
 }
 
@@ -139,6 +137,11 @@ body {
 .disable-buttons .screen-button{
   pointer-events: auto; /* Enable specific buttons */
   opacity: 1;
+}
+
+.end {
+  z-index: 3;
+  height: 40px;
 }
 
 .game-background {
@@ -337,13 +340,12 @@ body {
   border-color: #9F86C0;
 }
 
-.leaderboard-screen {
-  top: 30% !important;
-}
-
 .leaderboard-container {
   display: flex;
   justify-content: space-between;
+  width: 100%;
+  gap: 40px;
+  margin-bottom: 30px;
 }
 
 .leaderboard-column {
@@ -393,6 +395,10 @@ body {
 
 .mute-button.MuiIconButton-root:hover {
   background-color: transparent !important;
+}
+
+.ice-cream-scoop {
+
 }
 
 .order {
@@ -468,16 +474,19 @@ body {
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  min-height: 70%;
-  padding: 20px;
+  width: 90%;
+  max-width: 1000px;
+  height: auto;
+  min-height: 60%;
+  padding: 30px;
   border-radius: 20px;
+  display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: flex-start;
   align-items: center;
   text-align: center;
   background-color: #efdae6ef;
   overflow: hidden;
-  bottom: 30vh !important;
 }
 
 .screen-title {
@@ -541,12 +550,13 @@ body {
 /* Make sure the starting screen content appears above the animated kitties */
 .starting.screen {
   position: relative;
-  z-index: 8;
+  z-index: 10;
   background-color: transparent;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   height: 80vh;
+  padding-top: 50px;
   padding-bottom: 50px;
   pointer-events: auto; /* Changed from none to auto to make buttons clickable */
 }

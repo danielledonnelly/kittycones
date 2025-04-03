@@ -111,9 +111,10 @@ const Leaderboard = () => {
           </Link>
         </div>
 
-        <div className="end screen end-screen leaderboard-screen" >
+        <div className="end screen end-screen">
           <h1 className="screen-title">High Scores</h1>
-          <div className="leaderboard-container" style={{ position: 'relative', zIndex: 5 }}>
+          
+          <div className="leaderboard-container">
             <div className="leaderboard-column">
               <h2>Local Leaderboard</h2>
               <div className="high-scores">
@@ -142,6 +143,10 @@ const Leaderboard = () => {
                 <div>
                   <p>Error loading global scores</p>
                   <Button 
+                    size="3" 
+                    variant="soft" 
+                    onClick={fetchGlobalScores}
+                    style={{ marginTop: '10px' }}
                   >
                     Retry
                   </Button>
