@@ -39,8 +39,13 @@ const InitialsModal = ({ score, onSave, onCancel }) => {
   };
 
   const handleSave = () => {
+    console.log("Save button clicked");
+    console.log("Current initials:", initials);
     if (initials.every(initial => initial !== "")) {
+      console.log("Saving initials:", initials.join(""));
       onSave(initials.join(""));
+    } else {
+      console.log("Cannot save: initials not complete");
     }
   };
 

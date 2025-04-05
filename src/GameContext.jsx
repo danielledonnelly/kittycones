@@ -180,8 +180,12 @@ export function GameProvider({ children }) {
   }, []);
 
   const checkHighScore = (currentScore) => {
+    console.log("Checking high score:", currentScore);
+    console.log("Current high scores:", highScores);
+    
     // If there are fewer than 10 scores, it's a high score
     if (highScores.length < 10) {
+      console.log("High score: Fewer than 10 scores");
       setPendingScore(currentScore);
       setShowInitialsModal(true);
       return true;
@@ -189,38 +193,50 @@ export function GameProvider({ children }) {
     
     // Check if currentScore is higher than the lowest high score
     const lowestHighScore = [...highScores].sort((a, b) => a.score - b.score)[0];
+    console.log("Lowest high score:", lowestHighScore);
+    
     if (currentScore > lowestHighScore.score) {
+      console.log("High score: Beat lowest score");
       setPendingScore(currentScore);
       setShowInitialsModal(true);
       return true;
     }
     
     // Not a high score, just save it normally
+    console.log("Not a high score");
     updateHighScores(currentScore);
     return false;
   };
 
   const saveHighScoreWithInitials = async (initials) => {
-    if (!pendingScore) return;
+    console.log("saveHighScoreWithInitials called with initials:", initials);
+    if (!pendingScore) {
+      console.log("No pending score, returning");
+      return;
+    }
     
     const newScore = { initials, score: pendingScore };
     const updatedScores = [...highScores, newScore]
-      .filter((score) => score.score > 0) // Ignore invalid scores
-      .sort((a, b) => b.score - a.score) // Sort descending
-      .slice(0, 10); // Top 10 scores
+      .filter((score) => score.score > 0)
+      .sort((a, b) => b.score - a.score)
+      .slice(0, 10);
     
+    console.log("Updating high scores:", updatedScores);
     setHighScores(updatedScores);
     setPendingScore(null);
     setShowInitialsModal(false);
     
     try {
       localStorage.setItem("highScores", JSON.stringify(updatedScores));
+      console.log("Saved to localStorage");
     } catch (error) {
       console.error("Error saving to localStorage:", error);
     }
     
     // Also submit to global leaderboard
+    console.log("Submitting to global leaderboard");
     await submitGlobalScore(initials, pendingScore);
+    console.log("Global leaderboard submission complete");
   };
 
   const updateHighScores = (currentScore) => {

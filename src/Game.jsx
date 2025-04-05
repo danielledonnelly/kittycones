@@ -133,7 +133,6 @@ export default function Game() {
       <div className="counter">
         {/* Assembled Ice Cream */}
         <div className="ice-cream">
-          
           {selectedScoops.map((scoop, index) => (
             <motion.img
               key={index}
@@ -184,52 +183,51 @@ export default function Game() {
             />
           )}
         </div>
-      <div className="ingredients">
-        {/* Buttons for Cones */}
-        <div className="buttons-group cone-buttons">
-          {cones.map((cone, index) => (
-            <button
-              key={cone}
-              onClick={() => handleConeClick(cone)}
-              className="button cone-stand-button"
-            >
-              <img 
-                src={`/assets/cone-stand${index + 1}.png`} 
-                alt={`stand ${index + 1}`} 
-                className="stand-image"
-              />
-            </button>
-          ))}
+
+        {/* Ingredients Section */}
+        <div className="ingredients">
+          {/* Cones Section */}
+          <div className="cone-buttons">
+            {cones.map((cone, index) => (
+              <button
+                key={cone}
+                onClick={() => handleConeClick(cone)}
+                className="button cone-stand-button"
+              >
+                <img 
+                  src={`/assets/cone-stand${index + 1}.png`} 
+                  alt={`stand ${index + 1}`} 
+                  className="stand-image"
+                />
+              </button>
+            ))}
+          </div>
+
+          {/* Scoops Section */}
+          <div className="scoop-buttons">
+            {scoops.map((scoop, index) => (
+              <button
+                key={scoop}
+                onClick={() => handleScoopClick(scoop)}
+                className="button scoop-tub-button"
+              >
+                <img 
+                  src={`/assets/tub${index + 1}.png`} 
+                  alt={`tub ${index + 1}`} 
+                  className="tub-image"
+                />
+              </button>
+            ))}
+          </div>
         </div>
 
-        {/* Buttons for Scoops */}
-        <div className="buttons-group scoop-buttons">
-          {scoops.map((scoop, index) => (
-            <button
-              key={scoop}
-              onClick={() => handleScoopClick(scoop)}
-              className="button scoop-tub-button"
-            >
-              <img 
-                src={`/assets/tub${index + 1}.png`} 
-                alt={`tub ${index + 1}`} 
-                className="tub-image"
-              />
-            </button>
-          ))}
-        </div>
-
-        {/* Order Reset Button */}
+        {/* Reset Button */}
         <div className="restart-button">
-          <button
-            onClick={resetOrder}
-            className="button"
-          >
+          <button onClick={resetOrder} className="button">
             <img src="/assets/restart.png" alt="Reset Order" />
           </button>
         </div>
       </div>
-    </div>
 
       {/* Add floating coin amounts */}
       {floatingCoins.map(coin => (

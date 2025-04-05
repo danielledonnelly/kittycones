@@ -49,8 +49,8 @@ function AppContent() {
     }
   }, [isMusicEnabled]);
   
-  const handleSaveInitials = (initials) => {
-    saveHighScoreWithInitials(initials);
+  const handleSaveInitials = async (initials) => {
+    await saveHighScoreWithInitials(initials);
     navigate("/game-over");
   };
   
