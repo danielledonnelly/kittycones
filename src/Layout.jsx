@@ -1,5 +1,5 @@
 import { useEffect, useState, useContext, useRef } from "react";
-import { Outlet } from "react-router-dom";
+import { Outlet, Link } from "react-router-dom";
 import { GameContext } from "./GameContext";
 import meow1 from "/assets/meow1.mp3?v=2";
 import meow2 from "/assets/meow2.mp3?v=2";
@@ -7,6 +7,7 @@ import meow3 from "/assets/meow3.mp3?v=2";
 import meow4 from "/assets/meow4.mp3?v=2";
 import meow5 from "/assets/meow5.mp3?v=2";
 import { MobileAnimatedKitties } from "./MobileAnimatedKitties";
+import { Button } from "@radix-ui/themes";
 
 // Component for the animated kitties background
 export const AnimatedKitties = () => {
@@ -225,11 +226,36 @@ const Layout = () => {
 
   return (
     <div className="app-container">
-      {/* Background with animated kitties that appears on all screens */}
-      {isMobile ? <MobileAnimatedKitties /> : <AnimatedKitties />}
+      <div className="main-content">
+        {/* Background with animated kitties that appears on all screens */}
+        {isMobile ? <MobileAnimatedKitties /> : <AnimatedKitties />}
+        
+        {/* The Outlet will render the current route */}
+        <Outlet />
+      </div>
       
-      {/* The Outlet will render the current route */}
-      <Outlet />
+      {/* Counter at the bottom */}
+      <div className="counter">
+        <div className="home-title-container">
+          <h1 className="home-title">
+            KITTY CONES
+          </h1>
+        </div>
+        
+        <div className="home-buttons-row">
+          <Link to="/game" style={{ textDecoration: 'none' }}>
+            <Button size="3" variant="soft">Start</Button>
+          </Link>
+
+          <Link to="/about" style={{ textDecoration: 'none' }}>
+            <Button size="3" variant="soft">About</Button>
+          </Link>
+          
+          <Link to="/leaderboard" style={{ textDecoration: 'none' }}>
+            <Button size="3" variant="soft">Leaderboard</Button>
+          </Link>
+        </div>
+      </div>
     </div>
   );
 };

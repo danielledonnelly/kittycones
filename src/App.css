@@ -17,6 +17,15 @@
   height: 100vh;
   position: relative;
   width: 100vw;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.main-content {
+  flex: 1;
+  position: relative;
+  overflow: hidden;
 }
 
 .background {
@@ -79,18 +88,28 @@ body {
   width: 100%;
 }
 
-.counter {
+.app-container .counter {
   align-items: center;
   background-color: #9F86C0;
-  bottom: 0;
   box-sizing: border-box;
   border-top: 4px solid #241843;
   border-bottom: 16px solid #241843;
   height: 30vh;
-  position: absolute;
   padding: 20px 40px 30px;
   width: 100%;
-  z-index: 3;
+  z-index: 4;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+  margin-top: auto;
+}
+
+.buttons-group {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  width: 100%;
 }
 
 .customer {
@@ -191,9 +210,12 @@ body {
 
 .home-title-container {
   width: 100%;
-  pointer-events: none; /* Allow clicks to pass through to kitties */
+  pointer-events: none;
   position: absolute;
-  bottom: 30px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 5;
 }
 
 .home-buttons-row {
@@ -201,10 +223,11 @@ body {
   display: flex;
   justify-content: center;
   gap: 20px;
-  pointer-events: auto; /* Make buttons clickable */
+  pointer-events: auto;
   position: absolute;
-  bottom: 10px;
+  bottom: 20px;
   left: 0;
+  z-index: 5;
 }
 
 .home-nav-button {
@@ -239,6 +262,8 @@ body {
 
 .ice-cream {
   display: flex;
+  justify-content: center;
+  width: 100%;
 }
 
 .ice-cream-cone {
@@ -409,11 +434,9 @@ body {
 }
 
 .restart-button {
-  position: relative;
-  flex: 0 0 auto;
-  outline: none;
-  margin-right: 2%;
-  z-index: 1;
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
 }
 
 .restart-button img {
@@ -635,9 +658,9 @@ body {
     max-width: 100px;
   }
 
-  .counter {
-    padding: 20px 20px 30px;
-    justify-content: flex-start;
+  .app-container .counter {
+    padding: 20px 40px 30px;
+    justify-content: space-between;
     height: 30vh;
   }
 
@@ -792,13 +815,13 @@ body {
     transform: translateY(-10%);
   }
 
-  .counter {
+  .app-container .counter {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     align-items: center;
-    justify-content: flex-end;
-    max-height: 35vh;
-    padding-bottom: 20px;
+    justify-content: space-between;
+    height: 30vh;
+    padding: 20px 40px 30px;
   }
 
   .cone-buttons {
