@@ -303,7 +303,7 @@ export function useGame() {
         }, 0);
       }
     } else {
-      const timer = setTimeout(() => setTime(time - 1), 100000); // REMINDER TO FIX THIS
+      const timer = setTimeout(() => setTime(time - 1), 1000); 
       return () => clearTimeout(timer);
     }
   }, [time, navigate, coins, checkHighScore]);

@@ -9,8 +9,8 @@
   position: fixed;
   width: 100%;
   height: 100%;
-  pointer-events: none; 
-  z-index: 2;
+  pointer-events: auto;
+  z-index: 3;
 }
 
 .app-container {
@@ -31,30 +31,20 @@ body {
   min-height: 100vh;
   min-width: 320px;
   place-items: center;
+  overflow: hidden; /* Important line, do not delete */
 }
 
 .button {
   background: none;
   border: none;
   cursor: pointer;
-  height: 120px;
-  outline: none;
-  padding: 10px;
-  width: 120px;
-}
-
-.button img {
-  display: block;
-  height: auto;
-  width: 100%;
-  min-width: 150px;
 }
 
 .coin-counter {
   background: #EFDAE6;
   border: 2px solid #241843;
   border-radius: 10px;
-  color: #000;
+  color: #241843;
   font-family: 'Roboto', sans-serif;
   font-size: 18px;
   font-weight: bold;
@@ -79,8 +69,6 @@ body {
   align-items: flex-end;
   flex-wrap: wrap;
   gap: 10px;
-  margin-right: 1%;
-  margin-bottom: 4%;
   justify-content: space-between;
   min-width: 580px;
 }
@@ -139,9 +127,9 @@ body {
 }
 
 .game-background {
-  position: fixed;
-  min-width: 100vw !important;
-  min-height: 100% !important;
+  position: fixed; /* Important line, do not delete */
+  /* min-width: 100vw !important;
+  min-height: 100% !important; */
   height: auto;
   top: 0;
   left: 0;
@@ -164,15 +152,8 @@ body {
   border-radius: 8px;
   padding: 8px 10px;
   text-align: left;
-  transition: transform 0.2s;
   font-weight: 600;
-  white-space: nowrap;
   overflow: hidden;
-}
-
-.high-score-item:hover {
-  transform: scale(1.05);
-  background-color: #DEB1CB;
 }
 
 .home-background {
@@ -186,13 +167,12 @@ body {
   background-color: #DEB1CB !important;
 }
 
-
 .home-title {
   font-family: 'Fredoka', sans-serif;
   font-size: 100px;
   letter-spacing: 6px;
   background-size: 200% 100%;
-  -webkit-background-clip: text;
+  -webkit-background-clip: text; /* Extremely important line, do not delete */
   -webkit-text-fill-color: transparent; 
   -webkit-text-stroke: 0.03em #241843;
   /* I know what you're thinking.
@@ -214,7 +194,6 @@ body {
   pointer-events: none; /* Allow clicks to pass through to kitties */
   position: absolute;
   bottom: 30px;
-  left: 0;
 }
 
 .home-buttons-row {
@@ -256,10 +235,6 @@ body {
   gap: 20px;
   margin-top: auto;
   width: 100%;
-}
-
-.home-buttons-row .screen-button {
-  min-width: 150px;
 }
 
 .ice-cream {
@@ -341,9 +316,10 @@ body {
 }
 
 .end-screen {
-  position: absolute;
-  top: 35% !important;
-  border: 4px solid #241843;
+  position: absolute; /* I would really like to keep this as absolute if at all possible */
+  top: 35% !important; /* I know I should about !important, but this was the only way I could get the format like I wanted */
+  border: 3px solid #241843;
+  pointer-events: auto;
 }
 
 .leaderboard-column {
@@ -454,10 +430,6 @@ body {
   scale: 1.1;
 }
 
-.rush-hour-button.MuiIconButton-root:hover {
-  background-color: transparent !important;
-}
-
 .scoop-order {
   position: absolute;
   bottom: calc(100px + var(--scoop-index) * 20px);
@@ -467,7 +439,6 @@ body {
 }
 
 .screen {
-  position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
@@ -547,7 +518,7 @@ body {
 /* Make sure the starting screen content appears above the animated kitties */
 .starting.screen {
   position: relative;
-  z-index: 10;
+  z-index: 3;
   background-color: transparent;
   display: flex;
   flex-direction: column;
@@ -555,7 +526,7 @@ body {
   height: 80vh;
   padding-top: 50px;
   padding-bottom: 50px;
-  pointer-events: auto; /* Changed from none to auto to make buttons clickable */
+  pointer-events: none;
 }
 
 .scoop-tub-button {
@@ -579,7 +550,6 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: flex-end;
   height: 150px;
   min-width: 100px;
   margin-top: 10%;
@@ -600,7 +570,6 @@ body {
   right: 10px;
   z-index: 7;
   background: #EFDAE6;
-  color: #000;
   border: 2px solid #241843;
   border-radius: 10px;
   padding: 10px 20px;
@@ -645,35 +614,6 @@ body {
   padding: 25px !important;
 }
 
-.rt-Text, .rt-TableCell {
-  color: #241843 !important;
-  font-family: 'Lato', sans-serif !important;
-}
-
-.rt-Heading {
-  color: #241843 !important;
-  font-family: 'Fredoka', sans-serif !important;
-}
-
-.rt-Table {
-  border: 2px solid #241843 !important;
-  border-radius: 10px !important;
-  overflow: hidden !important;
-}
-
-.rt-TableRow:nth-child(odd) {
-  background-color: rgba(208, 174, 219, 0.4) !important;
-}
-
-.rt-TableRow:hover {
-  background-color: rgba(208, 174, 219, 0.7) !important;
-}
-
-.rt-TableCell {
-  border-bottom: 1px solid #241843 !important;
-  padding: 10px 15px !important;
-}
-
 /* Make sure Home buttons row maintains original styling */
 .home-buttons-row {
   display: flex;
@@ -683,53 +623,12 @@ body {
   gap: 20px;
 }
 
-/* Additional Radix UI Custom Styling */
-.about-card, .leaderboard-card {
-  width: 100%;
-  height: 100%;
-  background-color: transparent !important;
-  border: none !important;
-  box-shadow: none !important;
-}
-
-/* Make sure the leaderboard tables use original styling */
-.leaderboard-card .rt-TableRoot {
-  background-color: transparent !important;
-  border: none !important;
-}
-
-.leaderboard-card .rt-TableRow {
-  background-color: transparent !important;
-}
-
-.leaderboard-card .rt-TableCell {
-  border-bottom: none !important;
-  padding: 0 !important;
-}
-
-.leaderboard-card .high-score-item {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  width: 100%;
-}
-
 /* Make sure buttons inside the counter use original styling */
 .counter .rt-Button {
   margin: 0;
   box-shadow: none;
   transform: none;
 }
-
-/* Keep the original font styles for text */
-.about-card .rt-Text, .leaderboard-card .rt-Text {
-  text-align: left;
-  margin-bottom: 15px;
-  font-size: 18px;
-  line-height: 1.5;
-  color: #241843;
-}
-
 
 @media (max-width: 1600px) {
   .button {
@@ -753,9 +652,7 @@ body {
 
   .cone-buttons {
     flex-wrap: nowrap;
-    gap: 0;
-    justify-content: flex-start;
-    margin-left: 6%;
+    justify-content: center;
   }
   
   .scoop-buttons {
@@ -777,14 +674,8 @@ body {
   .restart-button {
     margin-right: 1%;
     margin-left: auto;
-    transform: scale(0.7);
   }
 
-  .stand-image {
-    width: 150%;
-    max-width: 100px !important;
-  }
-  
   .customer {
     margin-bottom: 4%;
   }
@@ -813,38 +704,46 @@ body {
   .order {
     top: 6%;
   }
+
+  .end-screen {
+    max-height: 70%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding-bottom: 20px;
+  }
   
   .screen {
     width: 80% !important;
-    height: auto;
-    margin-right: 10%;
+    min-height: auto;
+    height: fit-content;
   }
 
   .screen-title {
     font-size: 52px;
-    padding-top: 10%;
+    margin-bottom: 10px;
   }
 
   .screen-text {
     font-size: 24px;
     width: 80% !important;
     max-width: 100% !important;
+    margin-bottom: 15px;
+  }
+
+  .modal-buttons {
+    margin-top: 10px;
   }
 
   .screen-button {
-    padding: 10px 20px;
+    padding: 10px 10px;
     font-size: 16px;
+    min-width: 120px;
+    min-height: 50px;
   }
 }
 
 @media (max-width: 800px) {
-  .home-background {
-    z-index: 3; 
-  }
-  
-  .game-background {
-    z-index: 1;
-  }
 
   .background {
     left: -650px;
@@ -853,7 +752,6 @@ body {
 
   body {
     overflow: hidden;
-    position: fixed;
     width: 100%;
     height: 100%;
   }
@@ -861,7 +759,7 @@ body {
   .home-buttons-row {
     flex-direction: row;
     align-items: center;
-    gap: 8px;
+    gap: 3px;
     flex-wrap: wrap;
     justify-content: center;
   }
@@ -869,11 +767,10 @@ body {
   .button {
     position: relative;
     flex-direction: row;
-    gap: 0px !important;
   }
     
   .button img {
-    width: 100%;
+    max-width: 50%;
     height: auto;
     display: block;
   }
@@ -985,16 +882,14 @@ body {
   .leaderboard-container {
     flex-direction: column;
     gap: 8px;
-    margin-top: 10px;
   }
 
   .leaderboard-column {
-    padding: 8px;
+    padding: 2px;
   }
 
   .leaderboard-column h2 {
     font-size: 16px;
-    margin-bottom: 4px;
   }
 
   .high-scores {
@@ -1043,7 +938,6 @@ body {
 
   .scoop-order {
     width: 85%;
-    transform: translateX(-50%);
   }
 
   .screen {
@@ -1056,47 +950,23 @@ body {
     font-size: 42px;
   }
 
-  .screen-text {
-    font-size: 14px;
-    width: 100% !important;
-    max-width: 100% !important;
-  }
-
-  /* Updated button styles for mobile */
-  .screen-button {
-    padding: 8px 16px;
-    font-size: 14px;
-    min-width: 120px;
-    min-height: 40px;
-  }
-
   .rt-Button.rt-variant-soft {
     font-size: 14px;
-    min-width: 120px;
+    min-width: 140px;
     min-height: 40px;
     padding: 8px 16px;
   }
 
   .home-buttons-row {
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
     gap: 8px;
   }
 
-  .end.screen {
-    width: 80% !important;
-    height: auto;
-    margin-right: 10%;
-  }
-
   .leaderboard-column {
-    padding: 15px;
+    padding: 10px;
   }
 
-  .leaderboard-column h2 {
-    font-size: 20px;
-    margin-bottom: 10px;
-  }
 
   .modal-buttons {
     gap: 10px;
