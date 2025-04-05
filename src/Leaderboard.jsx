@@ -102,7 +102,6 @@ const Leaderboard = () => {
               variant="soft" 
               onClick={clearAllScores}
               disabled={isClearing}
-              style={{ marginTop: '20px' }}
             >
               Clear All Scores
             </Button>
@@ -118,7 +117,6 @@ const Leaderboard = () => {
                   size="3" 
                   variant="soft" 
                   onClick={fetchGlobalScores}
-                  style={{ marginTop: '10px' }}
                 >
                   Retry
                 </Button>
@@ -138,7 +136,6 @@ const Leaderboard = () => {
                   variant="soft" 
                   onClick={clearAllGlobalScores}
                   disabled={isClearingGlobal}
-                  style={{ marginTop: '20px' }}
                 >
                   Refresh Scores
                 </Button>

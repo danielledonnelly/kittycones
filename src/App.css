@@ -11,6 +11,7 @@
   height: 100%;
   pointer-events: auto;
   z-index: 3;
+  bottom: 5%;
 }
 
 .app-container {
@@ -26,6 +27,10 @@
   flex: 1;
   position: relative;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-bottom: 0;
 }
 
 .background {
@@ -38,7 +43,6 @@ body {
   display: flex;
   margin: 0;
   min-height: 100vh;
-  min-width: 320px;
   place-items: center;
   overflow: hidden; /* Important line, do not delete */
 }
@@ -147,10 +151,7 @@ body {
   opacity: 1;
 }
 
-.end {
-  z-index: 3;
-  height: 40px;
-}
+
 
 .game-background {
   position: fixed; /* Important line, do not delete */
@@ -203,7 +204,7 @@ body {
   background-size: 200% 100%;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent; 
-  -webkit-text-stroke: 0.03em #241843;
+  -webkit-text-stroke: 3px #241843;
   background-image: linear-gradient(to bottom, 
     rgb(245, 233, 243) 20%, 
     #f2b8da 40%, 
@@ -215,27 +216,6 @@ body {
         drop-shadow(1.2px 1px 0.5px white);
   text-align: center;
   pointer-events: auto;
-}
-
-.home-nav-button {
-  background-color: #241843;
-  color: white;
-  font-family: 'Lato', sans-serif;
-  font-weight: bold;
-  font-size: 18px;
-  padding: 12px 24px;
-  margin: 5px;
-  min-width: 150px;
-  border: 3px solid white;
-  border-radius: 8px;
-  box-shadow: none;
-  transition: transform 0.2s ease, background-color 0.2s ease;
-  cursor: pointer;
-}
-
-.home-nav-button:hover {
-  background-color: #352a64;
-  transform: scale(1.1);
 }
 
 .home-buttons-row {
@@ -334,10 +314,12 @@ body {
 }
 
 .end-screen {
-  position: absolute; /* I would really like to keep this as absolute if at all possible */
-  top: 50% !important; /* I know I should about !important, but this was the only way I could get the format like I wanted */
+  position: relative;
   border: 3px solid #241843;
   pointer-events: auto;
+  padding: 0px;
+  margin: auto;
+  margin-bottom: 5vh;
 }
 
 .leaderboard-column {
@@ -396,7 +378,6 @@ body {
   position: relative;
   cursor: pointer;
   z-index: 1; 
-  position: absolute;
   display: flex;
   flex-direction: column-reverse;
   align-items: center;
@@ -405,7 +386,6 @@ body {
 
 .order::before {
   content: '';
-  position: absolute;
   width: 200px; 
   height: 260px;
   background-color: #EFDAE6;
@@ -417,13 +397,8 @@ body {
 
 .rank-number {
   display: inline-block;
-  min-width: 25px;
   text-align: right;
   padding-right: 5px;
-}
-
-.rank-number.single-digit {
-  padding-left: 0px;
 }
 
 .restart-button {
@@ -445,15 +420,6 @@ body {
   height: auto;
 }
 
-.rush-hour-button {
-  position: fixed !important;
-  top: 15px !important;
-  right: 170px !important;
-  z-index: 10 !important;
-  color: #5E558F !important;
-  scale: 1.1;
-}
-
 .scoop-order {
   position: absolute;
   bottom: calc(100px + var(--scoop-index) * 20px);
@@ -463,9 +429,6 @@ body {
 }
 
 .screen {
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
   width: 90%;
   max-width: 1000px;
   height: auto;
@@ -479,25 +442,14 @@ body {
   text-align: center;
   background-color: #efdae6ef;
   overflow: hidden;
+  margin: auto;
 }
 
 .screen-title {
-  position: relative;
-  font-size: 65px;
-  font-weight: bold;
-  margin-top: 0;
-  margin-bottom: 10px;
+  font-size: 2vw;
   font-family: 'Fredoka', sans-serif;
-  letter-spacing: 4px;
-  color: #5E558F;
-  z-index: 3;
-  text-shadow: 
-    /* Inner outline */
-    -1px -1px 0 white,
-    1px -1px 0 white,
-    -1px 1px 0 white,
-    1px 1px 0 white;
-  filter: drop-shadow(0 0 2px white) drop-shadow(0 0 4px white);
+  color: #241843;
+  text-align: center;
 }
 
 .screen-text {
@@ -546,7 +498,8 @@ body {
   background-color: transparent;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  align-items: center;
+  justify-content: center;
   height: 80vh;
   padding-top: 50px;
   padding-bottom: 50px;
@@ -581,11 +534,7 @@ body {
 }
 
 .stand-image {
-  position: absolute;
-  bottom: -10px;
   z-index: 1;
-  width: 180%;
-  transform: translateX(-22%);
 }
 
 .timer {
@@ -619,10 +568,9 @@ body {
   border: 2px solid white;
   color: white;
   font-family: 'Fredoka', sans-serif;
-  font-size: 1.4vw;
-  min-width: 11vw;
-  min-height: 3.5vw;
-  padding: 0px;
+  font-size: 1.2vw;
+  min-width: 10vw;
+  min-height: 3vw;
   cursor: pointer;
 }
 
@@ -631,67 +579,33 @@ body {
   cursor: pointer;
 }
 
-.rt-Card {
-  background-color: rgba(239, 218, 230, 0.95) !important;
-  border: 4px solid #241843 !important;
-  border-radius: 20px !important;
-  padding: 25px !important;
-}
-
-.counter .rt-Button {
-  margin: 0;
-  box-shadow: none;
-  transform: none;
-}
-
 @media (max-width: 1600px) {
   .button {
     max-width: 100px;
   }
 
-  .app-container .counter {
-    padding: 20px 40px 30px;
-    justify-content: space-between;
-    height: 30vh;
-  }
-
   .cone-stand-button {
-    height: 100px;
-    min-width: 65px;
-    margin-top: 10%;
-    transform: scale(0.65);
-    margin-left: -5px;
-    margin-right: -5px;
+
   }
 
   .cone-buttons {
-    flex-wrap: nowrap;
-    justify-content: center;
+ 
   }
   
   .scoop-buttons {
-    flex-wrap: nowrap;
-    gap: 40px;
-    justify-content: flex-end;
-    margin-right: 4%;
-    margin-bottom: 6%;
+
   }
   
   .scoop-tub-button {
-    transform: scale(0.65);
-    width: 65px;
-    height: 65px;
-    margin-left: 0;
-    margin-right: 0;
+
   }
   
   .restart-button {
-    margin-right: 1%;
-    margin-left: auto;
+
   }
 
   .customer {
-    margin-bottom: 4%;
+
   }
 
   .customer-image {
@@ -730,8 +644,8 @@ body {
   }
 
   .screen-title {
-    font-size: 52px;
-    margin-bottom: 10px;
+    font-size: 48px;
+    margin: 0px;
   }
 
   .screen-text {
@@ -755,11 +669,6 @@ body {
 
 @media (max-width: 800px) {
 
-  .background {
-    left: -650px;
-    zoom: 0.5;
-  }
-
   body {
     overflow: hidden;
     width: 100%;
@@ -767,24 +676,9 @@ body {
   }
 
   .home-buttons-row {
-    flex-direction: row;
-    align-items: center;
     gap: 3px;
-    flex-wrap: wrap;
-    justify-content: center;
-  }
-
-  .button {
-    position: relative;
-    flex-direction: row;
   }
     
-  .button img {
-    max-width: 50%;
-    height: auto;
-    display: block;
-  }
-
   .buttons-group {
     display: flex;
     justify-content: center !important; 
@@ -848,12 +742,12 @@ body {
     padding: 30px;
   }
 
-  .customer {
-    bottom: 45% !important;
-  }
-
   .customer-image {
     max-width: 320px;
+  }
+
+  .counter {
+    max-height: 20vh;
   }
 
   .high-scores {
@@ -868,14 +762,15 @@ body {
 
   .home-title {
     position: relative;
-    font-size: 40px;
+    font-size: 32px;
     bottom: auto;
     left: auto;
     transform: none;
     width: 100%;
     text-align: center;
     filter: none;
-    letter-spacing: 3px;
+    letter-spacing: 2px;
+    -webkit-text-stroke: 2px #241843;
   }
  
   .ice-cream {
@@ -898,14 +793,17 @@ body {
   .leaderboard-container {
     flex-direction: column;
     gap: 8px;
+    margin-top: 5px;
   }
 
   .leaderboard-column {
-    padding: 2px;
+    padding: 8px;
   }
 
   .leaderboard-column h2 {
     font-size: 16px;
+    margin: 0 0 5px 0;
+    padding-bottom: 2px;
   }
 
   .high-scores {
@@ -916,6 +814,7 @@ body {
   .high-score-item {
     font-size: 10px;
     padding: 2px 4px;
+    margin: 0;
   }
 
   .rank-number {
@@ -923,18 +822,23 @@ body {
     padding-right: 2px;
   }
 
-  .screen-title {
-    font-size: 24px;
-    margin-bottom: 4px;
-  }
-
   .screen-text {
-    font-size: 12px;
+    font-size: 10px;
     margin: 2px 0;
   }
 
-  .end.screen {
-    padding: 10px;
+  .end-screen {
+    max-height: 90vh;
+    margin: auto;
+    width: 90%;
+    height: 90%;
+  }
+
+  .main-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-bottom: 0;
   }
 
   .mute-button, .rush-hour-button {
@@ -957,29 +861,24 @@ body {
   }
 
   .screen {
-    width: 80% !important;
+    width: 90% !important;
     height: auto;
-    margin-right: 10%;
+    margin: auto;
   }
 
   .screen-title {
-    font-size: 40px;
+    font-size: 16px;
+    margin: 0 0 5px 0;
   }
 
   .rt-Button.rt-variant-soft {
-    font-size: 14px;
-    min-width: 95px;
-    min-height: 20px;
+    min-width: 75px;
+    min-height: 10px;
     font-size: 12px;
     padding: 0px;
     margin: 0px;
     border: 1px solid white;
   }
-
-  .leaderboard-column {
-    padding: 10px;
-  }
-
 
   .modal-buttons {
     gap: 10px;

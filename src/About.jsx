@@ -4,7 +4,7 @@ import { Button } from "@radix-ui/themes";
 const About = () => {
   return (
     <div className="starting screen">
-      <div className="end screen end-screen" style={{ top: '30%', position: 'relative', zIndex: 5 }}>
+      <div className="end screen end-screen">
         <h1 className="screen-title">About</h1>
         
         <p className="screen-text">
