@@ -39,7 +39,7 @@ export default function Game() {
   }, [time, navigate]);
 
   return (
-    <>
+    <div className="game-screen">
       {/* Mobile Warning */}
       {showMobileWarning && (
         <div className="mobile screen">
@@ -139,6 +139,7 @@ export default function Game() {
               src={`/assets/${scoop}`}
               alt={`Scoop ${index + 1}`}
               className="ice-cream-scoop"
+              style={{ "--scoop-index": index }}
               initial={{ scale: 1.5, y: -100, opacity: 1 }}
               animate={orderSuccess 
                 ? { scale: 1, y: -100, opacity: 0, x: 150 }
@@ -259,6 +260,6 @@ export default function Game() {
           +{coin.amount}
         </motion.div>
       ))}
-    </>
+    </div>
   );
 }
