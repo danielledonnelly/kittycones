@@ -223,10 +223,12 @@ export default function Game() {
         </div>
 
         {/* Reset Button */}
-        <div className="restart-button">
-          <button onClick={resetOrder} className="button">
-            <img src="/assets/restart.png" alt="Reset Order" />
-          </button>
+        <div className="restart-container">
+          <div className="restart-button">
+            <button onClick={resetOrder} className="button">
+              <img src="/assets/restart.png" alt="Reset Order" />
+            </button>
+          </div>
         </div>
       </div>
 

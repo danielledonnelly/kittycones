@@ -70,19 +70,18 @@ body {
 
 .cone-buttons {
   display: flex;
-  gap: 20px;
+  gap: 10px;
   align-items: center;
-  justify-content: flex-start;
-  flex: 0 1 auto;
+  justify-content: center;
+  flex: 1;
 }
 
 .scoop-buttons {
   display: flex;
-  gap: 20px;
+  gap: 10px;
   align-items: center;
-  justify-content: flex-start;
-  flex: 0 1 auto;
-  margin-left: auto;
+  justify-content: center;
+  flex: 1;
 }
 
 /* If you want to see something funny, remove the styling below and watching what happens to the cats in-game */
@@ -111,10 +110,10 @@ body {
 
 .ingredients {
   display: flex;
-  justify-content: flex-start;
+  justify-content: space-between;
   align-items: center;
   width: 100%;
-  gap: 40px;
+  gap: 20px;
 }
 
 .buttons-group {
@@ -191,6 +190,10 @@ body {
   background-color: #DEB1CB !important;
 }
 
+h1 {
+  margin: 0;
+}
+
 .high-scores {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -258,8 +261,8 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 200px;
-  height: 180px;
+  width: 240px;
+  height: 220px;
   margin-right: 20px;
   position: relative;
 }
@@ -267,34 +270,34 @@ body {
 .ice-cream-cone {
   position: absolute;
   bottom: 0;
-  max-width: 120px;
-  min-width: 100px;
+  max-width: 140px;
+  min-width: 120px;
   height: auto;
   z-index: 1;
 }
 
 .ice-cream-scoop {
   position: absolute;
-  bottom: 125px;
-  max-width: 130px;
-  min-width: 110px;
+  bottom: 145px;
+  max-width: 150px;
+  min-width: 130px;
   height: auto;
   z-index: 2;
 }
 
 /* Remove specific nth-child selectors and use a more dynamic approach */
 .ice-cream-scoop:not(:first-child) {
-  bottom: calc(125px + (var(--scoop-index, 1) * 30px));
+  bottom: calc(140px + (var(--scoop-index, 1) * 35px));
   z-index: calc(var(--scoop-index, 1) + 1);
 }
 
 .ice-cream-scoop:nth-child(2) {
-  bottom: 150px;
+  bottom: 175px;
   z-index: 3;
 }
 
 .ice-cream-scoop:nth-child(3) {
-  bottom: 185px;
+  bottom: 215px;
   z-index: 4;
 }
 
@@ -373,7 +376,10 @@ body {
   border: 3px solid #241843;
   pointer-events: auto;
   padding: 0px;
-  margin: auto;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
 .leaderboard-column {
@@ -451,11 +457,24 @@ body {
   padding-right: 5px;
 }
 
+.restart-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 200px;
+  height: 180px;
+  margin-left: 20px;
+  position: relative;
+}
+
 .restart-button {
-  position: absolute;
-  right: 20px;
-  bottom: 20px;
-  z-index: 5;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
 }
 
 .restart-button button {
@@ -466,7 +485,8 @@ body {
 }
 
 .restart-button img {
-  width: 50px;
+  min-width: 90px;
+  max-width: 140px;
   height: auto;
 }
 
@@ -557,19 +577,21 @@ body {
 }
 
 .scoop-tub-button {
-  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
-  transform: scale(0.8);
+  min-width: 120px;
+  max-width: 150px;
+  height: 180px;
   z-index: 2;
 }
 
 .tub-image {
-  position: relative;
-  width: 85%;
+  width: 100%;
   height: auto;
-  max-width: 120px;
+  min-width: 100px;
+  max-width: 140px;
+  object-fit: contain;
 }
 
 .cone-stand-button {
@@ -577,9 +599,9 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: flex-end;
-  height: 150px;
-  min-width: 100px;
-  margin: 0 10px;
+  min-width: 120px;
+  max-width: 150px;
+  height: 180px;
   background: none;
   border: none;
   cursor: pointer;
@@ -588,7 +610,8 @@ body {
 .stand-image {
   width: 100%;
   height: auto;
-  max-width: 120px;
+  min-width: 100px;
+  max-width: 140px;
   object-fit: contain;
 }
 
