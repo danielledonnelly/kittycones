@@ -45,7 +45,7 @@ const GameOver = () => {
             {displayHighScores.map((scoreData, index) => (
               <div key={index} className="high-score-item">
                 <span className={`rank-number ${index < 9 ? 'single-digit' : ''}`}>{index + 1}.</span>
-                {scoreData.score ? `   ${scoreData.initials || ""}      ${scoreData.score} pts` : ""}
+                {scoreData.score ? `   ${scoreData.initials || ""}      ${scoreData.score} Coins` : ""}
               </div>
             ))}
           </div>
@@ -71,7 +71,7 @@ const GameOver = () => {
               {displayGlobalScores.map((scoreData, index) => (
                 <div key={index} className="high-score-item">
                   <span className={`rank-number ${index < 9 ? 'single-digit' : ''}`}>{index + 1}.</span>
-                  {scoreData.score ? `   ${scoreData.initials || ""}      ${scoreData.score} pts` : ""}
+                  {scoreData.score ? `   ${scoreData.initials || ""}      ${scoreData.score} Coins` : ""}
                 </div>
               ))}
             </div>

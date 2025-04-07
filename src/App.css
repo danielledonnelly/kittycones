@@ -21,6 +21,25 @@
   overflow: hidden;
 }
 
+.app-container .counter {
+  align-items: center;
+  background-color: #9F86C0;
+  box-sizing: border-box;
+  border-top: 4px solid #241843;
+  border-bottom: 16px solid #241843;
+  min-height: 25vh;
+  max-height: 30vh;
+  padding: 20px 40px;
+  width: 100%;
+  z-index: 4;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+  margin-top: auto;
+  gap: 20px;
+}  
+
 .main-content {
   flex: 1;
   position: relative;
@@ -147,8 +166,8 @@ body {
   box-sizing: border-box;
   border-top: 4px solid #241843;
   border-bottom: 12px solid #241843;
-  min-height: 20vh;
-  max-height: 25vh;
+  min-height: 25vh;
+  max-height: 30vh;
   padding: 20px 40px;
   width: 100%;
   z-index: 4;
@@ -386,16 +405,29 @@ h1 {
   margin-top: 20px;
 }
 
-.mute-button {
-  position: fixed !important;
-  top: 15px !important;
-  right: 130px !important;
-  z-index: 10 !important;
-  color: #5E558F !important;
-  scale: 1.1;
+.mute-button, .rush-hour-button, .pause-button {
+  position: fixed;
+  top: 15px;
+  z-index: 99;
+  color: #5E558F;
+
 }
 
-.mute-button.MuiIconButton-root:hover {
+.mute-button {
+  right: 130px;
+}
+
+.rush-hour-button {
+  right: 170px;
+}
+
+.pause-button {
+  right: 210px;
+}
+
+.mute-button.MuiIconButton-root:hover,
+.rush-hour-button.MuiIconButton-root:hover,
+.pause-button.MuiIconButton-root:hover {
   background-color: transparent !important;
 }
 
@@ -417,7 +449,6 @@ h1 {
   border: 3px solid #241843;
   border-radius: 50%;
   z-index: -1; 
-  top: -260px;
 }
 
 .rank-number {
@@ -623,6 +654,14 @@ h1 {
 
 @media (max-width: 800px) {
 
+  .customer {
+    bottom: 10vh
+  }
+
+  .customer-image {
+    max-width: 300px;
+  }
+
   body {
     overflow: hidden;
     width: 100%;
@@ -632,22 +671,13 @@ h1 {
   .home-buttons-row {
     gap: 3px;
   }
-    
-  .buttons-group {
-    display: flex;
-    justify-content: center !important; 
-    gap: 0; 
-    padding: 0;
-  }
+
   
   .coin-counter, .timer {
     font-size: 14px;
     padding: 8px 16px;
   }
 
-  .cone-order {
-    width: 85%;
-  }
 
   .cone-buttons {
     display: flex;
@@ -677,12 +707,10 @@ h1 {
 
   }
 
-  .customer-image {
-    max-width: 320px;
-  }
 
   .counter {
-    max-height: 20vh;
+    max-height: 30vh;
+    min-height: 30vh;
   }
 
   .high-scores {
@@ -701,33 +729,6 @@ h1 {
     -webkit-text-stroke: 1.5px #241843;
     filter: drop-shadow(1px 1px 1px white)
     drop-shadow(-1px -1px white);
-  }
- 
-  .ice-cream {
-    width: 180px;
-    height: 160px;
-    margin-right: 15px;
-  }
-
-  .ice-cream img {
-    width: 100%;
-  }
-  
-  .ice-cream-cone {
-    max-width: 100px;
-    min-width: 80px;
-  }
-  
-  .ice-cream-scoop {
-    bottom: 110px;
-  }
-
-  .ice-cream-scoop:nth-child(2) {
-    bottom: 140px;
-  }
-
-  .ice-cream-scoop:nth-child(3) {
-    bottom: 170px;
   }
 
   .leaderboard-container {
@@ -781,25 +782,6 @@ h1 {
     justify-content: center;
     align-items: center;
     padding-bottom: 0;
-  }
-
-  .mute-button, .rush-hour-button {
-    right: 100px !important;
-    top: 8px !important;
-    z-index: 3 !important;
-  }
-
-  .order::before {
-    width: 100px; 
-    height: 250px;
-  }
-
-  .rush-hour-button {
-    right: 130px !important;
-  }
-
-  .scoop-order {
-    width: 85%;
   }
 
   .screen {
