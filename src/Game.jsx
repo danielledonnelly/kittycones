@@ -74,9 +74,7 @@ export default function Game() {
                 type: "tween"
               }}
               style={{
-                position: 'absolute',
                 left: `${catPositions[index]}px`,
-                bottom: '0',
                 width: isMobile ? '100px' : '220px',
                 zIndex: cat.exitAnimation ? -10 : Math.floor(catPositions[index]),
                 pointerEvents: cat.exitAnimation ? 'none' : 'auto'

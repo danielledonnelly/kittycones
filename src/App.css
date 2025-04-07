@@ -1,6 +1,4 @@
 * {
-  /* NOTE TO SELF: I need to go back and add this blurb to a lot of my other web projects */
-  /* Remove margin where possible */
   -webkit-user-drag: none;
   user-select: none;
 }
@@ -35,7 +33,7 @@
 
 .background {
   height: auto;
-  position: absolute;
+  position: fixed;
   z-index: 1;
 }
 
@@ -63,7 +61,7 @@ body {
   font-weight: bold;
   left: 10px;
   padding: 10px 20px;
-  position: absolute;
+  position: fixed;
   top: 10px;
   z-index: 7;
 }
@@ -84,28 +82,9 @@ body {
   flex: 1;
 }
 
-/* If you want to see something funny, remove the styling below and watching what happens to the cats in-game */
 .cone-order {
-  position: absolute;
+  position: fixed;
   width: 100%;
-}
-
-.app-container .counter {
-  align-items: center;
-  background-color: #9F86C0;
-  box-sizing: border-box;
-  border-top: 4px solid #241843;
-  border-bottom: 16px solid #241843;
-  height: 30vh;
-  padding: 20px 40px;
-  width: 100%;
-  z-index: 4;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  position: relative;
-  margin-top: auto;
-  gap: 20px;
 }
 
 .ingredients {
@@ -124,18 +103,17 @@ body {
 }
 
 .customer {
+  position: absolute;
   align-items: center;
   display: flex;
   flex-direction: column;
   flex-grow: 1;
-  position: relative;
-  width: 150px;
-  margin-bottom: 10%;
+  bottom: 10vh;
 }
 
 .customer-image {
-  max-width: 400px;
-}
+  max-width: 50vh;
+} 
 
 .disable-buttons button:not(.screen-button){
   pointer-events: none; /* Prevent clicking */
@@ -168,8 +146,9 @@ body {
   background-color: #9F86C0;
   box-sizing: border-box;
   border-top: 4px solid #241843;
-  border-bottom: 16px solid #241843;
-  height: 30vh;
+  border-bottom: 12px solid #241843;
+  min-height: 20vh;
+  max-height: 25vh;
   padding: 20px 40px;
   width: 100%;
   z-index: 4;
@@ -268,7 +247,7 @@ h1 {
 }
 
 .ice-cream-cone {
-  position: absolute;
+  position: fixed;
   bottom: 0;
   max-width: 140px;
   min-width: 120px;
@@ -277,7 +256,7 @@ h1 {
 }
 
 .ice-cream-scoop {
-  position: absolute;
+  position: fixed;
   bottom: 145px;
   max-width: 150px;
   min-width: 130px;
@@ -287,18 +266,8 @@ h1 {
 
 /* Remove specific nth-child selectors and use a more dynamic approach */
 .ice-cream-scoop:not(:first-child) {
-  bottom: calc(140px + (var(--scoop-index, 1) * 35px));
+  bottom: calc(145px + (var(--scoop-index, 1) * 30px));
   z-index: calc(var(--scoop-index, 1) + 1);
-}
-
-.ice-cream-scoop:nth-child(2) {
-  bottom: 175px;
-  z-index: 3;
-}
-
-.ice-cream-scoop:nth-child(3) {
-  bottom: 215px;
-  z-index: 4;
 }
 
 /* Initials Modal Styles */
@@ -443,9 +412,9 @@ h1 {
 .order::before {
   content: '';
   width: 200px; 
-  height: 260px;
+  height: 240px;
   background-color: #EFDAE6;
-  border: 4px solid #241843;
+  border: 3px solid #241843;
   border-radius: 50%;
   z-index: -1; 
   top: -260px;
@@ -491,10 +460,8 @@ h1 {
 }
 
 .scoop-order {
-  position: absolute;
+  position: fixed;
   bottom: calc(100px + var(--scoop-index) * 20px);
-  left: 50%;
-  transform: translateX(-50%);
   width: 110%;
 }
 
@@ -551,17 +518,14 @@ h1 {
 }
 
 .screen-button:hover {
-  transform: scale(1.05);
   background-color: #5E558F;
 }
 
 .screen-button:disabled {
   opacity: 0.5;
   cursor: not-allowed;
-  transform: none;
 }
 
-/* Make sure the starting screen content appears above the animated kitties */
 .starting.screen {
   position: relative;
   z-index: 3;
@@ -578,7 +542,7 @@ h1 {
 
 .scoop-tub-button {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
   min-width: 120px;
   max-width: 150px;
@@ -598,7 +562,7 @@ h1 {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: flex-end;
+  justify-content: center;
   min-width: 120px;
   max-width: 150px;
   height: 180px;
@@ -616,7 +580,7 @@ h1 {
 }
 
 .timer {
-  position: absolute;
+  position: fixed;
   top: 10px;
   right: 10px;
   z-index: 7;
@@ -657,91 +621,6 @@ h1 {
   cursor: pointer;
 }
 
-@media (max-width: 1600px) {
-
-  .cone-stand-button {
-
-  }
-
-  .cone-buttons {
- 
-  }
-  
-  .scoop-buttons {
-
-  }
-  
-  .scoop-tub-button {
-
-  }
-  
-  .restart-button {
-
-  }
-
-  .customer {
-    bottom: 0%;
-  }
-
-  .customer-image {
-    max-width: 400px;
-    bottom: 0%;
-  }
-
-  .high-score-item {
-    font-size: 14px;
-    padding: 6px 8px;
-  }
-
-  .leaderboard-container {
-    gap: 20px;
-  }
-  
-  .leaderboard-column h2 {
-    font-size: 24px;
-  }
-
-  .order {
-    top: 6%;
-  }
-
-  .end-screen {
-    max-height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-  }
-  
-  .screen {
-    width: 80% !important;
-    min-height: auto;
-    height: fit-content;
-  }
-
-  .screen-title {
-    font-size: 36px;
-    margin: 0px;
-  }
-
-  .screen-text {
-    font-size: 24px;
-    width: 80% !important;
-    max-width: 100% !important;
-    margin-bottom: 15px;
-  }
-
-  .modal-buttons {
-    margin-top: 10px;
-  }
-
-  .screen-button {
-    padding: 10px 10px;
-    font-size: 16px;
-    min-width: 120px;
-    min-height: 50px;
-  }
-}
-
 @media (max-width: 800px) {
 
   body {
@@ -768,16 +647,6 @@ h1 {
 
   .cone-order {
     width: 85%;
-    transform: translateY(-10%);
-  }
-
-  .app-container .counter {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-between;
-    height: 30vh;
-    padding: 20px 40px 30px;
   }
 
   .cone-buttons {
@@ -796,7 +665,7 @@ h1 {
   }
 
   .restart-button {
-    transform: scale(0.7);
+
   }
 
   .restart-button img {
@@ -805,7 +674,7 @@ h1 {
   }
 
   .scoop-tub-button {
-    transform: scale(0.45);
+
   }
 
   .customer-image {
@@ -827,16 +696,11 @@ h1 {
   }
 
   .home-title {
-    position: relative;
     font-size: 32px;
-    bottom: auto;
-    left: auto;
-    transform: none;
-    width: 100%;
-    text-align: center;
-    filter: none;
-    letter-spacing: 2px;
-    -webkit-text-stroke: 2px #241843;
+    letter-spacing: 4px;
+    -webkit-text-stroke: 1.5px #241843;
+    filter: drop-shadow(1px 1px 1px white)
+    drop-shadow(-1px -1px white);
   }
  
   .ice-cream {

@@ -261,6 +261,14 @@ export function GameProvider({ children }) {
     setShowInitialsModal(false);
   };
 
+  // Add pause state
+  const [isPaused, setIsPaused] = useState(false);
+
+  // Function to toggle pause state
+  const togglePause = () => {
+    setIsPaused(prev => !prev);
+  };
+
   return (
     <GameContext.Provider 
       value={{ 
@@ -284,7 +292,9 @@ export function GameProvider({ children }) {
         fetchGlobalScores,
         submitGlobalScore,
         isRushHourMode,
-        toggleRushHourMode
+        toggleRushHourMode,
+        isPaused,
+        togglePause
       }}
     >
       {children}

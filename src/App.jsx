@@ -15,6 +15,7 @@ import MusicNoteIcon from "@mui/icons-material/MusicNote";
 import MusicOffIcon from "@mui/icons-material/MusicOff";
 import FastForwardIcon from "@mui/icons-material/FastForward";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
+import PauseIcon from "@mui/icons-material/Pause";
 import music from "/assets/music.mp3";
 
 function AppContent() {
@@ -27,7 +28,9 @@ function AppContent() {
     isSoundEnabled,
     toggleAudio,
     isRushHourMode,
-    toggleRushHourMode
+    toggleRushHourMode,
+    isPaused,
+    togglePause
   } = useContext(GameContext);
   
   const navigate = useNavigate();
@@ -66,6 +69,23 @@ function AppContent() {
         <source src={music} type="audio/mpeg" />
         Your browser does not support the audio element.
       </audio>
+      
+      {/* Pause Button */}
+      <IconButton
+        className="pause-button"
+        sx={{
+          position: "fixed",
+          top: "15px",
+          right: "210px",
+          zIndex: 9999,
+          color: "#5E558F",
+        }}
+        onClick={togglePause}
+        title={isPaused ? "Resume game" : "Pause game"}
+        disableRipple={true}
+      >
+        {isPaused ? <PlayArrowIcon /> : <PauseIcon />}
+      </IconButton>
       
       {/* Rush Hour Mode Toggle Button */}
       <IconButton
