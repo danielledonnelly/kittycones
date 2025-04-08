@@ -2,6 +2,8 @@ import { Link } from "react-router-dom";
 import { useEffect, useState, useContext } from "react";
 import { GameContext } from "./GameContext";
 import { Button } from "@radix-ui/themes";
+import DeleteIcon from '@mui/icons-material/Delete';
+import RefreshIcon from '@mui/icons-material/Refresh';
 
 const Leaderboard = () => {
   const { 
@@ -98,7 +100,20 @@ const Leaderboard = () => {
         
         <div className="leaderboard-container">
           <div className="leaderboard-column">
-            <h2>Local Leaderboard</h2>
+            <div className="leaderboard-header">
+              <h2>Local Leaderboard</h2>
+              {!isMobile && (
+                <Button 
+                  size="3" 
+                  variant="soft" 
+                  onClick={clearAllScores}
+                  disabled={isClearing}
+                  className="leaderboard-button"
+                >
+                  <DeleteIcon sx={{ fontSize: 16 }} />Clear
+                </Button>
+              )}
+            </div>
             <div className="high-scores">
               {displayHighScores.map((scoreData, index) => (
                 <div key={index} className="high-score-item">
@@ -107,20 +122,22 @@ const Leaderboard = () => {
                 </div>
               ))}
             </div>
-            {!isMobile && (
-              <Button 
-                size="3" 
-                variant="soft" 
-                onClick={clearAllScores}
-                disabled={isClearing}
-                className="leaderboard-button"
-              >
-                Clear Scores
-              </Button>
-            )}
           </div>
           <div className="leaderboard-column">
-            <h2>Global Leaderboard</h2>
+            <div className="leaderboard-header">
+              <h2>Global Leaderboard</h2>
+              {!isMobile && !isLoadingGlobalScores && !globalScoreError && (
+                <Button 
+                  size="3" 
+                  variant="soft" 
+                  onClick={clearAllGlobalScores}
+                  disabled={isClearingGlobal}
+                  className="leaderboard-button"
+                >
+                  <RefreshIcon sx={{ fontSize: 16 }} />Refresh
+                </Button>
+              )}
+            </div>
             {isLoadingGlobalScores ? (
               <p>Loading global scores...</p>
             ) : globalScoreError ? (
@@ -138,27 +155,14 @@ const Leaderboard = () => {
                 )}
               </div>
             ) : (
-              <>
-                <div className="high-scores">
-                  {displayGlobalScores.map((scoreData, index) => (
-                    <div key={index} className="high-score-item">
-                      <span className={`rank-number ${index < 9 ? 'single-digit' : ''}`}>{index + 1}.</span>
-                      {scoreData.score ? `   ${scoreData.initials || ""}      ${scoreData.score} Coins` : ""}
-                    </div>
-                  ))}
-                </div>
-                {!isMobile && (
-                  <Button 
-                    size="3" 
-                    variant="soft" 
-                    onClick={clearAllGlobalScores}
-                    disabled={isClearingGlobal}
-                    className="leaderboard-button"
-                  >
-                    Refresh Scores
-                  </Button>
-                )}
-              </>
+              <div className="high-scores">
+                {displayGlobalScores.map((scoreData, index) => (
+                  <div key={index} className="high-score-item">
+                    <span className={`rank-number ${index < 9 ? 'single-digit' : ''}`}>{index + 1}.</span>
+                    {scoreData.score ? `   ${scoreData.initials || ""}      ${scoreData.score} Coins` : ""}
+                  </div>
+                ))}
+              </div>
             )}
           </div>
         </div>

@@ -8,10 +8,11 @@ const About = () => {
         <h1 className="screen-title">About</h1>
         
         <p className="screen-text">
-        Kitty Cones is a fast-paced game where you serve ice cream to hungry cats!
-        Click the items on the counter to build and serve customer orders before the timer runs out. 
-        The more scoops an order has, the more coins you earn.
-        <p>This game was made by Dani Donnelly.</p></p>
+        You're the server at Kitty Cones, an ice cream shop that caters to catty customers. 
+        Click the correct cones and scoops to fill customer orders as fast as you can.
+        If you mess up an order, throw it away and try again.
+        
+        <p>Click the play icon to activate Rush Hour Mode and speed things up.</p></p>
       </div>
     </div>
   );

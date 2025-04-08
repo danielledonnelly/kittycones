@@ -38,7 +38,7 @@
   background-color: #9F86C0;
   box-sizing: border-box;
   border-top: 4px solid #241843;
-  border-bottom: 16px solid #241843;
+  border-bottom: 12px solid #241843;
   min-height: 30vh;
   max-height: 30vh;
   padding: 20px 40px;
@@ -246,12 +246,11 @@ h1 {
   background-image: linear-gradient(to bottom, 
     rgb(245, 233, 243) 20%, 
     #f2b8da 40%, 
-    #9F86C0 90%
+    #ab8bd4 90%
   );
-  filter: drop-shadow(-0.8px -1px 0.5px white) 
-        drop-shadow(1.2px -1px 0.5px white) 
-        drop-shadow(-0.8px 1px 0.5px white) 
-        drop-shadow(1.2px 1px 0.5px white);
+  filter: drop-shadow(-2.1px -1.6px 0px white) 
+        drop-shadow(1.4px -0.1px 0px white) 
+        drop-shadow(1.4px 1.4px 0px white);
   text-align: center;
   pointer-events: auto;
 }
@@ -262,14 +261,25 @@ h1 {
   gap: 15px;
   width: 100%;
   padding: 0 15px;
+  margin-bottom: 30px;
 }
 
 .home-buttons-row .rt-Button.rt-variant-soft {
-  min-width: clamp(100px, 12vw, 160px);
-  min-height: clamp(35px, 4vw, 50px);
-  font-size: clamp(0.8rem, 1.2vw, 1.1rem);
-  border: 2px solid white;
-  padding: 0.3em 0.8em;
+  min-width: clamp(100px, 12vw, 180px);
+  min-height: clamp(35px, 4vw, 55px);
+  font-size: clamp(0.9rem, 1.4vw, 1.3rem);
+  background-color: #241843;
+  border: 2px solid #150c2b;
+  padding: 0.5em 1em;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.home-buttons-row .rt-Button.rt-variant-soft:hover {
+  background-color: #150c2b;
+}
+
+.home-title-container {
+  margin-bottom: -10px;
 }
 
 .ice-cream {
@@ -377,10 +387,6 @@ h1 {
   z-index: 5;
 }
 
-.leaderboard .rt-Button.rt-variant-soft {
-  width: 100px;
-}
-
 .end-screen {
   position: relative;
   border: 3px solid #241843;
@@ -393,6 +399,22 @@ h1 {
   z-index: 5;
 }
 
+.leaderboard-header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 25px;
+  padding-bottom: 5px;
+}
+
+.leaderboard-header h2 {
+  margin: 0;
+  border-bottom: none;
+  font-family: 'Fredoka', sans-serif;
+  color: #241843;
+  font-size: 28px;
+}
+
 .leaderboard-column {
   flex: 1;
   background-color: rgba(159, 134, 192, 0.3);
@@ -401,15 +423,23 @@ h1 {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   border: none;
   min-width: 200px;
+  text-align: center;
 }
 
-.leaderboard-column h2 {
-  font-family: 'Fredoka', sans-serif;
-  color: #241843;
-  font-size: 28px;
-  margin-bottom: 15px;
-  text-align: center;
-  border-bottom: 2px solid #9F86C0;
+.leaderboard-header .rt-Button.rt-variant-soft {
+  min-width: clamp(80px, 8vw, 90px);
+  min-height: clamp(10px, 2.5vw, 28px);
+  font-size: clamp(0.7rem, 1vw, 0.85rem);
+  background-color: #9F86C0;
+  border: none;
+  color: white;
+  padding: 0.5em 1em;
+  border: 1px solid #8e74b0;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.leaderboard-header .rt-Button.rt-variant-soft:hover {
+  background-color: #8e74b0;
 }
 
 .mobile {
@@ -547,7 +577,7 @@ h1 {
   line-height: 1.5;
   margin-bottom: 0px;
   color: #241843;
-  max-width: 70%;
+  max-width: 85%;
   font-family: 'Fredoka', sans-serif;
   padding: 1%;
   z-index: 3;
@@ -654,28 +684,9 @@ h1 {
 
 /* Radix UI Custom Styling */
 .rt-Button.rt-variant-soft {
-  background-color: #241843;
-  border: 1px solid white;
   color: white;
   font-family: 'Fredoka', sans-serif;
-  font-size: .9em;
-  max-width: 100px;
-  min-width: 8vw;
-  min-height: 2vw;
   cursor: pointer;
-}
-
-.rt-Button.rt-variant-soft:hover {
-  background-color: #352a64; /* Slightly lighter dark purple for hover */
-  cursor: pointer;
-}
-
-.leaderboard-button {
-  min-width: clamp(80px, 15vw, 120px);
-  min-height: clamp(30px, 4vw, 40px);
-  font-size: clamp(0.65rem, 1vw, 0.85rem);
-  border: 1px solid white;
-  padding: 0.2em 0.5em;
 }
 
 @media (max-width: 800px) {
@@ -820,9 +831,9 @@ h1 {
   }
 
   .rt-Button.rt-variant-soft {
-    min-width: clamp(90px, 18vw, 130px);
+    min-width: clamp(90px, 18vw, 140px);
     min-height: clamp(32px, 5vw, 45px);
-    font-size: clamp(0.7rem, 1.1vw, 0.9rem);
+    font-size: clamp(0.8rem, 1.2vw, 1.1rem);
     border: 1px solid white;
     padding: 0.2em 0.6em;
   }
@@ -842,5 +853,11 @@ h1 {
     min-height: clamp(28px, 3.5vw, 35px);
     font-size: clamp(0.6rem, 0.9vw, 0.75rem);
     padding: 0.15em 0.4em;
+  }
+
+  .leaderboard-header h2 {
+    font-size: 16px;
+    margin: 0 0 5px 0;
+    padding-bottom: 2px;
   }
 }
