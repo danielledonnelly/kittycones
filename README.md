@@ -1,10 +1,4 @@
 # [─── Kitty Cones ───](https://kitty-cones.pages.dev/)
-
-                            ╱|、
-                          (˚ˎ 。7  
-                           |、˜〵          
-                          じしˍ,)ノ
-
 ## A cute yet chaotic ice cream serving simulator
 
 ### Game Description
@@ -36,7 +30,7 @@ These modes can be switched back and forth in-game. Toggle the mode to Rush Hour
 <br>✦ Global leaderboard integration using Val Town
 
 ### Dependencies
-<br>✦ React
+✦ React
 <br>✦ React Router
 <br>✦ Material UI Icons
 <br>✦ Radix UI Buttons
