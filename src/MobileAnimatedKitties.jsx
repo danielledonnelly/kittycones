@@ -179,12 +179,7 @@ export const MobileAnimatedKitties = () => {
               left: `${kitty.x}px`,
               top: `${kitty.y}px`,
               transform: `scale(${kitty.scale}) translateY(${Math.sin(kitty.bobPhase) * 8}px) scaleX(${kitty.direction})`,
-              transition: 'transform 0.3s ease-in-out',
-              zIndex: 1000,
-              cursor: 'pointer',
-              pointerEvents: 'auto',
-              width: '180px', // Smaller width for mobile
-              height: 'auto',
+
             }}
             onClick={(e) => {
               console.log("Click event fired");

@@ -14,6 +14,16 @@ const Leaderboard = () => {
   } = useContext(GameContext);
   const [isClearing, setIsClearing] = useState(false);
   const [isClearingGlobal, setIsClearingGlobal] = useState(false);
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 800);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 800);
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   useEffect(() => {
     // Log current state of high scores for debugging
@@ -97,14 +107,17 @@ const Leaderboard = () => {
                 </div>
               ))}
             </div>
-            <Button 
-              size="3" 
-              variant="soft" 
-              onClick={clearAllScores}
-              disabled={isClearing}
-            >
-              Clear All Scores
-            </Button>
+            {!isMobile && (
+              <Button 
+                size="3" 
+                variant="soft" 
+                onClick={clearAllScores}
+                disabled={isClearing}
+                className="leaderboard-button"
+              >
+                Clear Scores
+              </Button>
+            )}
           </div>
           <div className="leaderboard-column">
             <h2>Global Leaderboard</h2>
@@ -113,13 +126,16 @@ const Leaderboard = () => {
             ) : globalScoreError ? (
               <div>
                 <p>Error loading global scores</p>
-                <Button 
-                  size="3" 
-                  variant="soft" 
-                  onClick={fetchGlobalScores}
-                >
-                  Retry
-                </Button>
+                {!isMobile && (
+                  <Button 
+                    size="3" 
+                    variant="soft" 
+                    onClick={fetchGlobalScores}
+                    className="leaderboard-button"
+                  >
+                    Retry
+                  </Button>
+                )}
               </div>
             ) : (
               <>
@@ -131,14 +147,17 @@ const Leaderboard = () => {
                     </div>
                   ))}
                 </div>
-                <Button 
-                  size="3" 
-                  variant="soft" 
-                  onClick={clearAllGlobalScores}
-                  disabled={isClearingGlobal}
-                >
-                  Refresh Scores
-                </Button>
+                {!isMobile && (
+                  <Button 
+                    size="3" 
+                    variant="soft" 
+                    onClick={clearAllGlobalScores}
+                    disabled={isClearingGlobal}
+                    className="leaderboard-button"
+                  >
+                    Refresh Scores
+                  </Button>
+                )}
               </>
             )}
           </div>

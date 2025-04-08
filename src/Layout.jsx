@@ -179,16 +179,9 @@ export const AnimatedKitties = () => {
             key={kitty.id}
             className="animated-kitty"
             style={{
-              position: 'absolute',
               left: `${kitty.x}px`,
               top: `${kitty.y}px`,
               transform: `scale(${kitty.scale}) translateY(${Math.sin(kitty.bobPhase) * 10}px) scaleX(${kitty.direction})`,
-              transition: 'transform 0.3s ease-in-out',
-              zIndex: 1000,
-              cursor: 'pointer',
-              pointerEvents: 'auto',
-              width: '220px',
-              height: 'auto',
             }}
             onClick={(e) => {
               console.log("Click event fired");
@@ -198,10 +191,9 @@ export const AnimatedKitties = () => {
             <img
               src={`/assets/${kitty.image}`}
               alt="Animated Kitty"
-              style={{ 
+              style={{
                 width: '100%', 
                 height: '100%',
-                pointerEvents: 'none',
                 display: 'block'
               }}
             />
@@ -243,15 +235,15 @@ const Layout = () => {
         </div>
         
         <div className="home-buttons-row">
-          <Link to="/game" style={{ textDecoration: 'none' }}>
+          <Link to="/game">
             <Button size="3" variant="soft">Start</Button>
           </Link>
 
-          <Link to="/about" style={{ textDecoration: 'none' }}>
+          <Link to="/about">
             <Button size="3" variant="soft">About</Button>
           </Link>
           
-          <Link to="/leaderboard" style={{ textDecoration: 'none' }}>
+          <Link to="/leaderboard">
             <Button size="3" variant="soft">Leaderboard</Button>
           </Link>
         </div>

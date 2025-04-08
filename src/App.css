@@ -3,6 +3,18 @@
   user-select: none;
 }
 
+.animated-kitty {
+    position: absolute;
+    transition: transform 0.3s ease-in-out;
+    z-index: 1000;
+    cursor: pointer;
+    pointer-events: auto;
+    width: 220px;
+    height: auto;
+    display: block;
+  }
+  
+
 .animated-kitties-container {
   position: fixed;
   width: 100%;
@@ -27,7 +39,7 @@
   box-sizing: border-box;
   border-top: 4px solid #241843;
   border-bottom: 16px solid #241843;
-  min-height: 25vh;
+  min-height: 30vh;
   max-height: 30vh;
   padding: 20px 40px;
   width: 100%;
@@ -166,7 +178,7 @@ body {
   box-sizing: border-box;
   border-top: 4px solid #241843;
   border-bottom: 12px solid #241843;
-  min-height: 25vh;
+  min-height: 30vh;
   max-height: 30vh;
   padding: 20px 40px;
   width: 100%;
@@ -227,7 +239,7 @@ h1 {
   padding: 0;
   position: relative;
   font-family: 'Fredoka', sans-serif;
-  font-size: 5vw;
+  font-size: clamp(2rem, 8vw, 6rem);
   letter-spacing: 6px;
   background-size: 200% 100%;
   -webkit-background-clip: text;
@@ -248,11 +260,18 @@ h1 {
 
 .home-buttons-row {
   display: flex;
-  flex-direction: row;
   justify-content: center;
-  gap: 20px;
-  margin-top: auto;
+  gap: 15px;
   width: 100%;
+  padding: 0 15px;
+}
+
+.home-buttons-row .rt-Button.rt-variant-soft {
+  min-width: clamp(100px, 12vw, 160px);
+  min-height: clamp(35px, 4vw, 50px);
+  font-size: clamp(0.8rem, 1.2vw, 1.1rem);
+  border: 2px solid white;
+  padding: 0.3em 0.8em;
 }
 
 .ice-cream {
@@ -357,6 +376,11 @@ h1 {
   display: flex;
   width: 100%;
   gap: 20px;
+  z-index: 5;
+}
+
+.leaderboard .rt-Button.rt-variant-soft {
+  width: 100px;
 }
 
 .end-screen {
@@ -368,6 +392,7 @@ h1 {
   display: flex;
   flex-direction: column;
   gap: 10px;
+  z-index: 5;
 }
 
 .leaderboard-column {
@@ -405,15 +430,14 @@ h1 {
   margin-top: 20px;
 }
 
-.mute-button, .rush-hour-button, .pause-button {
+.sound-button, .rush-hour-button, .pause-button {
   position: fixed;
   top: 15px;
   z-index: 99;
   color: #5E558F;
-
 }
 
-.mute-button {
+.sound-button {
   right: 130px;
 }
 
@@ -425,7 +449,7 @@ h1 {
   right: 210px;
 }
 
-.mute-button.MuiIconButton-root:hover,
+.sound-button.MuiIconButton-root:hover,
 .rush-hour-button.MuiIconButton-root:hover,
 .pause-button.MuiIconButton-root:hover {
   background-color: transparent !important;
@@ -514,20 +538,19 @@ h1 {
 }
 
 .screen-title {
-  font-size: 2vw;
+  font-size: clamp(1.5rem, 3vw, 4rem);
   font-family: 'Fredoka', sans-serif;
   color: #241843;
   text-align: center;
 }
 
 .screen-text {
-  font-size: 24px;
+  font-size: clamp(1rem, 2.5vw, 1.5rem);
   line-height: 1.5;
   margin-bottom: 0px;
   color: #241843;
   max-width: 70%;
   font-family: 'Fredoka', sans-serif;
-  border-radius: 10px;
   padding: 1%;
   z-index: 3;
   text-align: left;
@@ -540,7 +563,7 @@ h1 {
   color: white;
   cursor: pointer;
   font-family: 'Fredoka', sans-serif;
-  font-size: 20px;
+  font-size: clamp(0.875rem, 2vw, 1.25rem);
   margin: 10px;
   min-width: 160px;
   min-height: 50px;
@@ -631,25 +654,30 @@ h1 {
   padding-right: 5px;
 }
 
-.rank-number.single-digit {
-  padding-left: 0px;
-}
-
 /* Radix UI Custom Styling */
 .rt-Button.rt-variant-soft {
   background-color: #241843;
-  border: 2px solid white;
+  border: 1px solid white;
   color: white;
   font-family: 'Fredoka', sans-serif;
-  font-size: 1.2vw;
-  min-width: 10vw;
-  min-height: 3vw;
+  font-size: .9em;
+  max-width: 100px;
+  min-width: 8vw;
+  min-height: 2vw;
   cursor: pointer;
 }
 
 .rt-Button.rt-variant-soft:hover {
   background-color: #352a64; /* Slightly lighter dark purple for hover */
   cursor: pointer;
+}
+
+.leaderboard-button {
+  min-width: clamp(80px, 15vw, 120px);
+  min-height: clamp(30px, 4vw, 40px);
+  font-size: clamp(0.65rem, 1vw, 0.85rem);
+  border: 1px solid white;
+  padding: 0.2em 0.5em;
 }
 
 @media (max-width: 800px) {
@@ -669,7 +697,8 @@ h1 {
   }
 
   .home-buttons-row {
-    gap: 3px;
+    gap: 8px;
+    padding: 0 8px;
   }
 
   
@@ -724,7 +753,6 @@ h1 {
   }
 
   .home-title {
-    font-size: 32px;
     letter-spacing: 4px;
     -webkit-text-stroke: 1.5px #241843;
     filter: drop-shadow(1px 1px 1px white)
@@ -764,7 +792,7 @@ h1 {
   }
 
   .screen-text {
-    font-size: 10px;
+    font-size: clamp(1rem, 2.5vw, 1.5rem);
     margin: 2px 0;
     max-width: 90%;
     padding: 0;
@@ -785,23 +813,20 @@ h1 {
   }
 
   .screen {
-    width: 90% !important;
+    min-width: 80%;
     height: auto;
     margin: auto;
-  }
-
-  .screen-title {
-    font-size: 16px;
-    margin: 0 0 5px 0;
+    min-height: 30%;
+    max-height: 90%;
+    margin-top: 10px;
   }
 
   .rt-Button.rt-variant-soft {
-    min-width: 75px;
-    min-height: 10px;
-    font-size: 12px;
-    padding: 0px;
-    margin: 0px;
+    min-width: clamp(90px, 18vw, 130px);
+    min-height: clamp(32px, 5vw, 45px);
+    font-size: clamp(0.7rem, 1.1vw, 0.9rem);
     border: 1px solid white;
+    padding: 0.2em 0.6em;
   }
 
   .modal-buttons {
@@ -812,5 +837,12 @@ h1 {
     width: 40px;
     height: 40px;
     font-size: 24px;
+  }
+
+  .leaderboard-button {
+    min-width: clamp(70px, 12vw, 100px);
+    min-height: clamp(28px, 3.5vw, 35px);
+    font-size: clamp(0.6rem, 0.9vw, 0.75rem);
+    padding: 0.15em 0.4em;
   }
 }

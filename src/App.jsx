@@ -11,8 +11,8 @@ import InitialsModal from "./InitialsModal";
 import Layout from "./Layout";
 import { useNavigate } from "react-router-dom";
 import { IconButton } from "@mui/material";
-import MusicNoteIcon from "@mui/icons-material/MusicNote";
-import MusicOffIcon from "@mui/icons-material/MusicOff";
+import VolumeUpIcon from "@mui/icons-material/VolumeUp";
+import VolumeOffIcon from "@mui/icons-material/VolumeOff";
 import FastForwardIcon from "@mui/icons-material/FastForward";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import PauseIcon from "@mui/icons-material/Pause";
@@ -104,20 +104,21 @@ function AppContent() {
         {isRushHourMode ? <FastForwardIcon /> : <PlayArrowIcon />}
       </IconButton>
       
-      {/* Global Music Toggle Button */}
+      {/* Global Sound Toggle Button */}
       <IconButton
-        className="mute-button"
+        className="sound-button"
         sx={{
           position: "fixed",
           top: "15px",
           right: "130px",
           zIndex: 9999,
-          color: isMusicEnabled ? "#EFDAE6" : "#5E558F",
+          color: "#5E558F",
         }}
         onClick={toggleAudio}
+        title={isMusicEnabled ? "Disable sound" : "Enable sound"}
         disableRipple={true}
       >
-        {isMusicEnabled ? <MusicNoteIcon /> : <MusicOffIcon />}
+        {isMusicEnabled ? <VolumeUpIcon /> : <VolumeOffIcon />}
       </IconButton>
       
       <img
