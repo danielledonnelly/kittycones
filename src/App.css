@@ -190,9 +190,7 @@ body {
 }
 
 .game-background {
-  position: fixed; /* Important line, do not delete */
-  /* min-width: 100vw !important;
-  min-height: 100% !important; */
+  position: fixed;
   height: auto;
   top: 0;
   left: 0;
