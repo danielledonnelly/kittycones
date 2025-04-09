@@ -1,5 +1,5 @@
 import { useEffect, useState, useContext, useRef } from "react";
-import { Outlet, Link } from "react-router-dom";
+import { Outlet, Link, useLocation } from "react-router-dom";
 import { GameContext } from "./GameContext";
 import meow1 from "/assets/meow1.mp3?v=2";
 import meow2 from "/assets/meow2.mp3?v=2";
@@ -206,6 +206,7 @@ export const AnimatedKitties = () => {
 
 const Layout = () => {
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 600);
+  const location = useLocation();
 
   useEffect(() => {
     const handleResize = () => {
@@ -239,12 +240,12 @@ const Layout = () => {
             <Button size="3" variant="soft">Start</Button>
           </Link>
 
-          <Link to="/about">
-            <Button size="3" variant="soft">About</Button>
+          <Link to={location.pathname === "/about" ? "/" : "/about"}>
+            <Button size="3" variant="soft">{location.pathname === "/about" ? "Home" : "About"}</Button>
           </Link>
           
-          <Link to="/leaderboard">
-            <Button size="3" variant="soft">Leaderboard</Button>
+          <Link to={location.pathname === "/leaderboard" ? "/" : "/leaderboard"}>
+            <Button size="3" variant="soft">{location.pathname === "/leaderboard" ? "Home" : "Leaderboard"}</Button>
           </Link>
         </div>
       </div>
