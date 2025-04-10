@@ -329,7 +329,7 @@ h2 {
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 240px;
+  width: clamp(100px, 30vw, 240px);
   height: 220px;
   margin-right: 20px;
   position: relative;
@@ -800,13 +800,12 @@ h2 {
 }
 
 @media (max-width: 900px) {
-
   .customer {
-    bottom: 10vh
+    bottom: 20vh;
   }
 
   .customer-image {
-    max-width: 300px;
+    max-width: 250px;
   }
 
   body {
@@ -829,7 +828,6 @@ h2 {
     padding: 8px 16px;
   }
 
-  /* Update counter layout for smaller screens */
   .counter {
     max-height: 30vh;
     min-height: 30vh;
@@ -838,7 +836,28 @@ h2 {
     gap: 10px;
   }
 
-  /* Update ingredients container to be column-based with reduced spacing */
+  /* Make ice cream smaller on mobile */
+  .ice-cream {
+    width: clamp(160px, 25vw, 200px);
+    height: 180px;
+    margin-right: 10px;
+  }
+
+  .ice-cream-cone {
+    max-width: 80px;
+    min-width: 60px;
+  }
+
+  .ice-cream-scoop {
+    max-width: 90px;
+    min-width: 70px;
+    bottom: 85px;
+  }
+  
+  .ice-cream-scoop:not(:first-child) {
+    bottom: calc(70px + (var(--scoop-index, 1) * 20px));
+  }
+
   .ingredients {
     width: 100%;
     flex-direction: column;
@@ -846,7 +865,6 @@ h2 {
     align-items: center;
   }
 
-  /* Update cone section - single row */
   .cone-buttons {
     display: flex;
     flex-direction: row;
@@ -857,7 +875,6 @@ h2 {
     margin-bottom: -5px;
   }
 
-  /* Update scoop section - single row */
   .scoop-buttons {
     display: flex;
     flex-direction: row;
@@ -869,14 +886,14 @@ h2 {
 
   /* Reduce size of button elements */
   .cone-stand-button {
-    min-width: 70px;
-    max-width: 85px;
+    min-width: 60px;
+    max-width: 70px;
     height: 120px;
   }
 
   .scoop-tub-button {
-    min-width: 70px;
-    max-width: 85px;
+    min-width: 60px;
+    max-width: 70px;
     height: 120px;
   }
 
