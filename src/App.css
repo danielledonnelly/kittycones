@@ -817,11 +817,11 @@ h2 {
   }
 
   .main-content {
-    padding-top: 60px; /* Add top padding to push content down from browser UI */
+    padding-top: 60px;
   }
 
   .home-title-container {
-    margin-top: -15%; /* Move title up */
+    margin-top: -25%;
   }
 
   .home-buttons-row {
@@ -839,7 +839,7 @@ h2 {
   }
 
   .counter {
-    max-height: 30vh;
+    max-height: 35vh;
     min-height: 30vh;
     padding: 15px 20px;
     justify-content: center;
