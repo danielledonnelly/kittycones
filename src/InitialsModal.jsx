@@ -28,10 +28,18 @@ const InitialsModal = ({ score, onSave, onCancel }) => {
   };
 
   const handleKeyDown = (e, index) => {
-    if (e.key === "Backspace" && initials[index] === "" && index > 0) {
-      // Move to previous input when backspace is pressed on empty input
-      setCurrentIndex(index - 1);
-      inputRefs[index - 1].current.focus();
+    if (e.key === "Backspace") {
+      if (initials[index] !== "") {
+        // Clear current input if it has a value
+        const newInitials = [...initials];
+        newInitials[index] = "";
+        setInitials(newInitials);
+        e.preventDefault(); // Prevent default backspace behavior
+      } else if (index > 0) {
+        // Move to previous input when backspace is pressed on empty input
+        setCurrentIndex(index - 1);
+        inputRefs[index - 1].current.focus();
+      }
     } else if (e.key === "Enter" && initials.every(initial => initial !== "")) {
       // Submit when Enter is pressed and all initials are filled
       handleSave();
