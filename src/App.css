@@ -101,10 +101,12 @@ body {
 
 .cone-buttons {
   display: flex;
-  gap: 10px;
-  align-items: center;
+  flex-direction: row;
+  gap: 4px;
+  max-width: 90%;
+  margin-right: 0;
   justify-content: center;
-  flex: 1;
+  margin-bottom: -5px;
 }
 
 .scoop-buttons {
@@ -814,6 +816,14 @@ h2 {
     height: 100%;
   }
 
+  .main-content {
+    padding-top: 60px; /* Add top padding to push content down from browser UI */
+  }
+
+  .home-title-container {
+    margin-top: -15%; /* Move title up */
+  }
+
   .home-buttons-row {
     gap: 8px;
     padding: 0 8px;
@@ -836,40 +846,42 @@ h2 {
     gap: 10px;
   }
 
-  /* Make ice cream smaller on mobile */
+  /* Make ice cream smaller on mobile and move up */
   .ice-cream {
-    width: clamp(160px, 25vw, 200px);
+    width: clamp(150px, 25vw, 180px);
     height: 180px;
-    margin-right: 10px;
+    margin-left: 10px;
   }
 
   .ice-cream-cone {
-    max-width: 80px;
-    min-width: 60px;
+    max-width: clamp(60px, 15vw, 80px);
+    min-width: clamp(60px, 15vw, 80px);
+    bottom: 100px; 
   }
 
   .ice-cream-scoop {
-    max-width: 90px;
-    min-width: 70px;
-    bottom: 85px;
+    max-width: clamp(60px, 15vw, 80px);
+    min-width: clamp(60px, 15vw, 80px);
+    bottom: 165px; 
   }
   
   .ice-cream-scoop:not(:first-child) {
-    bottom: calc(70px + (var(--scoop-index, 1) * 20px));
+    bottom: calc(160px + (var(--scoop-index, 1) * 15px));
   }
 
   .ingredients {
-    width: 100%;
+    max-width: 80%;
     flex-direction: column;
-    gap: 5px;
+    gap: 3px;
     align-items: center;
   }
 
+  /* Update cone section - single row with minimal spacing */
   .cone-buttons {
     display: flex;
     flex-direction: row;
-    gap: 8px;
-    width: 100%;
+    gap: 4px;
+    max-width: 90%;
     margin-right: 0;
     justify-content: center;
     margin-bottom: -5px;
@@ -878,10 +890,10 @@ h2 {
   .scoop-buttons {
     display: flex;
     flex-direction: row;
-    gap: 8px;
-    width: 100%;
+    gap: 4px;
+    max-width: 90%;
     justify-content: center;
-    margin-top: -5px;
+    margin-top: -10px;
   }
 
   /* Reduce size of button elements */
@@ -905,15 +917,22 @@ h2 {
 
   /* Position restart button */
   .restart-container {
-    width: 120px;
-    height: 120px;
+    width: 100px;
+    height: 100px;
     margin: 0;
+    left:0px;
+    bottom: 8px;
+    position: fixed;
+  }
+
+  .restart-button {
+    align-items: flex-start;
   }
 
   .restart-button img {
-    width: 100%;
-    min-width: 60px;
-    max-width: 80px;
+    width: 90%;
+    min-width: 50px;
+    max-width: 70px;
   }
 
   .high-scores {
