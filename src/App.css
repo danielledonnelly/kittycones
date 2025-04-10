@@ -109,7 +109,7 @@ body {
 
 .scoop-buttons {
   display: flex;
-  gap: 10px;
+  gap: 20px;
   align-items: center;
   justify-content: center;
   flex: 1;
@@ -609,9 +609,6 @@ h2 {
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 200px;
-  height: 180px;
-  margin-left: 20px;
   position: relative;
 }
 
@@ -622,7 +619,6 @@ h2 {
   align-items: center;
   justify-content: center;
   height: 100%;
-  width: 100%;
 }
 
 .restart-button button {
@@ -633,8 +629,7 @@ h2 {
 }
 
 .restart-button img {
-  min-width: 90px;
-  max-width: 140px;
+  width: clamp(80px, 10vw, 140px);
   height: auto;
 }
 
@@ -723,17 +718,14 @@ h2 {
   display: flex;
   flex-direction: row;
   align-items: center;
-  min-width: 120px;
-  max-width: 150px;
-  height: 180px;
+  width: clamp(80px, 10vw, 120px);
+  height: clamp(120px, 15vh, 180px);
   z-index: 2;
 }
 
 .tub-image {
-  width: 100%;
+  width: clamp(90px, 8vw, 140px);
   height: auto;
-  min-width: 100px;
-  max-width: 140px;
   object-fit: contain;
 }
 
@@ -742,19 +734,16 @@ h2 {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  min-width: 120px;
-  max-width: 150px;
-  height: 180px;
+  width: clamp(80px, 10vw, 120px);
+  height: clamp(120px, 15vh, 180px);
   background: none;
   border: none;
   cursor: pointer;
 }
 
 .stand-image {
-  width: 100%;
+  width: clamp(70px, 8vw, 140px);
   height: auto;
-  min-width: 100px;
-  max-width: 140px;
   object-fit: contain;
 }
 
@@ -810,7 +799,7 @@ h2 {
   margin: 20px 0;
 }
 
-@media (max-width: 800px) {
+@media (max-width: 900px) {
 
   .customer {
     bottom: 10vh
@@ -840,39 +829,74 @@ h2 {
     padding: 8px 16px;
   }
 
-
-  .cone-buttons {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
+  /* Update counter layout for smaller screens */
+  .counter {
+    max-height: 30vh;
+    min-height: 30vh;
+    padding: 15px 20px;
     justify-content: center;
     gap: 10px;
   }
 
+  /* Update ingredients container to be column-based with reduced spacing */
+  .ingredients {
+    width: 100%;
+    flex-direction: column;
+    gap: 5px;
+    align-items: center;
+  }
+
+  /* Update cone section - single row */
+  .cone-buttons {
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+    width: 100%;
+    margin-right: 0;
+    justify-content: center;
+    margin-bottom: -5px;
+  }
+
+  /* Update scoop section - single row */
   .scoop-buttons {
     display: flex;
     flex-direction: row;
-    flex-wrap: nowrap;
+    gap: 8px;
+    width: 100%;
     justify-content: center;
+    margin-top: -5px;
   }
 
-  .restart-button {
+  /* Reduce size of button elements */
+  .cone-stand-button {
+    min-width: 70px;
+    max-width: 85px;
+    height: 120px;
+  }
 
+  .scoop-tub-button {
+    min-width: 70px;
+    max-width: 85px;
+    height: 120px;
+  }
+
+  .stand-image, .tub-image {
+    width: 90%;
+    min-width: 60px;
+    max-width: 70px;
+  }
+
+  /* Position restart button */
+  .restart-container {
+    width: 120px;
+    height: 120px;
+    margin: 0;
   }
 
   .restart-button img {
     width: 100%;
-    min-width: 70px;
-  }
-
-  .scoop-tub-button {
-
-  }
-
-
-  .counter {
-    max-height: 30vh;
-    min-height: 30vh;
+    min-width: 60px;
+    max-width: 80px;
   }
 
   .high-scores {
@@ -886,6 +910,7 @@ h2 {
   }
 
   .home-title {
+    font-size: clamp(1em, 2.5em, 4em);
     letter-spacing: 4px;
     -webkit-text-stroke: 1.5px #241843;
     filter: drop-shadow(1px 1px 1px white)

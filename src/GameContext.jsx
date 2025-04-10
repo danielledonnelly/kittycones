@@ -183,6 +183,12 @@ export function GameProvider({ children }) {
     console.log("Checking high score:", currentScore);
     console.log("Current high scores:", highScores);
     
+    // Don't show the initials modal if score is 0
+    if (currentScore === 0) {
+      console.log("Score is 0, not saving as high score");
+      return false;
+    }
+    
     // If there are fewer than 10 scores, it's a high score
     if (highScores.length < 10) {
       console.log("High score: Fewer than 10 scores");
