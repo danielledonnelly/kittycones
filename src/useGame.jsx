@@ -144,8 +144,7 @@ export function useGame() {
         // For Rush Hour mode, set initial offsets for animation
         setCatPositions(isMobile ? [100, -100] : [200, 100, 0, -100, -200]);
       } else {
-        // For normal mode, use centered positions
-        setCatPositions(isMobile ? [0, 0] : [0, 0, 0, 0]);
+        // For normal mode, don't set positions here - handled in initialization
       }
     }
   }, []); // No dependency on isRushHourMode to prevent repositioning on mode change
@@ -156,8 +155,8 @@ export function useGame() {
       const screenWidth = window.innerWidth;
       const sectionWidth = screenWidth / (isMobile ? 2 : 4);
       
-      // Initialize cats with IDs and images
-      const initialCats = customerImages.slice(0, isMobile ? 2 : 4).map((image, index) => ({
+      // Initialize with only 2 cats instead of 4
+      const initialCats = customerImages.slice(0, 2).map((image, index) => ({
         image,
         id: `cat-${Date.now()}-${index}`
       }));
@@ -167,8 +166,8 @@ export function useGame() {
         Math.random() * Math.PI * 2
       );
 
-      // Initialize orders for the initial cats
-      const initialOrders = generateCustomerOrders(cones, scoops, customerImages.slice(0, isMobile ? 2 : 4));
+      // Initialize orders for the initial cats (only 2)
+      const initialOrders = generateCustomerOrders(cones, scoops, customerImages.slice(0, 2));
 
       // Add additional cats off-screen and their orders
       const additionalCats = [];
@@ -184,17 +183,21 @@ export function useGame() {
         additionalOrders.push(generateCustomerOrders(cones, scoops, [catImage])[0]);
       }
 
-      // Calculate initial positions with equal spacing
-      const initialPositions = Array.from({ length: isMobile ? 2 : 4 }, (_, i) => {
-        return (i * sectionWidth) + (sectionWidth/2 - (isMobile ? 60 : 110));
-      });
+      // Use consistent section width for spacing
+      const catSpacing = sectionWidth;
       
-      // Calculate the position where the last visible cat will be
-      const lastVisibleCatPos = initialPositions[initialPositions.length - 1];
+      // Position first cat near the middle of the screen
+      const firstCatPosition = screenWidth * 0.5;
       
-      // Add positions for additional cats off-screen with the same spacing
+      // Position all cats with equal spacing
+      const initialPositions = [
+        firstCatPosition,
+        firstCatPosition + catSpacing
+      ];
+      
+      // Add positions for additional cats with the same consistent spacing
       const additionalPositions = Array.from({ length: additionalCount }, (_, i) => {
-        return lastVisibleCatPos + ((i + 1) * (isMobile ? sectionWidth * 0.8 : sectionWidth));
+        return initialPositions[1] + ((i + 1) * catSpacing);
       });
 
       setCats([...initialCats, ...additionalCats]);

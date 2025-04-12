@@ -195,11 +195,13 @@ body {
 
 .game-background {
   position: fixed;
+  width: 100%;
   height: auto;
   top: 0;
   left: 0;
   z-index: 1;
   background-color: #DEB1CB !important;
+  min-width: 100vw;
 }
 
 h1 {
@@ -247,6 +249,7 @@ h2 {
   left: 0;
   z-index: 1;
   background-color: #DEB1CB !important;
+  width: 100%;
 }
 
 .home-title {
