@@ -3,6 +3,14 @@
 * {
   -webkit-user-drag: none;
   user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+}
+
+img, button, a, .customer-image, .order, .cone-stand-button, .scoop-tub-button {
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+  outline: none;
 }
 
 .animated-kitty {
