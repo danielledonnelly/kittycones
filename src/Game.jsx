@@ -1,6 +1,6 @@
 import { motion } from "motion/react";
 import { useGame } from "./useGame";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 export default function Game() {
@@ -24,10 +24,48 @@ export default function Game() {
     getZIndexForNormalMode,
     cones,
     scoops,
-    isMobile
+    isMobile,
+    isInitialized,
+    setCatPositions,
+    setCats,
+    setCustomerOrders,
+    setIsInitialized,
+    customerImages,
+    generateCustomerOrders,
+    isPaused,
+    gameOverRef
   } = useGame();
   
   const navigate = useNavigate();
+
+  // Add state for emotion icons
+  const [emotionIcons, setEmotionIcons] = useState([]);
+
+  // Handle displaying emotions (hearts/rage)
+  const createEmotionIcon = (type, x, y) => {
+    const newIcon = {
+      id: `emotion-${Date.now()}-${Math.random()}`,
+      type, // 'hearts' or 'rage'
+      x,
+      y
+    };
+    
+    setEmotionIcons(prev => [...prev, newIcon]);
+    
+    // Remove the icon after animation completes
+    setTimeout(() => {
+      setEmotionIcons(prev => prev.filter(icon => icon.id !== newIcon.id));
+    }, 2000);
+  };
+  
+  // Make the emotion function available to useGame
+  useEffect(() => {
+    window.addEmotionIcon = createEmotionIcon;
+    
+    return () => {
+      delete window.addEmotionIcon;
+    };
+  }, []);
 
   // Ensure we navigate away when time is up
   useEffect(() => {
@@ -230,6 +268,40 @@ export default function Game() {
         </div>
       </div>
 
+      {/* Add floating emotion icons */}
+      {emotionIcons.map(icon => (
+        <motion.div
+          key={icon.id}
+          className={`floating-emotion ${icon.type}`}
+          initial={{ y: 0, opacity: 1, scale: 1 }}
+          animate={{ 
+            y: -100, 
+            opacity: 0,
+            scale: icon.type === 'hearts' ? 1.5 : 1.2
+          }}
+          transition={{ 
+            duration: 2, 
+            ease: "easeOut"
+          }}
+          style={{
+            position: 'absolute',
+            left: `${icon.x}px`,
+            bottom: '450px',
+            pointerEvents: 'none',
+            zIndex: 1000
+          }}
+        >
+          <img 
+            src={`/assets/${icon.type}.png`} 
+            alt={icon.type} 
+            style={{
+              width: icon.type === 'hearts' ? '60px' : '70px',
+              height: 'auto'
+            }}
+          />
+        </motion.div>
+      ))}
+      
       {/* Add floating coin amounts */}
       {floatingCoins.map(coin => (
         <motion.div

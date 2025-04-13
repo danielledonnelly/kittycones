@@ -40,7 +40,7 @@
   background-color: #9F86C0;
   box-sizing: border-box;
   border-top: 4px solid #3F366B;
-  border-bottom: 8px solid #3F366B;
+  border-bottom: 4px solid #3F366B;
   min-height: 30vh;
   max-height: 30vh;
   padding: 20px 40px;
@@ -181,7 +181,7 @@ body {
   background-color: #9F86C0;
   box-sizing: border-box;
   border-top: 4px solid #3F366B;
-  border-bottom: 8px solid #3F366B;
+  border-bottom: 4px solid #3F366B;
   min-height: 30vh;
   max-height: 30vh;
   padding: 20px 40px;

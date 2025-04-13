@@ -47,6 +47,7 @@ export function useGame() {
   const thudSound = useRef(null);
   const wooshSound = useRef(null);
   const angrySound = useRef(null);
+  const purrSound = useRef(null);
   
   // Add state for floating coin amounts
   const [floatingCoins, setFloatingCoins] = useState([]);
@@ -65,6 +66,9 @@ export function useGame() {
     angrySound.current = new Audio('/assets/angry.mp3');
     angrySound.current.volume = 0.2; // Quiet meow
     angrySound.current.load(); // Preload the audio
+    purrSound.current = new Audio('/assets/purr.mp3');
+    purrSound.current.volume = 0.6; 
+    purrSound.current.load(); 
     return () => {
       if (popSound.current) {
         popSound.current.pause();
@@ -85,6 +89,10 @@ export function useGame() {
       if (angrySound.current) {
         angrySound.current.pause();
         angrySound.current = null;
+      }
+      if (purrSound.current) {
+        purrSound.current.pause();
+        purrSound.current = null;
       }
     };
   }, []);
@@ -212,13 +220,15 @@ export function useGame() {
   useEffect(() => {
     if (!isInitialized || time <= 0 || gameOverRef.current || isPaused) return;
     
+    // Add state for movement speed
     const moveInterval = setInterval(() => {
       setCatPositions(prev => {
         const screenWidth = window.innerWidth;
         const sectionWidth = screenWidth / (isMobile ? 2 : 4);
         
         // Move all cats left by fixed amount - slower on mobile
-        const newPositions = prev.map(pos => pos - (isRushHourMode ? (isMobile ? 2 : 4) : (isMobile ? 1 : 2)));
+        // Reduce the rush hour mode speed by about 25%
+        const newPositions = prev.map(pos => pos - (isRushHourMode ? (isMobile ? 1.5 : 3) : (isMobile ? 0.7 : 1.5)));
         
         // Check if leftmost cat is off-screen
         if (newPositions[0] < -250) {
@@ -268,8 +278,9 @@ export function useGame() {
       });
 
       // Update bob phases for animation - slower on mobile
+      // Also reduce the bobbing animation speed in rush hour mode
       setBobPhases(prev => 
-        prev.map(phase => (phase + (isRushHourMode ? (isMobile ? 0.08 : 0.15) : (isMobile ? 0.04 : 0.08))) % (Math.PI * 2))
+        prev.map(phase => (phase + (isRushHourMode ? (isMobile ? 0.06 : 0.12) : (isMobile ? 0.04 : 0.08))) % (Math.PI * 2))
       );
     }, 16);
     
@@ -357,9 +368,28 @@ export function useGame() {
         (scoop, index) => scoop === selectedScoops[index]
       );
 
+    // Get cat position for emotion display
+    const catPosition = catPositions[customerIndex];
+
     if (isConeMatch && isScoopsMatch) {
-      // Play woosh sound immediately
+      // Play both purr and woosh sounds as the cat exits
       playSound(wooshSound);
+      
+      // For purr sound, play it but stop after 2 seconds
+      if (purrSound.current) {
+        purrSound.current.currentTime = 0;
+        purrSound.current.play().catch(error => {
+          console.warn("Sound playback failed:", error);
+        });
+        
+        // Stop purr sound after 2 seconds
+        setTimeout(() => {
+          if (purrSound.current) {
+            purrSound.current.pause();
+            purrSound.current.currentTime = 0;
+          }
+        }, 2000);
+      }
 
       // Show success animation
       setOrderSuccess(true);
@@ -370,13 +400,17 @@ export function useGame() {
       setCoins((prevCoins) => prevCoins + coinReward);
 
       // Add floating coin amount
-      const catPosition = catPositions[customerIndex];
       setFloatingCoins(prev => [...prev, {
         id: Date.now(),
         amount: coinReward,
         x: catPosition + 80,
         y: 200
       }]);
+      
+      // Add hearts icon
+      if (window.addEmotionIcon) {
+        window.addEmotionIcon('hearts', catPosition + 80, 200);
+      }
 
       // Remove floating coin after animation
       setTimeout(() => {
@@ -441,6 +475,12 @@ export function useGame() {
     } else {
       // Play angry sound for incorrect order
       playSound(angrySound);
+      
+      // Add rage icon for wrong order
+      if (window.addEmotionIcon) {
+        window.addEmotionIcon('rage', catPosition + 80, 200);
+      }
+      
       // Decrement coins for incorrect order
       setCoins((prevCoins) => Math.max(0, prevCoins - 5));
     }
