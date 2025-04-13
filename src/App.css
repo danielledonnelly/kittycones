@@ -1047,4 +1047,20 @@ h2 {
     margin: 0 0 5px 0;
     padding-bottom: 2px;
   }
+
+  /* Fix background styles for mobile */
+  .home-background,
+  .game-background {
+    position: fixed;
+    width: auto;
+    height: 100vh;
+    min-height: 100vh;
+    min-width: auto;
+    max-width: none;
+    object-fit: cover;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1;
+  }
 }
