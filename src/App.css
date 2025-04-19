@@ -567,7 +567,7 @@ h2 {
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
 }
 
-.sound-button, .rush-hour-button, .pause-button {
+.sound-button, .rush-hour-button {
   position: fixed;
   top: 15px;
   z-index: 99;
@@ -582,13 +582,8 @@ h2 {
   right: 170px;
 }
 
-.pause-button {
-  right: 210px;
-}
-
 .sound-button.MuiIconButton-root:hover,
-.rush-hour-button.MuiIconButton-root:hover,
-.pause-button.MuiIconButton-root:hover {
+.rush-hour-button.MuiIconButton-root:hover {
   background-color: transparent !important;
 }
 

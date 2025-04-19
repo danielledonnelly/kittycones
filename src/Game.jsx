@@ -32,7 +32,6 @@ export default function Game() {
     setIsInitialized,
     customerImages,
     generateCustomerOrders,
-    isPaused,
     gameOverRef
   } = useGame();
   

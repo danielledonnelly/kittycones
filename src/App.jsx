@@ -70,23 +70,6 @@ function AppContent() {
         Your browser does not support the audio element.
       </audio>
       
-      {/* Pause Button */}
-      <IconButton
-        className="pause-button"
-        sx={{
-          position: "fixed",
-          top: "15px",
-          right: "210px",
-          zIndex: 9999,
-          color: "#5E558F",
-        }}
-        onClick={togglePause}
-        title={isPaused ? "Resume game" : "Pause game"}
-        disableRipple={true}
-      >
-        {isPaused ? <PlayArrowIcon /> : <PauseIcon />}
-      </IconButton>
-      
       {/* Rush Hour Mode Toggle Button */}
       <IconButton
         className="rush-hour-button"
