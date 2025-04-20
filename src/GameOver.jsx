@@ -34,58 +34,64 @@ const GameOver = () => {
   }
 
   return (
-    <div className="end screen end-screen">
-      <h1 className="screen-title">Game Over</h1>
-      <p className="screen-text">Your Score: {coins || 0}</p>
-      
-      <div className="leaderboard-container">
-        <div className="leaderboard-column">
-          <h2>Local Leaderboard</h2>
-          <div className="high-scores">
-            {displayHighScores.map((scoreData, index) => (
-              <div key={index} className="high-score-item">
-                <span className={`rank-number ${index < 9 ? 'single-digit' : ''}`}>{index + 1}.</span>
-                {scoreData.score ? `   ${scoreData.initials || ""}      ${scoreData.score} Coins` : ""}
+    <div className="game-screen">
+      <div className="main-content">
+        <div className="end screen end-screen">
+          <h1 className="screen-title">Game Over</h1>
+          <p className="screen-text">Your Score: {coins || 0}</p>
+          
+          <div className="leaderboard-container">
+            <div className="leaderboard-column">
+              <h2>Local Leaderboard</h2>
+              <div className="high-scores">
+                {displayHighScores.map((scoreData, index) => (
+                  <div key={index} className="high-score-item">
+                    <span className={`rank-number ${index < 9 ? 'single-digit' : ''}`}>{index + 1}.</span>
+                    {scoreData.score ? `   ${scoreData.initials || ""}      ${scoreData.score} Coins` : ""}
+                  </div>
+                ))}
               </div>
-            ))}
-          </div>
-        </div>
-        <div className="leaderboard-column">
-          <h2>Global Leaderboard</h2>
-          {isLoadingGlobalScores ? (
-            <p>Loading global scores...</p>
-          ) : globalScoreError ? (
-            <div>
-              <p>Error loading global scores</p>
-              <Button 
-                size="3" 
-                variant="soft" 
-                onClick={fetchGlobalScores}
-              >
-                Retry
-              </Button>
             </div>
-          ) : (
-            <div className="high-scores">
-              {displayGlobalScores.map((scoreData, index) => (
-                <div key={index} className="high-score-item">
-                  <span className={`rank-number ${index < 9 ? 'single-digit' : ''}`}>{index + 1}.</span>
-                  {scoreData.score ? `   ${scoreData.initials || ""}      ${scoreData.score} Coins` : ""}
+            <div className="leaderboard-column">
+              <h2>Global Leaderboard</h2>
+              {isLoadingGlobalScores ? (
+                <p>Loading global scores...</p>
+              ) : globalScoreError ? (
+                <div>
+                  <p>Error loading global scores</p>
+                  <Button 
+                    size="3" 
+                    variant="soft" 
+                    onClick={fetchGlobalScores}
+                  >
+                    Retry
+                  </Button>
                 </div>
-              ))}
+              ) : (
+                <div className="high-scores">
+                  {displayGlobalScores.map((scoreData, index) => (
+                    <div key={index} className="high-score-item">
+                      <span className={`rank-number ${index < 9 ? 'single-digit' : ''}`}>{index + 1}.</span>
+                      {scoreData.score ? `   ${scoreData.initials || ""}      ${scoreData.score} Coins` : ""}
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
-          )}
+          </div>
         </div>
       </div>
       
-      <div className="home-buttons-row">
-        <Link to="/game">
-          <Button size="3" variant="soft">Play Again</Button>
-        </Link>
-        
-        <Link to="/" >
-          <Button size="3" variant="soft">Home</Button>
-        </Link>
+      <div className="counter">
+        <div className="home-buttons-row">
+          <Link to="/game">
+            <Button size="3" variant="soft">Play Again</Button>
+          </Link>
+          
+          <Link to="/" >
+            <Button size="3" variant="soft">Home</Button>
+          </Link>
+        </div>
       </div>
     </div>
   );
