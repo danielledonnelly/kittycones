@@ -70,6 +70,7 @@ img, button, a, .customer-image, .order, .cone-stand-button, .scoop-tub-button {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
   padding-bottom: 0;
 }
 
@@ -211,7 +212,7 @@ body {
   top: 0;
   left: -1vw; /* Pull slightly to the left to center */
   z-index: 1;
-  background-color: #DEB1CB !important;
+  background-color: #DEB1CB ;
   object-fit: cover;
   transform: none; /* Remove scaling */
   /* Set object position to prioritize the top */
@@ -316,7 +317,7 @@ h2 {
 
 .home-buttons-row .rt-Button.rt-variant-soft::before {
   content: '';
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   right: 0;
@@ -332,13 +333,6 @@ h2 {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1),
               inset 0 1px 1px rgba(255, 255, 255, 0.05);
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
-}
-
-.home-buttons-row .rt-Button.rt-variant-soft:active {
-  background: linear-gradient(to bottom, #241843 0%, #150c2b 100%);
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1),
-              inset 0 1px 1px rgba(0, 0, 0, 0.1);
-  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.3);
 }
 
 .ice-cream {
@@ -369,7 +363,6 @@ h2 {
   z-index: 2;
 }
 
-/* Remove specific nth-child selectors and use a more dynamic approach */
 .ice-cream-scoop:not(:first-child) {
   bottom: calc(145px + (var(--scoop-index, 1) * 30px));
   z-index: calc(var(--scoop-index, 1) + 1);
@@ -535,10 +528,10 @@ h2 {
 
 .mobile {
   z-index: 200;
-  background-color: #EFDAE6 !important;
-  color: #241843 !important;
-  height: 80% !important;
-  width: 80% !important;
+  background-color: #EFDAE6;
+  color: #241843;
+  height: 80%;
+  width: 80%;
   visibility: hidden;
 }
 
@@ -590,7 +583,7 @@ h2 {
 
 .sound-button.MuiIconButton-root:hover,
 .rush-hour-button.MuiIconButton-root:hover {
-  background-color: transparent !important;
+  background-color: transparent;
 }
 
 .order {
@@ -721,13 +714,16 @@ h2 {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center; /* Center content vertically */
+  justify-content: center;
   height: auto;
   min-height: 80vh;
-  padding-top: 0; /* Remove top padding */
-  padding-bottom: 50px;
+  padding-top: 0;
+  padding-bottom: 0;
+  margin-top: 0;
+  margin-bottom: 0;
   pointer-events: none;
   overflow: visible;
+  flex: 1;
 }
 
 .scoop-tub-button {
@@ -817,62 +813,79 @@ h2 {
 
 /* Specific styling for leaderboard screen */
 .leaderboard-screen {
-  max-height: none !important;
-  min-height: 70vh !important;
-  height: auto !important;
-  overflow: visible !important;
-  margin-top: 0 !important; /* Remove margin-top, will use flex instead */
-  padding-bottom: 10px !important;
-  position: relative !important;
-  top: 0 !important;
+  max-height: none;
+  min-height: auto;
+  height: auto;
+  overflow: visible;
+  margin: 0 auto;
+  padding: 20px;
+  position: relative;
+  width: 90%;
+  max-width: 800px;
+  /* Let flex handle the vertical positioning */
 }
 
-.leaderboard-screen .high-scores {
-  /* Remove min-height and margin-bottom */
+/* About screen styling to match leaderboard */
+.about-screen {
+  max-height: none ;
+  min-height: auto ;
+  height: auto ;
+  overflow: visible ;
+  margin: 0 auto ; /* Center horizontally */
+  padding: 20px ;
+  position: relative ;
+  width: 90% ;
+  max-width: 800px ; /* Match leaderboard max-width */
 }
-  
-.leaderboard-screen .leaderboard-container {
-  /* Remove padding-bottom */
+
+/* Ensure the leaderboard title is not cut off */
+.leaderboard-screen .screen-title {
+  margin-top: 10px;
+  margin-bottom: 20px;
+  position: relative;
+}
+
+/* Set specific heights for the leaderboard columns */
+.leaderboard-screen .leaderboard-column {
+  min-height: 200px;
 }
 
 @media (max-width: 900px) {
   /* Hide MUI buttons on the home screen */
   body:has(.starting.screen) .MuiIconButton-root {
-    display: none !important;
+    display: none;
   }
   
   /* Center MUI buttons on mobile */
   .sound-button, .rush-hour-button {
-    position: fixed !important;
-    top: 15px !important;
-    z-index: 9999 !important;
-    transform: translateX(-50%) !important;
-    left: 50% !important;
+    position: fixed;
+    top: 15px;
+    z-index: 9;
+    transform: translateX(-50%);
+    left: 50%;
   }
   
   .sound-button {
     margin-left: -25px !important;
-    right: auto !important;
   }
   
   .rush-hour-button {
     margin-left: 25px !important;
-    right: auto !important;
   }
 
   /* Ensure consistent background rendering on mobile */
   .home-background,
   .game-background {
-    position: fixed !important;
-    width: 105vw !important; /* Even wider on mobile */
-    height: 105vh !important; /* Slightly taller than screen */
-    top: 0 !important;
-    left: -2.5vw !important; /* Center the wider image */
-    object-fit: cover !important;
-    object-position: center top !important; /* Prioritize the top */
-    transform: none !important; /* Remove scaling */
-    z-index: 1 !important;
-    background-color: #DEB1CB !important;
+    position: fixed;
+    width: 105vw; 
+    height: 105vh;
+    top: 0;
+    left: -2.5vw;
+    object-fit: cover;
+    object-position: center top;
+    transform: none; 
+    z-index: 1;
+    background-color: #DEB1CB;
   }
   
   .customer {
@@ -902,7 +915,7 @@ h2 {
     gap: 8px;
     padding: 0 8px;
     max-height: 8vh;
-    padding-bottom: 50px;
+    padding-bottom: 70px;
   }
 
   .initials-modal {
@@ -1076,9 +1089,9 @@ h2 {
   }
 
   .end-screen {
-    max-height: none !important;
-    min-height: auto !important;
-    height: auto !important;
+    max-height: none;
+    min-height: auto;
+    height: auto;
   }
 
   .main-content {
@@ -1150,15 +1163,15 @@ h2 {
     bottom: calc(74px + var(--scoop-index) * 15px);
   }
 
-  .leaderboard-screen {
-    max-height: none !important;
-    min-height: 400px !important;
-    height: auto !important;
-    overflow: visible !important;
-    padding-bottom: 10px !important;
-    margin-top: 0 !important; /* Remove margin-top, will use flex instead */
-    position: relative !important;
-    top: 0 !important;
+  .leaderboard-screen, .about-screen {
+    max-height: none ;
+    min-height: auto ;
+    height: auto ;
+    overflow: visible ;
+    padding: 15px ;
+    margin: 0 auto ;
+    position: relative ;
+    width: 90% ;
   }
   
   .leaderboard-screen .high-scores {
@@ -1171,8 +1184,8 @@ h2 {
   }
 
   .starting.screen {
-    justify-content: center; /* Center content vertically on mobile too */
-    min-height: 60vh; /* Slightly shorter on mobile */
-    padding-top: 0;
+    justify-content: center;
+    min-height: 60vh;
+    padding: 0;
   }
 }
