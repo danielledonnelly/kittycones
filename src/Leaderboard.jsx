@@ -95,7 +95,7 @@ const Leaderboard = () => {
 
   return (
     <div className="starting screen">
-      <div className="end screen end-screen">
+      <div className="end screen end-screen leaderboard-screen">
         <h1 className="screen-title">High Scores</h1>
         
         <div className="leaderboard-container">

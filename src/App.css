@@ -458,6 +458,9 @@ h2 {
   z-index: 5;
   height: auto;
   min-height: auto;
+  max-height: none; /* Allow full height */
+  overflow: visible;
+  top: 0;
 }
 
 /* Common styling for leaderboard containers on both screens */
@@ -662,7 +665,7 @@ h2 {
   align-items: center;
   text-align: center;
   background-color: #efdae6ef;
-  overflow: hidden;
+  overflow: visible;
   margin: auto;
 }
 
@@ -718,11 +721,13 @@ h2 {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  height: 80vh;
-  padding-top: 50px;
+  justify-content: center; /* Center content vertically */
+  height: auto;
+  min-height: 80vh;
+  padding-top: 0; /* Remove top padding */
   padding-bottom: 50px;
   pointer-events: none;
+  overflow: visible;
 }
 
 .scoop-tub-button {
@@ -810,6 +815,26 @@ h2 {
   margin: 20px 0;
 }
 
+/* Specific styling for leaderboard screen */
+.leaderboard-screen {
+  max-height: none !important;
+  min-height: 70vh !important;
+  height: auto !important;
+  overflow: visible !important;
+  margin-top: 0 !important; /* Remove margin-top, will use flex instead */
+  padding-bottom: 10px !important;
+  position: relative !important;
+  top: 0 !important;
+}
+
+.leaderboard-screen .high-scores {
+  /* Remove min-height and margin-bottom */
+}
+  
+.leaderboard-screen .leaderboard-container {
+  /* Remove padding-bottom */
+}
+
 @media (max-width: 900px) {
   /* Hide MUI buttons on the home screen */
   body:has(.starting.screen) .MuiIconButton-root {
@@ -877,7 +902,7 @@ h2 {
     gap: 8px;
     padding: 0 8px;
     max-height: 8vh;
-    padding-bottom: 35px;
+    padding-bottom: 50px;
   }
 
   .initials-modal {
@@ -1051,11 +1076,9 @@ h2 {
   }
 
   .end-screen {
-    max-height: 90vh;
-    margin: auto;
-    margin-top: none !important;
-    width: 90%;
-    height: 90%;
+    max-height: none !important;
+    min-height: auto !important;
+    height: auto !important;
   }
 
   .main-content {
@@ -1125,5 +1148,31 @@ h2 {
   .scoop-order {
     width: 70px;
     bottom: calc(74px + var(--scoop-index) * 15px);
+  }
+
+  .leaderboard-screen {
+    max-height: none !important;
+    min-height: 400px !important;
+    height: auto !important;
+    overflow: visible !important;
+    padding-bottom: 10px !important;
+    margin-top: 0 !important; /* Remove margin-top, will use flex instead */
+    position: relative !important;
+    top: 0 !important;
+  }
+  
+  .leaderboard-screen .high-scores {
+    min-height: auto;
+    margin-bottom: 0;
+  }
+  
+  .leaderboard-screen .leaderboard-container {
+    padding-bottom: 0;
+  }
+
+  .starting.screen {
+    justify-content: center; /* Center content vertically on mobile too */
+    min-height: 60vh; /* Slightly shorter on mobile */
+    padding-top: 0;
   }
 }
