@@ -51,7 +51,7 @@ img, button, a, .customer-image, .order, .cone-stand-button, .scoop-tub-button {
   border-top: 4px solid #3F366B;
   border-bottom: 4px solid #3F366B;
   min-height: 30vh;
-  max-height: 35vh;
+  max-height: 30vh;
   padding: 20px 40px;
   width: 100%;
   z-index: 4;
@@ -61,7 +61,6 @@ img, button, a, .customer-image, .order, .cone-stand-button, .scoop-tub-button {
   position: relative;
   margin-top: auto;
   gap: 20px;
-  overflow: hidden;
 }  
 
 .main-content {
@@ -264,7 +263,6 @@ h2 {
   z-index: 2;
   position: relative;
   text-align: center;
-  overflow: hidden;
 }
 
 .home-title {
@@ -272,7 +270,7 @@ h2 {
   padding: 0;
   position: relative;
   font-family: 'Fredoka', sans-serif;
-  font-size: clamp(2.5rem, 6vw, 5rem);
+  font-size: clamp(3rem, 8vw, 6rem);
   letter-spacing: 6px;
   background-size: 200% 100%;
   -webkit-background-clip: text;
@@ -288,7 +286,7 @@ h2 {
         drop-shadow(1.0px 1.8px 0.4px white);
   text-align: center;
   pointer-events: auto;
-  line-height: 1.1;
+  line-height: 1.2;
 }
 
 .home-buttons-row {
@@ -299,18 +297,17 @@ h2 {
   padding: 0 15px;
   height: auto;
   min-height: 0;
-  max-height: 12vh;
-  overflow: hidden;
+  max-height: 10vh;
 }
 
 .home-buttons-row .rt-Button.rt-variant-soft {
-  min-width: clamp(90px, 15vw, 180px);
-  min-height: clamp(32px, 4vw, 50px);
-  font-size: clamp(0.8rem, 1.5vw, 1.2rem);
+  min-width: clamp(100px, 18vw, 200px);
+  min-height: clamp(35px, 5vw, 55px);
+  font-size: clamp(0.9rem, 1.8vw, 1.3rem);
   background: linear-gradient(to bottom, #352A64 0%, #241843 100%);
   border: 1px solid #5E558F;
   border-radius: 8px;
-  padding: 0.4em 0.8em;
+  padding: 0.5em 1em;
   transition: all 0.2s ease;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1),
               inset 0 1px 1px rgba(255, 255, 255, 0.1);
@@ -319,6 +316,7 @@ h2 {
 }
 
 .home-buttons-row .rt-Button.rt-variant-soft::before {
+  content: '';
   position: fixed;
   top: 0;
   left: 0;
@@ -446,14 +444,14 @@ h2 {
   border: 3px solid #9F86C0;
   pointer-events: auto;
   padding: 0px;
-  margin: 0px;
+  margin: 0;
   display: flex;
   flex-direction: column;
   gap: 10px;
   z-index: 5;
   height: auto;
   min-height: auto;
-  max-height: none; 
+  max-height: none; /* Allow full height */
   overflow: visible;
   top: 0;
 }
@@ -661,7 +659,7 @@ h2 {
   text-align: center;
   background-color: #efdae6ef;
   overflow: visible;
-  margin: 0px auto;
+  margin: auto;
 }
 
 .screen-title {
@@ -844,6 +842,7 @@ h2 {
 /* Ensure the leaderboard title is not cut off */
 .leaderboard-screen .screen-title {
   margin-top: 10px;
+  margin-bottom: 20px;
   position: relative;
 }
 
@@ -911,7 +910,7 @@ h2 {
   }
 
   .home-title-container {
-    margin-bottom: 5px;
+    margin-bottom: 10px;
     margin-top: 0;
   }
 
@@ -919,7 +918,7 @@ h2 {
     gap: 8px;
     padding: 0 8px;
     max-height: 8vh;
-    padding-bottom: 5px;
+    padding-bottom: 60px;
   }
 
   .initials-modal {
@@ -936,9 +935,8 @@ h2 {
   .game-screen .counter {
     max-height: 35vh;
     min-height: 30vh;
-    padding: 10px 15px;
-    gap: 8px;
-    overflow: hidden;
+    padding: 15px 20px;
+    gap: 10px;
   }
 
   /* Preserve game screen counter's row layout */
@@ -1056,53 +1054,32 @@ h2 {
   }
 
   .home-title {
-    font-size: clamp(2rem, 5vw, 3.5rem);
-    letter-spacing: 2px;
+    font-size: clamp(2.5rem, 6vw, 4rem);
+    letter-spacing: 4px;
     -webkit-text-stroke: 1.5px #241843;
     filter: drop-shadow(1px 1px 1px white)
     drop-shadow(-1px -1px white);
-    line-height: 1;
   }
 
   .leaderboard-container {
     flex-direction: column;
     gap: 8px;
-    margin-top: 0;
-    max-height: 55vh;
-    overflow-y: auto;
-    padding-bottom: 20px;
+    margin-top: 5px;
   }
 
   .leaderboard-column {
-    padding: 10px;
-    min-width: auto;
-    min-height: auto !important;
+    padding: 8px;
   }
-  
-  .high-scores {
-    grid-template-columns: 1fr 1fr;
-    gap: 4px;
-    margin-bottom: 4px;
-    padding-bottom: 4px;
-  }
-  
-  .high-score-item {
-    font-size: 13px;
-    padding: 5px;
-    max-height: clamp(10px, 3vw, 22px);
-    min-height: 20px;
-    margin: 0 2px;
-  }
-  
+
   .leaderboard-column h2 {
     font-size: 16px;
     margin: 0 0 5px 0;
     padding-bottom: 2px;
   }
-  
+
   .rank-number {
-    min-width: 20px;
-    padding-right: 3px;
+    min-width: 18px;
+    padding-right: 2px;
   }
 
   .screen-text {
@@ -1117,10 +1094,6 @@ h2 {
     max-height: none;
     min-height: auto;
     height: auto;
-    gap: 5px;
-    padding-bottom: 0;
-    transform: scale(0.9);
-    margin-bottom: 35px;
   }
 
   .main-content {
@@ -1131,20 +1104,21 @@ h2 {
   }
 
   .screen {
-    min-width: 90%;
+    min-width: 80%;
     height: auto;
-    margin: 0px auto;
+    margin: auto;
     min-height: 200px;
     max-height: 100%;
+
     padding: 15px;
   }
 
   .rt-Button.rt-variant-soft {
-    min-width: clamp(80px, 15vw, 120px);
-    min-height: clamp(28px, 4vw, 40px);
-    font-size: clamp(0.7rem, 1.2vw, 1rem);
+    min-width: clamp(90px, 18vw, 140px);
+    min-height: clamp(32px, 5vw, 45px);
+    font-size: clamp(0.8rem, 1.2vw, 1.1rem);
     border: 1px solid #DEB1CB;
-    padding: 0.2em 0.5em;
+    padding: 0.2em 0.6em;
   }
 
   .modal-buttons {
@@ -1193,13 +1167,13 @@ h2 {
 
   .leaderboard-screen, .about-screen {
     max-height: none;
-    min-height: auto;
-    height: auto;
-    overflow: visible;
-    padding: 10px 15px 15px;
-    margin: 0 auto;
-    position: relative;
-    width: 90%;
+    min-height: auto ;
+    height: auto ;
+    overflow: visible ;
+    padding: 15px ;
+    margin: 0 auto ;
+    position: relative ;
+    width: 90% ;
   }
   
   .leaderboard-screen .high-scores {
@@ -1214,51 +1188,11 @@ h2 {
     height: auto;
     gap: 5px;
     padding-bottom: 0;
-    transform: scale(0.9);
-    margin-bottom: 35px;
   }
 
   .starting.screen {
     justify-content: flex-start;
     min-height: 60vh;
     padding: 10vh 0 0 0;
-  }
-
-  .leaderboard-column {
-    padding: 5px;
-    min-width: auto;
-    min-height: auto !important;
-  }
-  
-  .high-scores {
-    grid-template-columns: 1fr 1fr;
-    gap: 2px;
-    margin-bottom: 0;
-    padding-bottom: 0;
-  }
-  
-  .high-score-item {
-    font-size: 11px;
-    padding: 3px;
-    max-height: clamp(8px, 2vw, 16px);
-    min-height: 16px;
-    margin: 0 1px;
-  }
-  
-  .leaderboard-column h2 {
-    font-size: 14px;
-    margin: 0 0 3px 0;
-    padding-bottom: 0;
-  }
-  
-  .screen-title {
-    font-size: 22px;
-    margin-bottom: 5px;
-  }
-  
-  .screen-text {
-    font-size: clamp(0.8rem, 1.8vw, 1.1rem);
-    margin: 0;
-    padding: 0;
   }
 }
