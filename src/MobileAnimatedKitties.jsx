@@ -9,7 +9,7 @@ import { GameContext } from "./GameContext";
 // Component for the animated kitties background on mobile
 export const MobileAnimatedKitties = () => {
   const [kitties, setKitties] = useState([]);
-  const { isRushHourMode } = useContext(GameContext);
+  const { isRushHourMode, isSoundEnabled } = useContext(GameContext);
   const kittiesInitialized = useRef(false);
   const spawnCooldown = useRef(false);
   const meowAudio = useRef(new Audio());
@@ -67,6 +67,9 @@ export const MobileAnimatedKitties = () => {
 
   // Handle kitty click
   const handleKittyClick = (e) => {
+    // Only play sound if sound is enabled
+    if (!isSoundEnabled) return;
+    
     // Randomly select a meow sound
     const randomIndex = Math.floor(Math.random() * meowSounds.length);
     const selectedMeow = meowSounds[randomIndex];

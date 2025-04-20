@@ -241,6 +241,7 @@ h2 {
 }
 
 .high-score-item {
+  width: 100% !;
   font-family: 'Fredoka', sans-serif;
   font-size: 18px;
   color: #5E558F;
@@ -251,7 +252,6 @@ h2 {
   font-weight: 700;
   overflow: hidden;
   margin: 0px 4px;
-  max-width: clamp(150px, 30vh, 300px);
   max-height: clamp(10px, 2vw, 24px);
   display: flex;
   align-items: center;
@@ -271,7 +271,7 @@ h2 {
   padding: 0;
   position: relative;
   font-family: 'Fredoka', sans-serif;
-  font-size: clamp(3rem, 8vw, 6rem);
+  font-size: clamp(2.3rem, 6.5vw, 5rem);
   letter-spacing: 6px;
   background-size: 200% 100%;
   -webkit-background-clip: text;
@@ -295,17 +295,19 @@ h2 {
   justify-content: center;
   gap: 15px;
   width: 100%;
-  padding: 0 15px;
+  padding: 0 15px 15px 15px;
   height: auto;
   min-height: 0;
   max-height: 10vh;
   margin-top: -5px;
+  position: relative;
+  z-index: 5;
 }
 
 .home-buttons-row .rt-Button.rt-variant-soft {
-  min-width: clamp(100px, 18vw, 200px);
-  min-height: clamp(35px, 5vw, 55px);
-  font-size: clamp(0.9rem, 1.8vw, 1.3rem);
+  min-width: clamp(85px, 15vw, 170px);
+  min-height: clamp(30px, 4vw, 48px);
+  font-size: clamp(0.8rem, 1.5vw, 1.1rem);
   background: linear-gradient(to bottom, #352A64 0%, #241843 100%);
   border: 1px solid #5E558F;
   border-radius: 8px;
@@ -446,17 +448,16 @@ h2 {
   border: 3px solid #9F86C0;
   pointer-events: auto;
   padding: 0px;
-  margin: 0;
-  margin-top: -20px;
+  margin: auto;
+  margin-top: 10vh;
   display: flex;
   flex-direction: column;
   gap: 10px;
   z-index: 5;
   height: auto;
   min-height: auto;
-  max-height: none; /* Allow full height */
+  max-height: none;
   overflow: visible;
-  top: 0;
 }
 
 /* Common styling for leaderboard containers on both screens */
@@ -662,8 +663,6 @@ h2 {
   text-align: center;
   background-color: #efdae6ef;
   overflow: visible;
-  margin: auto;
-  margin-top: 0;
 }
 
 .screen-title {
@@ -922,10 +921,20 @@ h2 {
 
   .home-buttons-row {
     gap: 8px;
-    padding: 0 8px;
-    max-height: 8vh;
-    padding-bottom: 40px;
+    padding: 0 8px 15px 8px;
+    max-height: none;
+    min-height: 50px;
     margin-top: 0;
+    position: relative;
+    z-index: 5;
+    align-items: center;
+  }
+
+  .home-buttons-row .rt-Button.rt-variant-soft {
+    min-width: clamp(75px, 14vw, 150px);
+    min-height: clamp(28px, 3.8vw, 42px);
+    font-size: clamp(0.7rem, 1.1vw, 0.95rem);
+    padding: 0.4em 0.8em;
   }
 
   .initials-modal {
@@ -1061,11 +1070,12 @@ h2 {
   }
 
   .home-title {
-    font-size: clamp(2.5rem, 6vw, 4rem);
+    font-size: clamp(1.8rem, 5vw, 3.2rem);
     letter-spacing: 4px;
     -webkit-text-stroke: 1.5px #241843;
     filter: drop-shadow(1px 1px 1px white)
     drop-shadow(-1px -1px white);
+    line-height: 1.1;
   }
 
   .leaderboard-container {
@@ -1095,15 +1105,6 @@ h2 {
     max-width: 90%;
     padding: 0;
     line-height: 1.4;
-  }
-
-  .end-screen {
-    max-height: none;
-    min-height: auto;
-    height: auto;
-    gap: 5px;
-    padding-bottom: 0;
-    margin-top: 0;
   }
 
   .main-content {
@@ -1192,16 +1193,6 @@ h2 {
     min-height: auto;
     margin-bottom: 0;
     padding-bottom: 0;
-  }
-  
-  .end-screen {
-    max-height: none;
-    min-height: auto;
-    height: auto;
-    gap: 4px;
-    padding-bottom: 0;
-    margin-top: -15px;
-    transform: scale(0.95);
   }
 
   .end-screen .leaderboard-container {

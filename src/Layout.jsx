@@ -12,7 +12,7 @@ import { Button } from "@radix-ui/themes";
 // Component for the animated kitties background
 export const AnimatedKitties = () => {
   const [kitties, setKitties] = useState([]);
-  const { isRushHourMode } = useContext(GameContext);
+  const { isRushHourMode, isSoundEnabled } = useContext(GameContext);
   const kittiesInitialized = useRef(false);
   const spawnCooldown = useRef(false);
   const meowAudio = useRef(new Audio());
@@ -71,6 +71,10 @@ export const AnimatedKitties = () => {
   // Handle kitty click
   const handleKittyClick = (e) => {
     console.log("Kitty clicked!"); // Add debug log
+    
+    // Only play sound if sound is enabled
+    if (!isSoundEnabled) return;
+    
     // Randomly select a meow sound
     const randomIndex = Math.floor(Math.random() * meowSounds.length);
     const selectedMeow = meowSounds[randomIndex];
