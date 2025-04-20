@@ -290,7 +290,7 @@ export function useGame() {
   const getCustomerContainerStyles = () => {
     return {
       position: "absolute",
-      bottom: "30px",
+      bottom: isMobile ? "45px" : "30px",
       left: 0,
       width: "100%",
       height: "300px",

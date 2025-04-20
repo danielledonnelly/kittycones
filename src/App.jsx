@@ -37,6 +37,7 @@ function AppContent() {
   const audioRef = useRef(null);
   const location = useLocation();
   const isGameRoute = location.pathname === "/game";
+  const isGameOverRoute = location.pathname === "/game-over";
   
   // Control the global audio element
   useEffect(() => {
@@ -70,39 +71,43 @@ function AppContent() {
         Your browser does not support the audio element.
       </audio>
       
-      {/* Rush Hour Mode Toggle Button */}
-      <IconButton
-        className="rush-hour-button"
-        sx={{
-          position: "fixed",
-          top: "15px",
-          right: "170px",
-          zIndex: 9999,
-          color: "#5E558F",
-        }}
-        onClick={toggleRushHourMode}
-        title={isRushHourMode ? "Switch to normal mode" : "Switch to Rush Hour mode"}
-        disableRipple={true}
-      >
-        {isRushHourMode ? <FastForwardIcon /> : <PlayArrowIcon />}
-      </IconButton>
+      {/* Rush Hour Mode Toggle Button - Hidden on game over screen */}
+      {!isGameOverRoute && (
+        <IconButton
+          className="rush-hour-button"
+          sx={{
+            position: "fixed",
+            top: "15px",
+            right: "170px",
+            zIndex: 9999,
+            color: "#5E558F",
+          }}
+          onClick={toggleRushHourMode}
+          title={isRushHourMode ? "Switch to normal mode" : "Switch to Rush Hour mode"}
+          disableRipple={true}
+        >
+          {isRushHourMode ? <FastForwardIcon /> : <PlayArrowIcon />}
+        </IconButton>
+      )}
       
-      {/* Global Sound Toggle Button */}
-      <IconButton
-        className="sound-button"
-        sx={{
-          position: "fixed",
-          top: "15px",
-          right: "130px",
-          zIndex: 9999,
-          color: "#5E558F",
-        }}
-        onClick={toggleAudio}
-        title={isMusicEnabled ? "Disable sound" : "Enable sound"}
-        disableRipple={true}
-      >
-        {isMusicEnabled ? <VolumeUpIcon /> : <VolumeOffIcon />}
-      </IconButton>
+      {/* Global Sound Toggle Button - Hidden on game over screen */}
+      {!isGameOverRoute && (
+        <IconButton
+          className="sound-button"
+          sx={{
+            position: "fixed",
+            top: "15px",
+            right: "130px",
+            zIndex: 9999,
+            color: "#5E558F",
+          }}
+          onClick={toggleAudio}
+          title={isMusicEnabled ? "Disable sound" : "Enable sound"}
+          disableRipple={true}
+        >
+          {isMusicEnabled ? <VolumeUpIcon /> : <VolumeOffIcon />}
+        </IconButton>
+      )}
       
       <img
         src="/assets/background.png"

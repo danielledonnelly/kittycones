@@ -125,7 +125,8 @@ export default function Game() {
                     cursor: 'pointer',
                     opacity: 1,
                     transition: 'opacity 0.3s ease-out',
-                    transform: isMobile ? 'scale(0.5)' : 'scale(1)'
+                    transform: isMobile ? 'scale(0.45)' : 'scale(1)',
+                    transformOrigin: 'center bottom'
                   }}
                 >
                   {customerOrders[index]?.cone && (

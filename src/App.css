@@ -809,7 +809,7 @@ h2 {
 
 @media (max-width: 900px) {
   .customer {
-    bottom: 20vh;
+    bottom: 30vh;
   }
 
   .customer-image {
@@ -844,15 +844,27 @@ h2 {
     padding: 8px 16px;
   }
 
-  .counter {
+  .counter,
+  .app-container .counter,
+  .game-screen .counter {
     max-height: 35vh;
     min-height: 30vh;
     padding: 15px 20px;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
     justify-content: center;
     gap: 10px;
   }
 
-  /* Make ice cream smaller on mobile and move up */
+  /* Preserve game screen counter's row layout */
+  .game-screen .counter {
+    flex-direction: row;
+    justify-content: flex-start;
+  }
+
   .ice-cream {
     width: clamp(150px, 25vw, 180px);
     height: 180px;
@@ -882,7 +894,6 @@ h2 {
     align-items: center;
   }
 
-  /* Update cone section - single row with minimal spacing */
   .cone-buttons {
     display: flex;
     flex-direction: row;
@@ -902,7 +913,6 @@ h2 {
     margin-top: -10px;
   }
 
-  /* Reduce size of button elements */
   .cone-stand-button {
     min-width: 60px;
     max-width: 70px;
@@ -921,7 +931,6 @@ h2 {
     max-width: 70px;
   }
 
-  /* Position restart button */
   .restart-container {
     width: 100px;
     height: 100px;
@@ -1051,7 +1060,6 @@ h2 {
     padding-bottom: 2px;
   }
 
-  /* Fix background styles for mobile */
   .home-background,
   .game-background {
     position: fixed;
@@ -1065,5 +1073,23 @@ h2 {
     left: 50%;
     transform: translateX(-50%);
     z-index: 1;
+  }
+
+  .order {
+    width: 70px;
+  }
+  
+  .order::before {
+    width: 150px;
+    height: 180px;
+  }
+  
+  .cone-order {
+    width: 70px;
+  }
+  
+  .scoop-order {
+    width: 70px;
+    bottom: calc(74px + var(--scoop-index) * 15px);
   }
 }
