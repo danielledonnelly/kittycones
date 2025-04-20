@@ -52,7 +52,7 @@ img, button, a, .customer-image, .order, .cone-stand-button, .scoop-tub-button {
   border-bottom: 4px solid #3F366B;
   min-height: 30vh;
   max-height: 30vh;
-  padding: 20px 40px;
+  padding: 20px 30px;
   width: 100%;
   z-index: 4;
   display: flex;
@@ -72,7 +72,8 @@ img, button, a, .customer-image, .order, .cone-stand-button, .scoop-tub-button {
   justify-content: flex-start;
   align-items: center;
   padding-bottom: 0;
-  padding-top: 10vh;
+  padding-top: 3vw;
+  gap: 10px;
 }
 
 .background {
@@ -258,7 +259,7 @@ h2 {
 
 .home-title-container {
   margin-top: 0;
-  margin-bottom: 1rem;
+  margin-bottom: 0;
   max-width: min(900px, 95%);
   z-index: 2;
   position: relative;
@@ -298,6 +299,7 @@ h2 {
   height: auto;
   min-height: 0;
   max-height: 10vh;
+  margin-top: -5px;
 }
 
 .home-buttons-row .rt-Button.rt-variant-soft {
@@ -445,6 +447,7 @@ h2 {
   pointer-events: auto;
   padding: 0px;
   margin: 0;
+  margin-top: -20px;
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -660,6 +663,7 @@ h2 {
   background-color: #efdae6ef;
   overflow: visible;
   margin: auto;
+  margin-top: 0;
 }
 
 .screen-title {
@@ -724,7 +728,7 @@ h2 {
   pointer-events: none;
   overflow: visible;
   flex: 1;
-  padding: 10vh 0 0 0;
+  padding: 2vh 0 0 0;
 }
 
 .scoop-tub-button {
@@ -823,32 +827,33 @@ h2 {
   position: relative;
   width: 90%;
   max-width: 800px;
-  /* Let flex handle the vertical positioning */
+  margin-top: 0;
 }
 
 /* About screen styling to match leaderboard */
 .about-screen {
-  max-height: none ;
-  min-height: auto ;
-  height: auto ;
-  overflow: visible ;
-  margin: 0 auto ; /* Center horizontally */
-  padding: 20px ;
-  position: relative ;
-  width: 90% ;
-  max-width: 800px ; /* Match leaderboard max-width */
+  max-height: none;
+  min-height: auto;
+  height: auto;
+  overflow: visible;
+  margin: 0 auto; /* Center horizontally */
+  padding: 20px;
+  position: relative;
+  width: 90%;
+  max-width: 800px; /* Match leaderboard max-width */
+  margin-top: 0;
 }
 
 /* Ensure the leaderboard title is not cut off */
 .leaderboard-screen .screen-title {
-  margin-top: 10px;
-  margin-bottom: 20px;
+  margin-top: 0;
+  margin-bottom: 10px;
   position: relative;
 }
 
 /* Set specific heights for the leaderboard columns */
 .leaderboard-screen .leaderboard-column {
-  min-height: 200px;
+  min-height: 180px;
 }
 
 @media (max-width: 900px) {
@@ -905,12 +910,13 @@ h2 {
 
   .main-content {
     position: relative;
-    padding-top: 5vh;
+    padding-top: 1vh;
     justify-content: flex-start;
+    gap: 5px;
   }
 
   .home-title-container {
-    margin-bottom: 10px;
+    margin-bottom: 0;
     margin-top: 0;
   }
 
@@ -918,7 +924,8 @@ h2 {
     gap: 8px;
     padding: 0 8px;
     max-height: 8vh;
-    padding-bottom: 60px;
+    padding-bottom: 40px;
+    margin-top: 0;
   }
 
   .initials-modal {
@@ -1094,6 +1101,9 @@ h2 {
     max-height: none;
     min-height: auto;
     height: auto;
+    gap: 5px;
+    padding-bottom: 0;
+    margin-top: 0;
   }
 
   .main-content {
@@ -1107,9 +1117,9 @@ h2 {
     min-width: 80%;
     height: auto;
     margin: auto;
+    margin-top: 0;
     min-height: 200px;
     max-height: 100%;
-
     padding: 15px;
   }
 
@@ -1167,13 +1177,15 @@ h2 {
 
   .leaderboard-screen, .about-screen {
     max-height: none;
-    min-height: auto ;
-    height: auto ;
-    overflow: visible ;
-    padding: 15px ;
-    margin: 0 auto ;
-    position: relative ;
-    width: 90% ;
+    min-height: auto;
+    height: auto;
+    overflow: visible;
+    padding: 12px;
+    margin: 0 auto;
+    margin-top: 0;
+    position: relative;
+    width: 90%;
+    transform: scale(0.95);
   }
   
   .leaderboard-screen .high-scores {
@@ -1186,13 +1198,63 @@ h2 {
     max-height: none;
     min-height: auto;
     height: auto;
-    gap: 5px;
+    gap: 4px;
     padding-bottom: 0;
+    margin-top: -15px;
+    transform: scale(0.95);
+  }
+
+  .end-screen .leaderboard-container {
+    gap: 5px;
   }
 
   .starting.screen {
     justify-content: flex-start;
     min-height: 60vh;
-    padding: 10vh 0 0 0;
+    padding: 1vh 0 0 0;
+  }
+
+  .leaderboard-container {
+    flex-direction: column;
+    gap: 6px;
+    margin-top: 0;
+  }
+
+  .leaderboard-column {
+    padding: 6px;
+    min-height: auto;
+  }
+
+  .leaderboard-column h2 {
+    font-size: clamp(14px, 1.5em, 24px);
+  }
+  
+  .high-score-item {
+    font-size: 11px;
+    padding: 4px;
+    max-height: clamp(8px, 2vw, 18px);
+    min-height: 16px;
+    margin: 0 2px;
+  }
+  
+  .high-scores {
+    grid-template-columns: 1fr 1fr;
+    gap: 3px;
+    margin-bottom: 0;
+    padding-bottom: 0;
+  }
+  
+  .end-screen {
+    max-height: none;
+    min-height: auto;
+    height: auto;
+    gap: 4px;
+    padding-bottom: 0;
+    margin-top: -15px;
+    transform: scale(0.95);
+  }
+  
+  .end-screen .leaderboard-container {
+    gap: 5px;
   }
 }
