@@ -226,8 +226,8 @@ export function useGame() {
         const sectionWidth = screenWidth / (isMobile ? 2 : 4);
         
         // Move all cats left by fixed amount - slower on mobile
-        // Reduce the rush hour mode speed by about 25%
-        const newPositions = prev.map(pos => pos - (isRushHourMode ? (isMobile ? 1.2 : 2.4) : (isMobile ? 0.7 : 1.5)));
+        // Increase the rush hour mode speed on mobile
+        const newPositions = prev.map(pos => pos - (isRushHourMode ? (isMobile ? 1.8 : 2.4) : (isMobile ? 0.7 : 1.5)));
         
         // Check if leftmost cat is off-screen
         if (newPositions[0] < -250) {
@@ -277,9 +277,9 @@ export function useGame() {
       });
 
       // Update bob phases for animation - slower on mobile
-      // Also reduce the bobbing animation speed in rush hour mode
+      // Also adjust the bobbing animation speed in rush hour mode
       setBobPhases(prev => 
-        prev.map(phase => (phase + (isRushHourMode ? (isMobile ? 0.05 : 0.09) : (isMobile ? 0.04 : 0.08))) % (Math.PI * 2))
+        prev.map(phase => (phase + (isRushHourMode ? (isMobile ? 0.07 : 0.09) : (isMobile ? 0.04 : 0.08))) % (Math.PI * 2))
       );
     }, 16);
     
@@ -375,7 +375,7 @@ export function useGame() {
       playSound(wooshSound);
       
       // For purr sound, play it but stop after 2 seconds
-      if (purrSound.current) {
+      if (isSoundEnabled && purrSound.current) {
         purrSound.current.currentTime = 0;
         purrSound.current.play().catch(error => {
           console.warn("Sound playback failed:", error);
@@ -510,12 +510,7 @@ export function useGame() {
 
   const resetOrder = () => {
     // Play thud sound immediately
-    if (thudSound.current) {
-      thudSound.current.currentTime = 0;
-      thudSound.current.play().catch(error => {
-        console.warn("Sound playback failed:", error);
-      });
-    }
+    playSound(thudSound);
     setSelectedCone(null); // Clear the selected cone
     setSelectedScoops([]); // Clear the selected scoops
   };

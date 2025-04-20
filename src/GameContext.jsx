@@ -13,10 +13,10 @@ export function GameProvider({ children }) {
   // Add music state with localStorage persistence
   const [isMusicEnabled, setIsMusicEnabled] = useState(() => {
     try {
-      // Always start with music disabled by default
-      const savedMusicSetting = localStorage.getItem("isMusicEnabled");
-      // Only enable if explicitly set to true in localStorage
-      return savedMusicSetting === "true" ? true : false;
+      // Always disabled by default, regardless of localStorage
+      // Clear any previously saved settings
+      localStorage.removeItem("isMusicEnabled");
+      return false;
     } catch (error) {
       console.error("Error reading music setting from localStorage:", error);
       return false; // Default to disabled
@@ -26,8 +26,10 @@ export function GameProvider({ children }) {
   // Add sound effects state with localStorage persistence
   const [isSoundEnabled, setIsSoundEnabled] = useState(() => {
     try {
-      const savedSoundSetting = localStorage.getItem("isSoundEnabled");
-      return savedSoundSetting === "true" ? true : false;
+      // Always disabled by default, regardless of localStorage
+      // Clear any previously saved settings
+      localStorage.removeItem("isSoundEnabled");
+      return false;
     } catch (error) {
       console.error("Error reading sound setting from localStorage:", error);
       return false; // Default to disabled

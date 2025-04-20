@@ -41,6 +41,7 @@ img, button, a, .customer-image, .order, .cone-stand-button, .scoop-tub-button {
   display: flex;
   flex-direction: column;
   overflow: hidden;
+  background-color: #DEB1CB; /* Fallback color matching background */
 }
 
 .app-container .counter {
@@ -84,6 +85,7 @@ body {
   min-height: 100vh;
   place-items: center;
   overflow: hidden; /* Important line, do not delete */
+  background-color: #DEB1CB; /* Fallback color matching background */
 }
 
 .button {
@@ -201,15 +203,19 @@ body {
   gap: 40px;
 }
 
+.home-background, 
 .game-background {
   position: fixed;
-  width: 100%;
-  height: auto;
+  width: 102vw; /* Slightly wider than screen */
+  height: 105vh; /* Slightly taller than screen */
   top: 0;
-  left: 0;
+  left: -1vw; /* Pull slightly to the left to center */
   z-index: 1;
   background-color: #DEB1CB !important;
-  min-width: 100vw;
+  object-fit: cover;
+  transform: none; /* Remove scaling */
+  /* Set object position to prioritize the top */
+  object-position: center top;
 }
 
 h1 {
@@ -248,16 +254,14 @@ h2 {
   align-items: center;
 }
 
-.home-background {
-  position: fixed;
-  min-width: 100vw !important;
-  min-height: 100% !important;
+.home-title-container {
+  margin-bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   height: auto;
-  top: 0;
-  left: 0;
-  z-index: 1;
-  background-color: #DEB1CB !important;
-  width: 100%;
+  min-height: 0;
+  max-height: 20vh;
 }
 
 .home-title {
@@ -265,7 +269,7 @@ h2 {
   padding: 0;
   position: relative;
   font-family: 'Fredoka', sans-serif;
-  font-size: clamp(2rem, 8vw, 6rem);
+  font-size: clamp(3rem, 8vw, 6rem);
   letter-spacing: 6px;
   background-size: 200% 100%;
   -webkit-background-clip: text;
@@ -281,6 +285,7 @@ h2 {
         drop-shadow(1.0px 1.8px 0.4px white);
   text-align: center;
   pointer-events: auto;
+  line-height: 1.2;
 }
 
 .home-buttons-row {
@@ -289,7 +294,10 @@ h2 {
   gap: 15px;
   width: 100%;
   padding: 0 15px;
-  margin-bottom: 10px !important;
+  margin-bottom: 0 !important;
+  height: auto;
+  min-height: 0;
+  max-height: 10vh;
 }
 
 .home-buttons-row .rt-Button.rt-variant-soft {
@@ -332,10 +340,6 @@ h2 {
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1),
               inset 0 1px 1px rgba(0, 0, 0, 0.1);
   text-shadow: 0 1px 1px rgba(0, 0, 0, 0.3);
-}
-
-.home-title-container {
-  margin-bottom: -10px;
 }
 
 .ice-cream {
@@ -473,7 +477,7 @@ h2 {
   border-bottom: none;
   font-family: 'Fredoka', sans-serif;
   color: #3F366B;
-  font-size: 28px;
+  font-size: 20px;
 }
 
 .end-screen .leaderboard-header .rt-Button.rt-variant-soft,
@@ -515,7 +519,7 @@ h2 {
 .leaderboard-column h2 {
   font-family: 'Fredoka', sans-serif;
   color: #3f366b;
-  font-size: clamp(14px, 1.7em, 28px) !important;
+  font-size: clamp(14px, 1.7em, 28px);
   margin: 0;
   border-bottom: none;
 }
@@ -664,7 +668,7 @@ h2 {
 }
 
 .screen-title {
-  font-size: clamp(1.5rem, 2.2em, 4rem);
+  font-size: clamp(1.5rem, 2.2em, 2.5rem);
   font-family: 'Fredoka', sans-serif;
   color: #241843;
   text-align: center;
@@ -808,6 +812,45 @@ h2 {
 }
 
 @media (max-width: 900px) {
+  /* Hide MUI buttons on the home screen */
+  body:has(.starting.screen) .MuiIconButton-root {
+    display: none !important;
+  }
+  
+  /* Center MUI buttons on mobile */
+  .sound-button, .rush-hour-button {
+    position: fixed !important;
+    top: 15px !important;
+    z-index: 9999 !important;
+    transform: translateX(-50%) !important;
+    left: 50% !important;
+  }
+  
+  .sound-button {
+    margin-left: -25px !important;
+    right: auto !important;
+  }
+  
+  .rush-hour-button {
+    margin-left: 25px !important;
+    right: auto !important;
+  }
+
+  /* Ensure consistent background rendering on mobile */
+  .home-background,
+  .game-background {
+    position: fixed !important;
+    width: 105vw !important; /* Even wider on mobile */
+    height: 105vh !important; /* Slightly taller than screen */
+    top: 0 !important;
+    left: -2.5vw !important; /* Center the wider image */
+    object-fit: cover !important;
+    object-position: center top !important; /* Prioritize the top */
+    transform: none !important; /* Remove scaling */
+    z-index: 1 !important;
+    background-color: #DEB1CB !important;
+  }
+  
   .customer {
     bottom: 30vh;
   }
@@ -827,12 +870,14 @@ h2 {
   }
 
   .home-title-container {
-    margin-top: -25%;
+    margin-top: 0;
+    max-height: 15vh;
   }
 
   .home-buttons-row {
     gap: 8px;
     padding: 0 8px;
+    max-height: 8vh;
   }
 
   .initials-modal {
@@ -850,12 +895,6 @@ h2 {
     max-height: 35vh;
     min-height: 30vh;
     padding: 15px 20px;
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    width: 100%;
-    justify-content: center;
     gap: 10px;
   }
 
@@ -950,6 +989,14 @@ h2 {
     max-width: 70px;
   }
 
+  .screen-title {
+    font-size: 25px;
+  }
+
+  h2 {
+    font-size: 10px;
+  }
+  
   .high-scores {
     grid-template-columns: 1fr 1fr;
     gap: 8px;
@@ -961,7 +1008,7 @@ h2 {
   }
 
   .home-title {
-    font-size: clamp(1em, 2.5em, 4em);
+    font-size: clamp(2.5rem, 6vw, 4rem);
     letter-spacing: 4px;
     -webkit-text-stroke: 1.5px #241843;
     filter: drop-shadow(1px 1px 1px white)
@@ -996,15 +1043,17 @@ h2 {
   }
 
   .screen-text {
-    font-size: clamp(1rem, 2.5vw, 1.5rem);
+    font-size: clamp(0.9rem, 2vw, 1.2rem);
     margin: 2px 0;
     max-width: 90%;
     padding: 0;
+    line-height: 1.4;
   }
 
   .end-screen {
     max-height: 90vh;
     margin: auto;
+    margin-top: none !important;
     width: 90%;
     height: 90%;
   }
@@ -1020,9 +1069,10 @@ h2 {
     min-width: 80%;
     height: auto;
     margin: auto;
-    min-height: 30%;
+    min-height: 70%;
     max-height: 90%;
     margin-top: 10px;
+    padding: 15px;
   }
 
   .rt-Button.rt-variant-soft {
@@ -1055,24 +1105,8 @@ h2 {
   }
 
   .leaderboard-header h2 {
-    font-size: 16px;
     margin: 0 0 5px 0;
     padding-bottom: 2px;
-  }
-
-  .home-background,
-  .game-background {
-    position: fixed;
-    width: auto;
-    height: 100vh;
-    min-height: 100vh;
-    min-width: auto;
-    max-width: none;
-    object-fit: cover;
-    top: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 1;
   }
 
   .order {
