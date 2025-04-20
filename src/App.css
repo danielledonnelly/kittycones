@@ -294,7 +294,6 @@ h2 {
   gap: 15px;
   width: 100%;
   padding: 0 15px;
-  margin-bottom: 0 !important;
   height: auto;
   min-height: 0;
   max-height: 10vh;
@@ -878,6 +877,7 @@ h2 {
     gap: 8px;
     padding: 0 8px;
     max-height: 8vh;
+    padding-bottom: 35px;
   }
 
   .initials-modal {
@@ -1069,9 +1069,9 @@ h2 {
     min-width: 80%;
     height: auto;
     margin: auto;
-    min-height: 70%;
-    max-height: 90%;
-    margin-top: 10px;
+    min-height: 200px;
+    max-height: 100%;
+
     padding: 15px;
   }
 
