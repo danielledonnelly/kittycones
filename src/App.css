@@ -922,10 +922,9 @@ h2 {
   .home-buttons-row {
     gap: 8px;
     padding: 0 8px 15px 8px;
-    max-height: none;
     min-height: 50px;
     margin-top: 0;
-    margin-bottom: 30px;
+    margin-bottom: 80px;
     position: relative;
     z-index: 5;
     align-items: center;
@@ -944,7 +943,7 @@ h2 {
   .app-container .counter,
   .game-screen .counter {
     max-height: 35vh;
-    min-height: 30vh;
+    min-width: 35vh;
     padding: 15px 20px;
     gap: 10px;
   }
