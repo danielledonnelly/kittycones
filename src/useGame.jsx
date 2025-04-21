@@ -114,7 +114,7 @@ export function useGame() {
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 600);
 
   // STATISTICS
-  const [time, setTime] = useState(30); // State to track the remaining time
+  const [time, setTime] = useState(45); // State to track the remaining time
   // Use a ref to track if the game is over to prevent infinite loops
   const gameOverRef = useRef(false);
 

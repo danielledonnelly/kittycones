@@ -925,16 +925,10 @@ h2 {
     max-height: none;
     min-height: 50px;
     margin-top: 0;
+    margin-bottom: 30px;
     position: relative;
     z-index: 5;
     align-items: center;
-  }
-
-  .home-buttons-row .rt-Button.rt-variant-soft {
-    min-width: clamp(75px, 14vw, 150px);
-    min-height: clamp(28px, 3.8vw, 42px);
-    font-size: clamp(0.7rem, 1.1vw, 0.95rem);
-    padding: 0.4em 0.8em;
   }
 
   .initials-modal {
@@ -1070,7 +1064,7 @@ h2 {
   }
 
   .home-title {
-    font-size: clamp(1.8rem, 5vw, 3.2rem);
+    font-size: clamp(2.5rem, 4vw, 4rem);
     letter-spacing: 4px;
     -webkit-text-stroke: 1.5px #241843;
     filter: drop-shadow(1px 1px 1px white)
