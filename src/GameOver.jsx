@@ -78,7 +78,7 @@ const GameOver = () => {
         </div>
       </div>
       
-      <div className="home-buttons-row">
+      <div className="home-buttons-row game-over">
         <Link to="/game">
           <Button size="3" variant="soft">Play Again</Button>
         </Link>

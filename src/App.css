@@ -930,6 +930,10 @@ h2 {
     align-items: center;
   }
 
+  .game-over {
+    margin-bottom: 0;
+  }
+
   .initials-modal {
     max-width: 80%;
   }
