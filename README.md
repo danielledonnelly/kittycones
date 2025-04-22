@@ -1,9 +1,12 @@
-# [─── Kitty Cones ───](https://kitty-cones.pages.dev/)
-
-[![Watch the video](assets/kitty-cones-og-image.png)](https://www.loom.com/share/cf84d44bc4db4eb9bf1ffc3a66f3ce06?sid=91524d9a-ad86-4ef5-819f-293d9d337df3)
+# [Kitty Cones](https://kitty-cones.pages.dev/)
 
 ### Game Description
 You're the head server at Kitty Cones, a cute little ice cream shop that caters to catty customers. Your first shift just started, so get to work! Match customer orders by selecting the correct cone and scoop combinations before time runs out. 
+
+### Video Demo (Link)
+<a href="https://www.loom.com/share/cf84d44bc4db4eb9bf1ffc3a66f3ce06?sid=91524d9a-ad86-4ef5-819f-293d9d337df3">
+  <img src="./public/assets/video-thumbnail.png" alt="Watch the demo" width="500"/>
+</a>
 
 ### Features
 ✦ Cute animated cat customers
