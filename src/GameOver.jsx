@@ -34,7 +34,7 @@ const GameOver = () => {
   }
 
   return (
-    <div className="end screen end-screen">
+    <div className="end screen end-screen game-over-screen">
       <h1 className="screen-title">Game Over</h1>
       <p className="screen-text">Your Score: {coins || 0}</p>
       
