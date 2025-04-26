@@ -1,3 +1,5 @@
+// This is the main entry point for the Kitty Cones game, which contains the router.
+
 import React from "react";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";

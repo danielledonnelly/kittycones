@@ -1,3 +1,5 @@
+// This is the custom hook for the Kitty Cones game, which contains the logic for the game.
+
 import { useState, useRef, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { GameContext } from "./GameContext";

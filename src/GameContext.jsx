@@ -1,3 +1,5 @@
+// This is the context for the Kitty Cones game, which is used to store the game's state and provide it to the components that need it.
+
 import { createContext, useState, useEffect } from "react";
 
 export const GameContext = createContext();
@@ -13,10 +15,8 @@ export function GameProvider({ children }) {
   // Add music state with localStorage persistence
   const [isMusicEnabled, setIsMusicEnabled] = useState(() => {
     try {
-      // Always disabled by default, regardless of localStorage
-      // Clear any previously saved settings
-      localStorage.removeItem("isMusicEnabled");
-      return false;
+      const savedMusicSetting = localStorage.getItem("isMusicEnabled");
+      return savedMusicSetting === "true" ? true : false;
     } catch (error) {
       console.error("Error reading music setting from localStorage:", error);
       return false; // Default to disabled
@@ -26,10 +26,8 @@ export function GameProvider({ children }) {
   // Add sound effects state with localStorage persistence
   const [isSoundEnabled, setIsSoundEnabled] = useState(() => {
     try {
-      // Always disabled by default, regardless of localStorage
-      // Clear any previously saved settings
-      localStorage.removeItem("isSoundEnabled");
-      return false;
+      const savedSoundSetting = localStorage.getItem("isSoundEnabled");
+      return savedSoundSetting === "true" ? true : false;
     } catch (error) {
       console.error("Error reading sound setting from localStorage:", error);
       return false; // Default to disabled

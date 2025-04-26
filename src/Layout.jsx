@@ -1,3 +1,5 @@
+// This is the layout component for the Kitty Cones game. It contains the animated kitties background and the counter at the bottom of the screen.
+
 import { useEffect, useState, useContext, useRef } from "react";
 import { Outlet, Link, useLocation } from "react-router-dom";
 import { GameContext } from "./GameContext";

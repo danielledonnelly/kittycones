@@ -1,3 +1,5 @@
+// This is the main App component, which is the root component for the Kitty Cones game.
+
 import { Routes, Route, useLocation } from "react-router-dom";
 import { GameProvider, GameContext } from "./GameContext";
 import { useContext, useEffect, useRef } from "react";

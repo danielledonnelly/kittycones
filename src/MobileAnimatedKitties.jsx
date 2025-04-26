@@ -1,3 +1,5 @@
+// This is the component for the animated kitties background on the home screen. Cats meow when clicked.
+
 import { useEffect, useState, useContext, useRef } from "react";
 import meow1 from "/assets/meow1.mp3?v=2";
 import meow2 from "/assets/meow2.mp3?v=2";

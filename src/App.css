@@ -1,3 +1,5 @@
+/* This is the stylesheet for the Kitty Cones game. It contains all the css styles used in the game. */
+
 @import url('https://fonts.googleapis.com/css2?family=Bubblegum+Sans&family=M+PLUS+Rounded+1c:wght@400;500;700&family=Poppins:wght@400;500;600;700&display=swap');
 
 * {
@@ -44,7 +46,7 @@ img, button, a, .customer-image, .order, .cone-stand-button, .scoop-tub-button {
   background-color: #DEB1CB; /* Fallback color matching background */
 }
 
-.app-container .counter {
+.counter {
   align-items: center;
   background-color: #9F86C0;
   box-sizing: border-box;
@@ -190,19 +192,9 @@ body {
   bottom: 0;
   left: 0;
   right: 0;
-  align-items: center;
-  background-color: #9F86C0;
-  box-sizing: border-box;
-  border-top: 4px solid #3F366B;
-  border-bottom: 4px solid #3F366B;
-  min-height: 30vh;
-  max-height: 30vh;
-  padding: 20px 40px;
-  width: 100%;
-  z-index: 4;
-  display: flex;
   flex-direction: row;
   justify-content: flex-start;
+  padding: 20px 40px;
   gap: 40px;
 }
 
@@ -484,23 +476,17 @@ h2 {
   min-width: clamp(80px, 8vw, 90px);
   min-height: clamp(10px, 2.5vw, 28px);
   font-size: clamp(0.8rem, 1.5vw, 0.9rem);
-  background: linear-gradient(to bottom, #B8A5D9 0%, #9F86C0 100%);
-  border-radius: 8px;
-  padding: 0.5em 1em;
-  font-weight: 300;
-  transition: all 0.2s ease;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1),
-              inset 0 1px 1px rgba(255, 255, 255, 0.1);
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
-  position: relative;
+  background-color: #9F86C0;
+  border-radius: 6px;
+  padding: 0.4em 0.8em;
+  font-weight: 400;
+  transition: background-color 0.2s ease;
+  color: white;
 }
 
 .end-screen .leaderboard-header .rt-Button.rt-variant-soft:hover,
 .leaderboard-header .rt-Button.rt-variant-soft:hover {
-  background: linear-gradient(to bottom, #b0a0d0 0%, #9780b8 100%);
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1),
-              inset 0 1px 1px rgba(255, 255, 255, 0.05);
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.25);
+  background-color: #8f7cb2;
 }
 
 .leaderboard-column {
@@ -798,8 +784,7 @@ h2 {
 }
 
 .rt-Button.rt-variant-soft:hover {
-  background-color: #8e74b0;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+  background-color: #8f7cb2;
 }
 
 .rt-Button.rt-variant-soft:active {
@@ -894,7 +879,7 @@ h2 {
   }
   
   .customer {
-    bottom: 30vh;
+    bottom: 23vh;
   }
 
   .customer-image {
@@ -921,10 +906,10 @@ h2 {
 
   .home-buttons-row {
     gap: 8px;
-    padding: 0 8px 15px 8px;
+    padding: 0 8px 10px 8px;
     min-height: 50px;
     margin-top: 0;
-    margin-bottom: 80px;
+    margin-bottom: 15px;
     position: relative;
     z-index: 5;
     align-items: center;
@@ -944,19 +929,27 @@ h2 {
     padding: 8px 16px;
   }
 
-  .counter,
-  .app-container .counter,
-  .game-screen .counter {
-    max-height: 35vh;
-    min-width: 35vh;
-    padding: 15px 20px;
-    gap: 10px;
+  .counter {
+    max-height: 30vh;
+    min-height: 30vh;
+    padding: 12px 20px;
+    gap: 8px;
   }
 
   /* Preserve game screen counter's row layout */
   .game-screen .counter {
     flex-direction: row;
     justify-content: flex-start;
+  }
+
+  /* Make home title smaller on mobile */
+  .home-title {
+    font-size: clamp(2.2rem, 4vw, 3.8rem);
+    letter-spacing: 4px;
+    -webkit-text-stroke: 1.5px #241843;
+    filter: drop-shadow(1px 1px 1px white)
+    drop-shadow(-1px -1px white);
+    line-height: 1.1;
   }
 
   .ice-cream {
@@ -1008,21 +1001,21 @@ h2 {
   }
 
   .cone-stand-button {
-    min-width: 60px;
-    max-width: 70px;
-    height: 120px;
+    min-width: 50px;
+    max-width: 60px;
+    height: 100px;
   }
 
   .scoop-tub-button {
-    min-width: 60px;
-    max-width: 70px;
-    height: 120px;
+    min-width: 50px;
+    max-width: 60px;
+    height: 100px;
   }
 
   .stand-image, .tub-image {
-    width: 90%;
-    min-width: 60px;
-    max-width: 70px;
+    width: 85%;
+    min-width: 45px;
+    max-width: 55px;
   }
 
   .restart-container {
@@ -1065,15 +1058,6 @@ h2 {
     max-height: clamp(8px, 2vw, 20px);
     min-height: 18px;
     margin: 0 2px;
-  }
-
-  .home-title {
-    font-size: clamp(2.5rem, 4vw, 4rem);
-    letter-spacing: 4px;
-    -webkit-text-stroke: 1.5px #241843;
-    filter: drop-shadow(1px 1px 1px white)
-    drop-shadow(-1px -1px white);
-    line-height: 1.1;
   }
 
   .leaderboard-container {
@@ -1149,6 +1133,10 @@ h2 {
     min-height: clamp(28px, 3.5vw, 35px);
     font-size: clamp(0.6rem, 0.9vw, 0.75rem);
     padding: 0.15em 0.4em;
+    background-color: #9F86C0;
+    border-radius: 6px;
+    color: white;
+    transition: background-color 0.2s ease;
   }
 
   .leaderboard-header h2 {
@@ -1232,18 +1220,20 @@ h2 {
     margin-bottom: 0;
     padding-bottom: 0;
   }
-  
-  .end-screen {
+
+  .game-over-screen {
     max-height: none;
     min-height: auto;
     height: auto;
-    gap: 4px;
-    padding-bottom: 0;
-    margin-top: -15px;
-    transform: scale(0.95);
+    overflow: visible;
+    padding: 12px;
+    margin: 0 auto;
+    margin-top: 0;
+    position: relative;
+    width: 90%;
   }
-  
-  .end-screen .leaderboard-container {
-    gap: 5px;
-  }
+}
+
+.leaderboard-button:hover {
+  background-color: #8f7cb2;
 }

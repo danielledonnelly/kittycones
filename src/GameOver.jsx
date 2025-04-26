@@ -1,93 +1,40 @@
+// This is the game over screen, which is displayed when the player's time runs out. It uses the Leaderboards component to display the local and global leaderboards.
+
 import { Link } from "react-router-dom";
 import { useContext } from "react";
 import { GameContext } from "./GameContext";
 import { Button } from "@radix-ui/themes";
+import Leaderboards from "./Leaderboards";
 
 const GameOver = () => {
-  const { 
-    coins, 
-    highScores, 
-    globalScores, 
-    isLoadingGlobalScores, 
-    globalScoreError, 
-    fetchGlobalScores 
-  } = useContext(GameContext);
-
-  // Ensure we have exactly 10 scores for display in local leaderboard
-  const displayHighScores = [...highScores];
-  
-  // If we have fewer than 10 scores, pad the array to 10 elements with empty placeholders
-  if (displayHighScores.length < 10) {
-    for (let i = displayHighScores.length; i < 10; i++) {
-      displayHighScores.push({ initials: "", score: "" });
-    }
-  }
-
-  // Ensure we have exactly 10 scores for the global leaderboard
-  const displayGlobalScores = [...globalScores];
-  
-  // If we have fewer than 10 scores, pad the array to 10 elements with empty placeholders
-  if (displayGlobalScores.length < 10) {
-    for (let i = displayGlobalScores.length; i < 10; i++) {
-      displayGlobalScores.push({ initials: "", score: "" });
-    }
-  }
+  const { coins } = useContext(GameContext);
 
   return (
-    <div className="end screen end-screen game-over-screen">
-      <h1 className="screen-title">Game Over</h1>
-      <p className="screen-text">Your Score: {coins || 0}</p>
-      
-      <div className="leaderboard-container">
-        <div className="leaderboard-column">
-          <h2>Local Leaderboard</h2>
-          <div className="high-scores">
-            {displayHighScores.map((scoreData, index) => (
-              <div key={index} className="high-score-item">
-                <span className={`rank-number ${index < 9 ? 'single-digit' : ''}`}>{index + 1}.</span>
-                {scoreData.score ? `   ${scoreData.initials || ""}      ${scoreData.score} Coins` : ""}
-              </div>
-            ))}
-          </div>
-        </div>
-        <div className="leaderboard-column">
-          <h2>Global Leaderboard</h2>
-          {isLoadingGlobalScores ? (
-            <p>Loading global scores...</p>
-          ) : globalScoreError ? (
-            <div>
-              <p>Error loading global scores</p>
-              <Button 
-                size="3" 
-                variant="soft" 
-                onClick={fetchGlobalScores}
-              >
-                Retry
-              </Button>
-            </div>
-          ) : (
-            <div className="high-scores">
-              {displayGlobalScores.map((scoreData, index) => (
-                <div key={index} className="high-score-item">
-                  <span className={`rank-number ${index < 9 ? 'single-digit' : ''}`}>{index + 1}.</span>
-                  {scoreData.score ? `   ${scoreData.initials || ""}      ${scoreData.score} Coins` : ""}
-                </div>
-              ))}
-            </div>
-          )}
-        </div>
+    <>
+      <div className="screen end-screen game-over-screen">
+        <h1 className="screen-title">Game Over</h1>
+        <p className="screen-text">Your Score: {coins || 0}</p>
+        <Leaderboards />
       </div>
       
-      <div className="home-buttons-row game-over">
-        <Link to="/game">
-          <Button size="3" variant="soft">Play Again</Button>
-        </Link>
+      <div className="counter">
+        <div className="home-title-container">
+          <h1 className="home-title">
+            KITTY CONES
+          </h1>
+        </div>
         
-        <Link to="/" >
-          <Button size="3" variant="soft">Home</Button>
-        </Link>
+        <div className="home-buttons-row">
+          <Link to="/game">
+            <Button size="3" variant="soft">Play Again</Button>
+          </Link>
+          
+          <Link to="/">
+            <Button size="3" variant="soft">Home</Button>
+          </Link>
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 

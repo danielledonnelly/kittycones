@@ -1,3 +1,5 @@
+// This is the Kitty Cones game screen, which can be accessed by clicking the "Start" button on the home screen.
+
 import { motion } from "motion/react";
 import { useGame } from "./useGame";
 import { useEffect, useState } from "react";

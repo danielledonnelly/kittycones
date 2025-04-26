@@ -1,3 +1,5 @@
+// This is the home screen, which is the first screen that the player sees when they open the game.
+
 import React from 'react';
 import { Link } from "react-router-dom";
 import { Button } from "@radix-ui/themes";

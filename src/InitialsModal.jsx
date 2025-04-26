@@ -1,3 +1,5 @@
+// This is the component used to enter the player's initials after they have earned a new high score.
+
 import { useState, useEffect, useRef } from "react";
 
 const InitialsModal = ({ score, onSave, onCancel }) => {
