@@ -192,8 +192,8 @@ export function useGame() {
         additionalOrders.push(generateCustomerOrders(cones, scoops, [catImage])[0]);
       }
 
-      // Use consistent section width for spacing
-      const catSpacing = sectionWidth;
+      // Mobile space adjustment
+      const catSpacing = isMobile ? sectionWidth * 1.5 : sectionWidth;
       
       // Position first cat near the middle of the screen
       const firstCatPosition = screenWidth * 0.5;
@@ -235,7 +235,7 @@ export function useGame() {
         if (newPositions[0] < -250) {
           newPositions.shift();
           const rightmostPos = newPositions[newPositions.length - 1];
-          newPositions.push(rightmostPos + sectionWidth);
+          newPositions.push(rightmostPos + (isMobile ? sectionWidth * 1.5 : sectionWidth));
           
           // Update bob phases when shifting cats
           setBobPhases(prev => {

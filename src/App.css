@@ -1,4 +1,4 @@
-/* This is the stylesheet for the Kitty Cones game. It contains all the css styles used in the game. */
+/* This is the stylesheet for Kitty Cones. It contains all the css styles used in the game. */
 
 @import url('https://fonts.googleapis.com/css2?family=Bubblegum+Sans&family=M+PLUS+Rounded+1c:wght@400;500;700&family=Poppins:wght@400;500;600;700&display=swap');
 
@@ -814,34 +814,28 @@ h2 {
   margin-top: 0;
 }
 
-/* About screen styling to match leaderboard */
 .about-screen {
   max-height: none;
   min-height: auto;
   height: auto;
   overflow: visible;
-  margin: 0 auto; /* Center horizontally */
+  margin: 0 auto;
   padding: 20px;
   position: relative;
   width: 90%;
-  max-width: 800px; /* Match leaderboard max-width */
+  max-width: 800px; 
   margin-top: 0;
 }
 
-/* Ensure the leaderboard title is not cut off */
 .leaderboard-screen .screen-title {
   margin-top: 0;
-  margin-bottom: 10px;
   position: relative;
 }
-
-/* Set specific heights for the leaderboard columns */
 .leaderboard-screen .leaderboard-column {
   min-height: 180px;
 }
 
 @media (max-width: 900px) {
-  /* Hide MUI buttons on the home screen */
   body:has(.starting.screen) .MuiIconButton-root {
     display: none;
   }
@@ -1064,31 +1058,48 @@ h2 {
     flex-direction: column;
     gap: 8px;
     margin-top: 5px;
+    transform: scale(0.95);
   }
 
   .leaderboard-column {
-    padding: 8px;
+    padding: 5px;
+    min-height: auto;
   }
 
   .leaderboard-column h2 {
-    font-size: 16px;
-    margin: 0 0 5px 0;
+    font-size: 14px;
+    margin: 0 0 3px 0;
     padding-bottom: 2px;
+  }
+  
+  .high-score-item {
+    font-size: 10px;
+    padding: 3px;
+    max-height: 16px;
+    min-height: 16px;
+    margin: 0 2px;
+  }
+  
+  .high-scores {
+    grid-template-columns: 1fr 1fr;
+    gap: 3px;
+    margin-bottom: 0;
+    padding-bottom: 0;
+  }
+
+  .end-screen .leaderboard-header .rt-Button.rt-variant-soft,
+  .leaderboard-header .rt-Button.rt-variant-soft {
+    min-width: clamp(60px, 6vw, 80px);
+    min-height: clamp(8px, 2vw, 24px);
+    font-size: clamp(0.6rem, 1.2vw, 0.8rem);
+    padding: 0.3em 0.5em;
   }
 
   .rank-number {
-    min-width: 18px;
+    min-width: 15px;
     padding-right: 2px;
   }
-
-  .screen-text {
-    font-size: clamp(0.9rem, 2vw, 1.2rem);
-    margin: 2px 0;
-    max-width: 90%;
-    padding: 0;
-    line-height: 1.4;
-  }
-
+  
   .main-content {
     display: flex;
     justify-content: center;
@@ -1126,17 +1137,6 @@ h2 {
     width: 40px;
     height: 40px;
     font-size: 24px;
-  }
-
-  .leaderboard-button {
-    min-width: clamp(70px, 12vw, 100px);
-    min-height: clamp(28px, 3.5vw, 35px);
-    font-size: clamp(0.6rem, 0.9vw, 0.75rem);
-    padding: 0.15em 0.4em;
-    background-color: #9F86C0;
-    border-radius: 6px;
-    color: white;
-    transition: background-color 0.2s ease;
   }
 
   .leaderboard-header h2 {
@@ -1234,6 +1234,3 @@ h2 {
   }
 }
 
-.leaderboard-button:hover {
-  background-color: #8f7cb2;
-}
