@@ -193,7 +193,7 @@ export function useGame() {
       }
 
       // Mobile space adjustment
-      const catSpacing = isMobile ? sectionWidth * 1.5 : sectionWidth;
+      const catSpacing = isMobile ? sectionWidth * 1.3 : sectionWidth;
       
       // Position first cat near the middle of the screen
       const firstCatPosition = screenWidth * 0.5;
@@ -228,14 +228,14 @@ export function useGame() {
         const sectionWidth = screenWidth / (isMobile ? 2 : 4);
         
         // Move all cats left by fixed amount - slower on mobile
-        // Increase the rush hour mode speed on mobile
-        const newPositions = prev.map(pos => pos - (isRushHourMode ? (isMobile ? 1.8 : 2.4) : (isMobile ? 0.7 : 1.5)));
+        // Increase the rush hour mode speed on PC
+        const newPositions = prev.map(pos => pos - (isRushHourMode ? (isMobile ? 1.8 : 2.7) : (isMobile ? 0.7 : 1.5)));
         
         // Check if leftmost cat is off-screen
         if (newPositions[0] < -250) {
           newPositions.shift();
           const rightmostPos = newPositions[newPositions.length - 1];
-          newPositions.push(rightmostPos + (isMobile ? sectionWidth * 1.5 : sectionWidth));
+          newPositions.push(rightmostPos + (isMobile ? sectionWidth * 1.3 : sectionWidth));
           
           // Update bob phases when shifting cats
           setBobPhases(prev => {
@@ -281,7 +281,7 @@ export function useGame() {
       // Update bob phases for animation - slower on mobile
       // Also adjust the bobbing animation speed in rush hour mode
       setBobPhases(prev => 
-        prev.map(phase => (phase + (isRushHourMode ? (isMobile ? 0.07 : 0.09) : (isMobile ? 0.04 : 0.08))) % (Math.PI * 2))
+        prev.map(phase => (phase + (isRushHourMode ? (isMobile ? 0.07 : 0.1) : (isMobile ? 0.04 : 0.08))) % (Math.PI * 2))
       );
     }, 16);
     

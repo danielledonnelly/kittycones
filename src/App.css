@@ -60,8 +60,10 @@ img, button, a, .customer-image, .order, .cone-stand-button, .scoop-tub-button {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  position: relative;
-  margin-top: auto;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
   gap: 20px;
 }  
 
@@ -235,7 +237,7 @@ h2 {
 .high-score-item {
   width: 100% !;
   font-family: 'Fredoka', sans-serif;
-  font-size: 18px;
+  font-size: clamp(2px, 1em, 24px);
   color: #5E558F;
   background-color: #EFDAE6;
   border-radius: 8px;
@@ -244,7 +246,7 @@ h2 {
   font-weight: 700;
   overflow: hidden;
   margin: 0px 4px;
-  max-height: clamp(10px, 2vw, 24px);
+  max-height: clamp(2px, 1em, 24px);
   display: flex;
   align-items: center;
 }
@@ -440,20 +442,21 @@ h2 {
   border: 3px solid #9F86C0;
   pointer-events: auto;
   padding: 0px;
-  margin: auto;
-  margin-top: 10vh;
+  margin: 0 auto;
+  left: 0;
+  right: 0;
   display: flex;
   flex-direction: column;
   gap: 10px;
-  z-index: 5;
-  height: auto;
-  min-height: auto;
-  max-height: none;
+  z-index: 3;
+  top: 6vh;
   overflow: visible;
+  width: 90%;
+  max-width: 800px;
 }
 
 /* Common styling for leaderboard containers on both screens */
-.end-screen .leaderboard-header,
+.leaderboard-header,
 .leaderboard-header {
   display: flex;
   justify-content: center;
@@ -474,11 +477,10 @@ h2 {
 .end-screen .leaderboard-header .rt-Button.rt-variant-soft,
 .leaderboard-header .rt-Button.rt-variant-soft {
   min-width: clamp(80px, 8vw, 90px);
-  min-height: clamp(10px, 2.5vw, 28px);
+  max-height: clamp(10px, 6em, 32px);
   font-size: clamp(0.8rem, 1.5vw, 0.9rem);
   background-color: #9F86C0;
   border-radius: 6px;
-  padding: 0.4em 0.8em;
   font-weight: 400;
   transition: background-color 0.2s ease;
   color: white;
@@ -497,6 +499,7 @@ h2 {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   border: none;
   min-width: 200px;
+
   text-align: center;
   font-family: 'Fredoka', sans-serif;
 }
