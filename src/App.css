@@ -838,7 +838,7 @@ h2 {
   min-height: 180px;
 }
 
-@media (max-width: 900px) {
+@media (max-width: 800px) {
   body:has(.starting.screen) .MuiIconButton-root {
     display: none;
   }
@@ -1235,7 +1235,7 @@ h2 {
     overflow: visible;
     padding: 4px;
     margin: 0 auto;
-    top: 0;
+    top: 1%;
     position: relative;
     width: 90%;
   }
