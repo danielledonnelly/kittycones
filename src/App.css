@@ -927,10 +927,8 @@ h2 {
   }
 
   .counter {
-    max-height: 28vh;
-    min-height: 28vh;
-    padding: 12px 20px;
-    gap: 8px;
+    max-height: 26vh;
+    min-height: 26vh;
   }
 
   /* Preserve game screen counter's row layout */
