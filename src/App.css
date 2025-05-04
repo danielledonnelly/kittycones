@@ -477,7 +477,7 @@ h2 {
 .end-screen .leaderboard-header .rt-Button.rt-variant-soft,
 .leaderboard-header .rt-Button.rt-variant-soft {
   min-width: clamp(80px, 8vw, 90px);
-  max-height: clamp(10px, 6em, 32px);
+  max-height: clamp(8px, 5em, 32px);
   font-size: clamp(0.8rem, 1.5vw, 0.9rem);
   background-color: #9F86C0;
   border-radius: 6px;
