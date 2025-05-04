@@ -1206,20 +1206,20 @@ h2 {
   }
 
   .leaderboard-column h2 {
-    font-size: clamp(14px, 1.5em, 24px);
+    font-size: clamp(12px, 1em, 24px);
   }
   
   .high-score-item {
-    font-size: 11px;
+    font-size: 12px;
     padding: 4px;
-    max-height: clamp(8px, 2vw, 18px);
+    max-height: clamp(8px, 1em, 16px);
     min-height: 16px;
     margin: 0 2px;
   }
   
   .high-scores {
     grid-template-columns: 1fr 1fr;
-    gap: 3px;
+    gap: 2px;
     margin-bottom: 0;
     padding-bottom: 0;
   }
@@ -1229,9 +1229,9 @@ h2 {
     min-height: auto;
     height: auto;
     overflow: visible;
-    padding: 12px;
+    padding: 4px;
     margin: 0 auto;
-    margin-top: 0;
+    top: 0;
     position: relative;
     width: 90%;
   }
