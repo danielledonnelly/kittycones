@@ -11,7 +11,7 @@ const About = () => {
         
         <p className="screen-text">
         You're the server at Kitty Cones, an ice cream shop that caters to catty customers. 
-        Click ingredients to match customer orders as fast as you can. Bigger orders will earn you more coins.
+        Click ingredients to match customer orders as fast as you can, and click the customer to serve them. 
         If you mess up an order, throw it away and try again. 
         
         <p>Click the play icon to activate Rush Hour Mode and speed things up.</p></p>
