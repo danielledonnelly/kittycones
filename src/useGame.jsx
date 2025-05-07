@@ -397,7 +397,7 @@ export function useGame() {
       
       // Calculate coins based on number of scoops
       const scoopCount = customerOrder.scoops.length;
-      const coinReward = scoopCount === 1 ? 15 : scoopCount === 2 ? 20 : 25;
+      const coinReward = scoopCount === 1 ? 20 : scoopCount === 2 ? 25 : 30;
       setCoins((prevCoins) => prevCoins + coinReward);
 
       // Add floating coin amount
