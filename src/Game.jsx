@@ -2,8 +2,12 @@
 
 import { motion } from "motion/react";
 import { useGame } from "./useGame";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
+import { IconButton } from "@mui/material";
+import PauseIcon from "@mui/icons-material/Pause";
+import { GameContext } from "./GameContext";
+import Pause from "./Pause";
 
 export default function Game() {
   const {
@@ -38,6 +42,7 @@ export default function Game() {
   } = useGame();
   
   const navigate = useNavigate();
+  const { isPaused, togglePause } = useContext(GameContext);
 
   // Add state for emotion icons
   const [emotionIcons, setEmotionIcons] = useState([]);
@@ -79,6 +84,25 @@ export default function Game() {
 
   return (
     <div className="game-screen">
+      <Pause />
+      
+      {/* Pause Button */}
+      <IconButton
+        className="pause-button"
+        sx={{
+          position: "fixed",
+          top: "15px",
+          right: "210px",
+          zIndex: 9999,
+          color: "#5E558F",
+        }}
+        onClick={togglePause}
+        title={isPaused ? "Resume game" : "Pause game"}
+        disableRipple={true}
+      >
+        <PauseIcon />
+      </IconButton>
+
       {/* Mobile Warning */}
       {showMobileWarning && (
         <div className="mobile screen">

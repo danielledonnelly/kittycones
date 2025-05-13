@@ -39,7 +39,8 @@ export function useGame() {
     updateHighScores, 
     checkHighScore, 
     isRushHourMode,
-    isSoundEnabled 
+    isSoundEnabled,
+    isPaused
   } = useContext(GameContext);
   
   // Create and preload audio
@@ -219,7 +220,7 @@ export function useGame() {
 
   // Continuous movement and bobbing effect
   useEffect(() => {
-    if (!isInitialized || time <= 0 || gameOverRef.current) return;
+    if (!isInitialized || time <= 0 || gameOverRef.current || isPaused) return;
     
     // Add state for movement speed
     const moveInterval = setInterval(() => {
@@ -286,7 +287,7 @@ export function useGame() {
     }, 16);
     
     return () => clearInterval(moveInterval);
-  }, [isInitialized, isRushHourMode, time, isMobile]);
+  }, [isInitialized, isRushHourMode, time, isMobile, isPaused]);
 
   // Simplified container styles
   const getCustomerContainerStyles = () => {
@@ -302,8 +303,8 @@ export function useGame() {
   };
 
   useEffect(() => {
-    // Skip this effect if game is already over
-    if (gameOverRef.current) return;
+    // Skip this effect if game is already over or paused
+    if (gameOverRef.current || isPaused) return;
     
     if (time <= 0) {
       // Mark game as over
@@ -322,7 +323,7 @@ export function useGame() {
       const timer = setTimeout(() => setTime(time - 1), 1000); 
       return () => clearTimeout(timer);
     }
-  }, [time, navigate, coins, checkHighScore]);
+  }, [time, navigate, coins, checkHighScore, isPaused]);
 
   useEffect(() => {
     setCoins(0); // Reset coins at the start of a new game

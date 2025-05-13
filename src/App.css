@@ -1239,3 +1239,170 @@ h2 {
   }
 }
 
+.pause-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10000;
+}
+
+.pause-screen {
+  max-height: none;
+  min-height: 500px;
+  height: auto;
+  overflow: visible;
+  margin: 0 auto;
+  padding: 30px;
+  position: relative;
+  width: 90%;
+  max-width: 800px;
+  min-width: 500px;
+  margin-top: -50px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.pause-screen .screen-title {
+  font-size: clamp(2rem, 3vw, 3rem);
+  margin-bottom: 20px;
+}
+
+.pause-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin-top: 20px;
+}
+
+.pause-buttons .rt-Button.rt-variant-soft {
+  width: 280px;
+  min-width: 280px;
+  background-color: #9F86C0;
+  color: white;
+  border: 1px solid #C89DD6;
+  border-radius: 8px;
+  font-family: 'Fredoka', sans-serif;
+  font-weight: 600;
+  font-size: 1.2rem;
+  padding: 12px 20px;
+  transition: all 0.2s ease;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+}
+
+.pause-button.MuiIconButton-root:hover {
+  background-color: transparent;
+}
+
+@media (max-width: 800px) {
+  .pause-button {
+    position: fixed;
+    top: 15px;
+    z-index: 9;
+    transform: translateX(-50%);
+    left: 50%;
+    margin-left: -75px !important;
+  }
+
+  .pause-screen {
+    width: 95%;
+    min-width: 300px;
+    padding: 20px;
+    min-height: 400px;
+    margin-top: -30px;
+  }
+
+  .pause-screen .screen-title {
+    font-size: clamp(1.8rem, 2.5vw, 2.5rem);
+  }
+
+  .pause-buttons .rt-Button.rt-variant-soft {
+    width: 240px;
+    min-width: 240px;
+    font-size: 1.1rem;
+    padding: 10px 16px;
+  }
+}
+
+.how-to-play-screen {
+  max-height: none;
+  min-height: auto;
+  height: auto;
+  overflow: visible;
+  margin: 0 auto;
+  padding: 20px;
+  position: relative;
+  width: 90%;
+  max-width: 800px;
+  margin-top: 0;
+}
+
+.how-to-play-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  width: 100%;
+}
+
+.how-to-play-image {
+  width: 100%;
+  max-width: 700px;
+  height: auto;
+}
+
+.back-button {
+  margin-top: 20px;
+  width: 200px;
+  min-width: 200px;
+  background-color: #9F86C0;
+  color: white;
+  border: 1px solid #C89DD6;
+  border-radius: 8px;
+  font-family: 'Fredoka', sans-serif;
+  font-weight: 600;
+  padding: 8px 16px;
+  transition: all 0.2s ease;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+}
+
+.back-button:hover {
+  background-color: #8e74b0;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+}
+
+.back-button:active {
+  background-color: #7d63a0;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+@media (max-width: 800px) {
+  .how-to-play-screen {
+    width: 95%;
+    padding: 15px;
+  }
+
+  .how-to-play-image {
+    max-width: 100%;
+  }
+
+  .back-button {
+    width: 180px;
+    min-width: 180px;
+    font-size: 14px;
+    padding: 6px 12px;
+  }
+}
+

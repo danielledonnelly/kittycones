@@ -46,6 +46,9 @@ export function GameProvider({ children }) {
     }
   });
 
+  // Add pause state
+  const [isPaused, setIsPaused] = useState(false);
+
   // Save music setting to localStorage when it changes
   useEffect(() => {
     try {
@@ -82,6 +85,11 @@ export function GameProvider({ children }) {
   // Function to toggle Rush Hour mode
   const toggleRushHourMode = () => {
     setIsRushHourMode(prev => !prev);
+  };
+
+  // Function to toggle pause state
+  const togglePause = () => {
+    setIsPaused(prev => !prev);
   };
 
   const [highScores, setHighScores] = useState(() => {
@@ -290,7 +298,9 @@ export function GameProvider({ children }) {
         fetchGlobalScores,
         submitGlobalScore,
         isRushHourMode,
-        toggleRushHourMode
+        toggleRushHourMode,
+        isPaused,
+        togglePause
       }}
     >
       {children}
