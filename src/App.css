@@ -851,18 +851,18 @@ h2 {
     z-index: 99 !important;
   }
   
-  /* Left button - Pause */
+  /* Left button - Sound */
   .sound-button {
     left: 34% !important;
   }
 
-  /* Middle button - Rush Hour */
-  .rush-hour-button {
+  /* Middle button - Pause */
+  .pause-button {
     left: 44% !important;
   }
 
-  /* Right button - Sound */
-  .pause-button {
+  /* Right button - Rush */
+  .rush-hour-button {
     left: 54% !important;
   }
 
