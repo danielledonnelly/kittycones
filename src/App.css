@@ -559,7 +559,7 @@ h2 {
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
 }
 
-.sound-button, .rush-hour-button {
+.sound-button, .rush-hour-button .pause-button {
   position: fixed;
   top: 15px;
   z-index: 99;
@@ -843,21 +843,27 @@ h2 {
     display: none;
   }
   
-  /* Center MUI buttons on mobile */
-  .sound-button, .rush-hour-button {
-    position: fixed;
-    top: 15px;
-    z-index: 9;
-    transform: translateX(-50%);
-    left: 50%;
+  /* Fix the positioning of control buttons for mobile */
+  .pause-button, .sound-button, .rush-hour-button {
+    position: fixed !important;
+    top: 15px !important;
+    right: auto !important; /* Override the inline styles */
+    z-index: 99 !important;
   }
   
+  /* Left button - Pause */
   .sound-button {
-    margin-left: -25px !important;
+    left: 34% !important;
   }
-  
+
+  /* Middle button - Rush Hour */
   .rush-hour-button {
-    margin-left: 25px !important;
+    left: 44% !important;
+  }
+
+  /* Right button - Sound */
+  .pause-button {
+    left: 54% !important;
   }
 
   /* Ensure consistent background rendering on mobile */
@@ -1306,15 +1312,6 @@ h2 {
 }
 
 @media (max-width: 800px) {
-  .pause-button {
-    position: fixed;
-    top: 15px;
-    z-index: 9;
-    transform: translateX(-50%);
-    left: 50%;
-    margin-left: -75px !important;
-  }
-
   .pause-screen {
     width: 95%;
     min-width: 300px;

@@ -86,23 +86,6 @@ export default function Game() {
     <div className="game-screen">
       <Pause />
       
-      {/* Pause Button */}
-      <IconButton
-        className="pause-button"
-        sx={{
-          position: "fixed",
-          top: "15px",
-          right: "210px",
-          zIndex: 9999,
-          color: "#5E558F",
-        }}
-        onClick={togglePause}
-        title={isPaused ? "Resume game" : "Pause game"}
-        disableRipple={true}
-      >
-        <PauseIcon />
-      </IconButton>
-
       {/* Mobile Warning */}
       {showMobileWarning && (
         <div className="mobile screen">
