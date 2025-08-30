@@ -47,5 +47,3 @@ App renders global controls (pause, Rush Hour, sound/music), a background image
 
 When time hits zero, useGame asks GameContext to check for a high score; if it qualifies, InitialsModal collects initials, saves top 10 locally, submits to Val.town, and then navigates to /game-over. The Game Over and Leaderboard screens display the local top 10 and fetched global scores.
 
-<img width="1920" height="700" alt="architecture" src="https://github.com/user-attachments/assets/b765568e-cb63-413d-8966-5b88b688aad8" />
-
