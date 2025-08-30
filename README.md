@@ -10,17 +10,17 @@ You're the head server at Kitty Cones, a cute little ice cream shop that caters 
 
 ### Features
 ✦ Cute animated cat customers
-<br>✦ Fast-paced gameplay with a timer
-<br>✦ Playful background music and sound effects
-<br>✦ Responsive design for mobile and desktop
+✦ Fast-paced gameplay with a timer
+✦ Playful background music and sound effects
+✦ Responsive design for mobile and desktop
 
 ### How to Play
-<p>1. Check customer order
-<br>2. Click matching cone
-<br>3. Click matching scoop(s)
-<br>4. Click customer to serve
-<br>5. ??????????????????????
-<br>6. Profit
+1. Check customer order
+2. Click matching cone
+3. Click matching scoop(s)
+4. Click customer to serve
+5. ??????????????????????
+6. Profit
 
 ### Game Modes
 ✦ **Normal Mode**: Standard gameplay where your catty customers slowly move across the screen
