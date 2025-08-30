@@ -40,4 +40,5 @@ You're the head server at Kitty Cones, a cute little ice cream shop that caters 
 <br>✦ Radix UI Buttons
 <br>✦ Motion Animations
 
-<img width="1745" height="552" alt="image" src="https://github.com/user-attachments/assets/3a1d593f-d8a7-44b1-be61-f6d95e18d181" />
+
+<img width="1920" height="700" alt="architecture" src="https://github.com/user-attachments/assets/6c154955-4482-44ef-8265-28e1cc7aa535" />
