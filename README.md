@@ -50,5 +50,12 @@ You're the head server at Kitty Cones, a cute little ice cream shop that caters 
 
 ✦ Motion Animations
 
+### How it Works
+On load, main.jsx mounts App inside BrowserRouter and a Radix Theme. App wraps everything in GameProvider (our GameContext) which holds coins, high scores (localStorage), audio/mode toggles, pause state, and global leaderboard fetch/submit. 
+
+App renders global controls (pause, Rush Hour, sound/music), a background image, and routes: home/about/leaderboard go through Layout (with animated kitties); /game renders the game; /game-over shows results. The game screen uses the useGame hook: it preloads sounds, generates cat orders, and runs a 45s timer and a movement loop that scrolls cats across the screen (both respect Pause; Rush Hour increases speeds). Players click a cone stand, add scoops, then click a cat/order bubble; useGame validates cone and exact scoop sequence, awards coins (+20/25/30) or subtracts 5, triggers animations/SFX, and replaces served cats. 
+
+When time hits zero, useGame asks GameContext to check for a high score; if it qualifies, InitialsModal collects initials, saves top 10 locally, submits to Val.town, and then navigates to /game-over. The Game Over and Leaderboard screens display the local top 10 and fetched global scores.
+
 <img width="1920" height="700" alt="architecture" src="https://github.com/user-attachments/assets/b765568e-cb63-413d-8966-5b88b688aad8" />
 
