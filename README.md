@@ -9,12 +9,9 @@ You're the head server at Kitty Cones, a cute little ice cream shop that caters 
 
 ### Features
 ✦ Cute animated cat customers
-
-✦ Fast-paced gameplay with a timer
-
-✦ Playful background music and sound effects
-
-✦ Responsive design for mobile and desktop
+<br>✦ Fast-paced gameplay with a timer
+<br>✦ Playful background music and sound effects
+<br>✦ Responsive design for mobile and desktop
 
 ### How to Play
 1. Check customer order
@@ -26,29 +23,21 @@ You're the head server at Kitty Cones, a cute little ice cream shop that caters 
 
 ### Game Modes
 ✦ **Normal Mode**: Standard gameplay where your catty customers slowly move across the screen
-
-✦ **Rush Hour Mode**: Faster and more challenging gameplay where customers move much quicker
+<br>✦ **Rush Hour Mode**: Faster and more challenging gameplay where customers move much quicker
 <br>These modes can be switched back and forth in-game. Toggle the mode to Rush Hour to kick things into high gear and get customers moving faster; if it's too much, you can switch right back to Normal Mode to slow customers down.
 
 ### Technical Details
 ✦ Built with React using React Router and context
-
-✦ Responsive design using CSS Flexbox and Grid
-
-✦ Local storage for saving high scores
-
-✦ Global leaderboard integration using Val Town
+<br>✦ Responsive design using CSS Flexbox and Grid
+<br>✦ Local storage for saving high scores
+<br>✦ Global leaderboard integration using Val Town
 
 ### Dependencies
 ✦ React
-
-✦ React Router
-
-✦ Material UI Icons
-
-✦ Radix UI Buttons
-
-✦ Motion Animations
+<br>✦ React Router
+<br>✦ Material UI Icons
+<br>✦ Radix UI Buttons
+<br>✦ Motion Animations
 
 ### How it Works
 On load, main.jsx mounts App inside BrowserRouter and a Radix Theme. App wraps everything in GameProvider (our GameContext) which holds coins, high scores (localStorage), audio/mode toggles, pause state, and global leaderboard fetch/submit. 
