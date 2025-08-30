@@ -6,6 +6,7 @@ You're the head server at Kitty Cones, a cute little ice cream shop that caters 
 ## Video Demo (Link)
 [![Watch the demo](./public/assets/video-thumbnail.png)](https://www.loom.com/share/cf84d44bc4db4eb9bf1ffc3a66f3ce06?sid=91524d9a-ad86-4ef5-819f-293d9d337df3)
 
+## Overview
 
 ### Features
 ✦ Cute animated cat customers
