@@ -10,8 +10,11 @@ You're the head server at Kitty Cones, a cute little ice cream shop that caters 
 
 ### Features
 ✦ Cute animated cat customers
+
 ✦ Fast-paced gameplay with a timer
+
 ✦ Playful background music and sound effects
+
 ✦ Responsive design for mobile and desktop
 
 ### How to Play
