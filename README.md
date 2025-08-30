@@ -27,7 +27,8 @@ You're the head server at Kitty Cones, a cute little ice cream shop that caters 
 
 ### Game Modes
 ✦ **Normal Mode**: Standard gameplay where your catty customers slowly move across the screen
-<br>✦ **Rush Hour Mode**: Faster and more challenging gameplay where customers move much quicker
+
+✦ **Rush Hour Mode**: Faster and more challenging gameplay where customers move much quicker
 <br>These modes can be switched back and forth in-game. Toggle the mode to Rush Hour to kick things into high gear and get customers moving faster; if it's too much, you can switch right back to Normal Mode to slow customers down.
 
 ### Technical Details
