@@ -33,16 +33,23 @@ You're the head server at Kitty Cones, a cute little ice cream shop that caters 
 
 ### Technical Details
 ✦ Built with React using React Router and context
-<br>✦ Responsive design using CSS Flexbox and Grid
-<br>✦ Local storage for saving high scores
-<br>✦ Global leaderboard integration using Val Town
+
+✦ Responsive design using CSS Flexbox and Grid
+
+✦ Local storage for saving high scores
+
+✦ Global leaderboard integration using Val Town
 
 ### Dependencies
 ✦ React
-<br>✦ React Router
-<br>✦ Material UI Icons
-<br>✦ Radix UI Buttons
-<br>✦ Motion Animations
+
+✦ React Router
+
+✦ Material UI Icons
+
+✦ Radix UI Buttons
+
+✦ Motion Animations
 
 <img width="1920" height="700" alt="architecture" src="https://github.com/user-attachments/assets/b765568e-cb63-413d-8966-5b88b688aad8" />
 
