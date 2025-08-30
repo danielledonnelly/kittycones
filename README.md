@@ -1,6 +1,6 @@
 # [Kitty Cones](https://kitty-cones.pages.dev/)
 
-### Game Description
+## Game Description
 You're the head server at Kitty Cones, a cute little ice cream shop that caters to catty customers. Your first shift just started, so get to work! Match customer orders by selecting the correct cone and scoop combinations before time runs out. 
 
 ### Video Demo (Link)
